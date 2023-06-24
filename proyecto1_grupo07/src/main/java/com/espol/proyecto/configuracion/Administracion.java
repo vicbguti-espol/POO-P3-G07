@@ -46,7 +46,7 @@ public class Administracion {
     
     // Método para modificar el número de un término académico de terminosAcademicos
     public void modificarNumero(TerminoAcademico termino, int numero){
-        // Verificar la existencia del término académico en terminosAcademicos
+    // Verificar la existencia del término académico en terminosAcademicos
         if (this.terminosAcademicos.contains(termino)){
             // Obtener el índice de termino en terminosAcademicos
            int indexTermino = this.terminosAcademicos.indexOf(termino);
