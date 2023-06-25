@@ -15,6 +15,12 @@ public class TerminoAcademico {
     
     Scanner sc = new Scanner(System.in);
     
+    // Constructor
+    public TerminoAcademico(int numTermino, int añoTermino){
+        this.numTermino = numTermino;
+        this.añoTermino = añoTermino;
+    }
+    
     // Getters y setters
 
     public int getNumTermino() {
