@@ -2,6 +2,7 @@ package com.espol.proyecto.configuracion;
 
 // Importar clases
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class TerminoAcademico {
@@ -10,6 +11,9 @@ public class TerminoAcademico {
     private int añoTermino;
     private ArrayList<Materia> materias;
     private ArrayList<Estudiante> estudiantes;
+    private ArrayList<Paralelo> paralelos;
+    
+    Scanner sc = new Scanner(System.in);
     
     // Getters y setters
 
@@ -34,29 +38,58 @@ public class TerminoAcademico {
         return "numTermino=" + numTermino + ", añoTermino="  + añoTermino;
     }
     
-    // Metodo ingresarMateria()
+    // Métodos
     
-    
-    // Método ingresarMateria()
-    public void ingresarMateria(String codigo, String nombre, int cantNiveles){
+    public void ingresarMateria(){
+        // Pedir al usuario
+        System.out.println("Ingresar el nombre de la materia");
+        String nombre = sc.nextLine();
+        
+        System.out.println("Ingresar el código de la materia");
+        String codigo = sc.nextLine();
+        
+        System.out.println("Ingresar la cantida de niveles");
+        int cantNiveles = sc.nextInt();
+        sc.nextLine();
+
+        // Agregar la materia
         this.materias.add(new Materia(codigo, nombre, cantNiveles));
     }
     
-    public boolean buscarMateria(Materia materia){
-        // Recorrer la lista de terminosAcademicos
-        for (Materia materiaIte: this.materias){
-            // De encontrarse el término académico true
-            if (materiaIte.equals(materia)){
-                return true;
+
+    public void modificarNombre(){
+        // Pedir al usuario
+        System.out.println("Ingresar el código de la materia");
+        String codigoMateria = sc.nextLine();
+        
+        // Pedir al usuario
+        System.out.println("Ingresar el nuevo nombre de la materia");
+        String nombre = sc.nextLine();
+        // Recorrer lista
+        for (Materia materia: this.materias){
+            if (materia.getCodigo().equals(codigoMateria)){
+                materia.setNombre(nombre);
             }
         }
-        return false;
+        
     }
     
-    // Método modificarNombre()
-    public void modificarNombre(Materia materia){
-        if (buscarMateria(materia)){
-            materia.
+    // Método modificarCantNiveles()
+    public void modificarCantNiveles(){
+        
+        // Pedir datos al usuario
+        System.out.println("Ingresar el código de la materia a modificar la cantidad de niveles: ");
+        String codigo = sc.nextLine();
+        System.out.println("Ingresar la cantidad de niveles: ");
+        int cantNiveles = sc.nextInt();
+        sc.nextLine();
+        
+        // Recorrer lista
+        for (Materia materia: this.materias){
+            if (materia.getCodigo().equals(codigo)){
+                materia.setCantNiveles(cantNiveles);
+            }
         }
     }
+    
 }

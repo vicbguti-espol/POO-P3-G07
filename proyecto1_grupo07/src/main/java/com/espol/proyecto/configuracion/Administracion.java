@@ -7,8 +7,7 @@ public class Administracion {
     private ArrayList<TerminoAcademico> terminosAcademicos;
     
     // Atributos de selección
-    protected TerminoAcademico terminoAcademicoJuego;
-
+    private TerminoAcademico terminoAcademicoJuego;
     private Materia materiaJuego;
     private Estudiante estudianteJuego;
     
@@ -17,69 +16,37 @@ public class Administracion {
         this.terminosAcademicos = new ArrayList<TerminoAcademico>();
     }
     
-    // Getter
+    // Getters y setters
+        public ArrayList<TerminoAcademico> getTerminosAcademicos() {
+        return terminosAcademicos;
+    }
+
+    public void setTerminosAcademicos(ArrayList<TerminoAcademico> terminosAcademicos) {
+        this.terminosAcademicos = terminosAcademicos;
+    }
 
     public TerminoAcademico getTerminoAcademicoJuego() {
         return terminoAcademicoJuego;
     }
-    
-    // Setters
-    
+
     public void setTerminoAcademicoJuego(TerminoAcademico terminoAcademicoJuego) {
         this.terminoAcademicoJuego = terminoAcademicoJuego;
+    }
+
+    public Materia getMateriaJuego() {
+        return materiaJuego;
     }
 
     public void setMateriaJuego(Materia materiaJuego) {
         this.materiaJuego = materiaJuego;
     }
-    
-    
-    // TÉRMINOS ACADÉMICOS
-    
-    // Método para ingresar un término académico
-    public void ingresarTermino(TerminoAcademico termino){
-        this.terminosAcademicos.add(termino);
+
+    public Estudiante getEstudianteJuego() {
+        return estudianteJuego;
     }
-    
-    // Método para buscar término académico buscarTermino()
-    public boolean buscarTerminoAcademico(TerminoAcademico terminoBuscar){
-        // Recorrer la lista de terminosAcademicos
-        for (TerminoAcademico termino: this.terminosAcademicos){
-            // De encontrarse el término académico true
-            if (termino.equals(terminoBuscar)){
-                return true;
-            }
-        }
-        return false;
+
+    public void setEstudianteJuego(Estudiante estudianteJuego) {
+        this.estudianteJuego = estudianteJuego;
     }
-    
-    
-    // Método para modificar el año de un término académico de terminosAcademicos
-    public void modificarAño(TerminoAcademico termino, int año){
-        // Verificar la existencia del término académico en terminosAcademicos
-        if (this.terminosAcademicos.contains(termino)){
-            // Obtener el índice de termino en terminosAcademicos
-           int indexTermino = this.terminosAcademicos.indexOf(termino);
-           // Obtener el terminoAcademico
-           TerminoAcademico t = this.terminosAcademicos.get(indexTermino);
-           // Modificar el año del término académico
-           t.setAñoTermino(año);
-            
-        }
-    }
-    
-    // Método para modificar el número de un término académico de terminosAcademicos
-    public void modificarNumero(TerminoAcademico termino, int numero){
-    // Verificar la existencia del término académico en terminosAcademicos
-        if (this.terminosAcademicos.contains(termino)){
-            // Obtener el índice de termino en terminosAcademicos
-           int indexTermino = this.terminosAcademicos.indexOf(termino);
-           // Obtener el terminoAcademico
-           TerminoAcademico t = this.terminosAcademicos.get(indexTermino);
-           // Modificar el número del término académico
-           t.setAñoTermino(numero);
-            
-        }
-    }
-    
+   
 }
