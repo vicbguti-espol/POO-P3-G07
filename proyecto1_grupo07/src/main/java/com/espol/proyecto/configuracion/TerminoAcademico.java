@@ -33,5 +33,7 @@ public class TerminoAcademico {
         return "numTermino=" + numTermino + ", añoTermino="  + añoTermino;
     }
     
+    // Metodo ingresarMateria()
+    
     
 }
