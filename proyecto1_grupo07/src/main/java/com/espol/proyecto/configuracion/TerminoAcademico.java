@@ -3,6 +3,7 @@ package com.espol.proyecto.configuracion;
 // Importar clases
 import java.util.ArrayList;
 
+
 public class TerminoAcademico {
     // Atributos 
     private int numTermino;
@@ -34,4 +35,26 @@ public class TerminoAcademico {
     }
     
     
+    // Método ingresarMateria()
+    public void ingresarMateria(String codigo, String nombre, int cantNiveles){
+        this.materias.add(new Materia(codigo, nombre, cantNiveles));
+    }
+    
+    public boolean buscarMateria(Materia materia){
+        // Recorrer la lista de terminosAcademicos
+        for (Materia materiaIte: this.materias){
+            // De encontrarse el término académico true
+            if (materiaIte.equals(materia)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Método modificarNombre()
+    public void modificarNombre(Materia materia){
+        if (buscarMateria(materia)){
+            materia.
+        }
+    }
 }
