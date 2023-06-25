@@ -5,12 +5,36 @@ import java.util.ArrayList;
 public class Administracion {
     // Atributos
     private ArrayList<TerminoAcademico> terminosAcademicos;
-    private TerminoAcademico terminoAcademicoJuego;
+    
+    // Atributos de selección
+    protected TerminoAcademico terminoAcademicoJuego;
+
+    private Materia materiaJuego;
+    private Estudiante estudianteJuego;
     
     // Constructor
     public Administracion(){
         this.terminosAcademicos = new ArrayList<TerminoAcademico>();
     }
+    
+    // Getter
+
+    public TerminoAcademico getTerminoAcademicoJuego() {
+        return terminoAcademicoJuego;
+    }
+    
+    // Setters
+    
+    public void setTerminoAcademicoJuego(TerminoAcademico terminoAcademicoJuego) {
+        this.terminoAcademicoJuego = terminoAcademicoJuego;
+    }
+
+    public void setMateriaJuego(Materia materiaJuego) {
+        this.materiaJuego = materiaJuego;
+    }
+    
+    
+    // TÉRMINOS ACADÉMICOS
     
     // Método para ingresar un término académico
     public void ingresarTermino(TerminoAcademico termino){
@@ -46,7 +70,7 @@ public class Administracion {
     
     // Método para modificar el número de un término académico de terminosAcademicos
     public void modificarNumero(TerminoAcademico termino, int numero){
-        // Verificar la existencia del término académico en terminosAcademicos
+    // Verificar la existencia del término académico en terminosAcademicos
         if (this.terminosAcademicos.contains(termino)){
             // Obtener el índice de termino en terminosAcademicos
            int indexTermino = this.terminosAcademicos.indexOf(termino);
@@ -58,5 +82,4 @@ public class Administracion {
         }
     }
     
-    // Método para se
 }
