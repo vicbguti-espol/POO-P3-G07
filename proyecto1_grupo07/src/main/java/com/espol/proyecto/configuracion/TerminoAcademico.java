@@ -39,11 +39,6 @@ public class TerminoAcademico {
         this.añoTermino = añoTermino;
     }
     
-    @Override
-    public String toString(){
-        return "numTermino=" + numTermino + ", añoTermino="  + añoTermino;
-    }
-    
     // Métodos
     
     public void ingresarMateria(){
@@ -98,4 +93,20 @@ public class TerminoAcademico {
         }
     }
     
+    @Override
+    public String toString(){
+        return "numTermino=" + numTermino + ", añoTermino="  + añoTermino;
+    }
+    
+    public boolean equals(Object o){
+        if (o == this){
+            return true;
+        }
+        if (o != null && getClass() == o.getClass()){
+            TerminoAcademico ter = (TerminoAcademico) o;
+            return numTermino == ter.getNumTermino() && añoTermino == ter.getAñoTermino();
+        } else{
+           return false;
+        }
+    }
 }

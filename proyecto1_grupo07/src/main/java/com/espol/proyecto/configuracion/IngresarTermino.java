@@ -2,7 +2,7 @@ package com.espol.proyecto.configuracion;
 
 import java.util.ArrayList;
 
-public class IngresarTermino extends Administracion {
+public class IngresarTermino extends AdministracionTerminosAcademicos {
     // Método para obtener los numeros de los térmions académicos en lista por año
     private ArrayList<Integer> obtenerNumeroTerminos(int año){
         // Crear un ArrayList añosTerminos
