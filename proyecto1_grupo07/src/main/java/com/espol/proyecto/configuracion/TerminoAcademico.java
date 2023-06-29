@@ -21,25 +21,16 @@ public class TerminoAcademico {
         this.añoTermino = añoTermino;
     }
     
-    // Getters y setters
-
-    public int getNumTermino() {
-        return numTermino;
-    }
-
+    // Setters
     public void setNumTermino(int numTermino) {
         this.numTermino = numTermino;
-    }
-
-    public int getAñoTermino() {
-        return añoTermino;
     }
 
     public void setAñoTermino(int añoTermino) {
         this.añoTermino = añoTermino;
     }
     
-    // Métodos
+    // Métodos que pueden ser retirados
     
     public void ingresarMateria(){
         // Pedir al usuario
