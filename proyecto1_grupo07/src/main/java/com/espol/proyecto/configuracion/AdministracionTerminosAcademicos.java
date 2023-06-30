@@ -11,9 +11,6 @@ public class AdministracionTerminosAcademicos {
     
     // Constructor
     public AdministracionTerminosAcademicos(){
-        /**
-         * Constructor de clase
-         */
         this.terminosAcademicos = new ArrayList<TerminoAcademico>();
         añoActual = 2023;
     }
