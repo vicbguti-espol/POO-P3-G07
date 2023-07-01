@@ -7,18 +7,27 @@ public class AdministracionTerminosAcademicos {
     // Atributos
     private static ArrayList<TerminoAcademico> terminosAcademicos;
     private int añoActual;
-    private TerminoAcademico terminoJuego;
-    
+    private static TerminoAcademico terminoJuego;
+   
     // Constructor
     public AdministracionTerminosAcademicos(){
-        this.terminosAcademicos = new ArrayList<TerminoAcademico>();
-        añoActual = 2023;
+        terminosAcademicos = new ArrayList<TerminoAcademico>();
+        
+        // Establecer valores default
+        terminosAcademicos.add(new TerminoAcademico(1,2023));
+        terminoJuego = terminosAcademicos.get(0);
+        this.añoActual = 2023;
+    }
+    
+    // Getters
+    public static TerminoAcademico getTerminoJuego(){
+        return terminoJuego;
     }
     
     // Scanner
     Scanner sc = new Scanner(System.in);
     
-    private TerminoAcademico ObtenerTerminoPorConsola(){
+    private TerminoAcademico obtenerTerminoPorConsola(){
         /**
          * Pedir datos del término académico al usuario
          * Retorna un objeto de tipo TerminoAcademico
@@ -48,7 +57,7 @@ public class AdministracionTerminosAcademicos {
         
         do{
             // Hallar el índice de el término académico
-            indTer = terminosAcademicos.indexOf(ObtenerTerminoPorConsola());
+            indTer = terminosAcademicos.indexOf(obtenerTerminoPorConsola());
             
             if (indTer == -1){
                 // Pedir al usuario una entrada
@@ -69,7 +78,7 @@ public class AdministracionTerminosAcademicos {
          * Pedir por consola los datos del término
          * Agregar objeto TerminoAcademico a terminosAcademicos
          */
-        this.terminosAcademicos.add(this.ObtenerTerminoPorConsola());
+        terminosAcademicos.add(this.obtenerTerminoPorConsola());
     }
     
     public void modificarDatosPorConsola(){
@@ -116,7 +125,7 @@ public class AdministracionTerminosAcademicos {
         // Pedir los datos del término para buscar su índice en la lista
         int indTermino = this.obtenerIndicePorConsola();
         // Asignar el término para el juego
-        this.terminoJuego = terminosAcademicos.get(indTermino);
+        terminoJuego = terminosAcademicos.get(indTermino);
         
     }
     
