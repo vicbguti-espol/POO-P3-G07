@@ -10,7 +10,7 @@ public class Paralelo {
     private Termino termino;
     private int numero;
     private String rutaarchivo;
-    private static ArrayList<Estudiante> estudiantes;
+    private ArrayList<Estudiante> estudiantes;
 
     Scanner sc = new Scanner(System.in);
 
@@ -22,7 +22,7 @@ public class Paralelo {
     }
 
     public void ingresarParalelo(){
-        System.out.println("Ingresar el nombre de la materia");
+        System.out.println("Ingresar el codigo de la materia");
         String materia = sc.nextLine();
         
         System.out.println("Ingresar el año del termino de la materia");
