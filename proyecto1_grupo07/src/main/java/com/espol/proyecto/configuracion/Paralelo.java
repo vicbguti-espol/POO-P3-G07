@@ -1,8 +1,7 @@
 package main.java.com.espol.proyecto.configuracion;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
-
 import com.espol.proyecto.configuracion.TerminoAcademico;
 
 public class Paralelo {
@@ -12,7 +11,7 @@ public class Paralelo {
     private ArrayList <Estudiante> estudiantes;
 
 
-    static ArrayList<Paralelo>paralelos=new ArrayList<Paralelo>(); 
+    public static ArrayList<Paralelo>paralelos=new ArrayList<Paralelo>(); 
 
     Scanner sc = new Scanner(System.in);
 
@@ -63,15 +62,15 @@ public class Paralelo {
         }
     }
 
-    private int getnumero() {
+    public int getnumero() {
         return numero;
     }
 
-    private TerminoAcademico getTerminoAcademico() {
+    public TerminoAcademico getTerminoAcademico() {
         return termino;
     }
 
-    private Materia getMateria() {
+    public Materia getMateria() {
         return materia;
     }
 

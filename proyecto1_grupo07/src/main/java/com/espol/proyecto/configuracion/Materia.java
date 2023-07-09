@@ -6,7 +6,7 @@ public class Materia {
     private String nombre;
     private int cantNiveles;
 
-    static ArrayList<Materia> materias=new ArrayList<Materia>();
+    public static ArrayList<Materia> materias=new ArrayList<Materia>();
 
     Scanner sc = new Scanner(System.in);
 
@@ -37,8 +37,32 @@ public class Materia {
     public String getNombre(){
         return nombre;
     }
+    public setNombre(String n){
+        this.nombre=n;
+    }
+    public setCantNiveles(int c){
+        this.cantNiveles=c;
+    }
     public int getCantNiveles(){
         return cantNiveles;
+    }
+
+    public void eliminarMateria(){
+        for (Materia m: materias){
+            System.out.println((materias.indexOf(m)+1)+". "+m.getCodigo()+" "+m.getNombre());
+        }
+        System.out.println("Ingrese codigo o indice de materia a eliminar");
+        if(sc.hasNextInt()){
+            int indice=sc.nextInt();
+            materias.remove(indice-1);
+        }
+        else if(sc.hasNextLine()){
+            String cmateriaeliminar=sc.nextLine();
+            Materia i=verificarExistencia(cmateriaeliminar);
+            materias.remove(i);
+        }else{
+            System.out.println("Ingreso invalido");
+        }
     }
 
     public static Materia verificarExistencia(String c){
@@ -53,14 +77,29 @@ public class Materia {
         return null;
     }
     
-    public void eliminarMateria(Materia m){
-        System.out.println("Ingrese el codigo de la materia a eliminar");
-        String cmateriaeliminar=sc.nextLine();
-        for(Materia i:materias){
-            if (cmateriaeliminar.equals(i.getCodigo())){
-                materias.remove(i);
-            }
+    public void editarMateria(Materia x){
+        for (Materia m: materias){
+            System.out.println((materias.indexOf(m)+1)+". "+m.getCodigo()+" "+m.getNombre());
         }
+        System.out.println("Ingrese el codigo o indice de la materia a editar");
+        if(sc.hasNextInt()){
+            System.out.println("Ingrese el nuevo nombre de la materia");
+            materias.get(sc.nextInt()).setNombre(sc.nextLine());
+
+            System.out.println("Ingrese la nueva cantidad de niveles de la materia");
+            materias.get(sc.nextInt()).setCantNiveles(sc.nextInt());
+        }
+        else if(sc.hasNextLine()){
+            Materia m=sc.nextLine().verificarExistencia();
+            System.out.println("Ingrese el nuevo nombre de la materia");
+            m.setNombre(sc.nextLine());
+
+            System.out.println("Ingrese la nueva cantidad de niveles de la materia");
+            m.setCantNiveles(sc.nextInt());
+        }else{
+            System.out.println("Ingreso invalido");
+        }
+        
     }
 
 }

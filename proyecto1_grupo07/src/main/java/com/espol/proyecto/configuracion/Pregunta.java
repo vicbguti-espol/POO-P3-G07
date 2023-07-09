@@ -9,7 +9,7 @@ private Materia materia;
 private String rc;
 private String[] ris = new String[3];
 
-static ArrayList<Pregunta> preguntas=new ArrayList<Pregunta>();
+public static ArrayList<Pregunta> preguntas=new ArrayList<Pregunta>();
 
 Scanner sc = new Scanner(System.in);
 
@@ -69,7 +69,7 @@ public void visualizarPreguntas(){
 }
 
 public void eliminarPregunta(){
-    System.out.println("Ingrese el numero de materia que desea eliminar");
+    System.out.println("Ingrese el numero de pregunta que desea eliminar");
     preguntas.remove(sc.nextInt()-1);
 }
 
