@@ -6,8 +6,8 @@ public class Pregunta {
 private String textop;
 private int nivel;
 private Materia materia;
-private String rc;
-private String[] ris = new String[3];
+private String respuestaCorrecta;
+private String[] respuestasIncorrectas = new String[3];
 
 public static ArrayList<Pregunta> preguntas=new ArrayList<Pregunta>();
 
@@ -17,8 +17,8 @@ public Pregunta(Materia m, String tp, int n, String rc, String[]ris){
     this.textop=tp;
     this.nivel=n;
     this.materia=m;
-    this.rc=rc;
-    this.ris=ris;
+    this.respuestaCorrecta=rc;
+    this.respuestasIncorrectas=ris;
 }
 
 public String getTextop(){
@@ -53,8 +53,10 @@ public void ingresarPregunta(){
     System.out.println("Ingresar texto de la respuesta correcta");
     String rc = sc.nextLine();
 
+    String[] ris = new String[3];
+
     for(int i=0;i<ris.length;i++){
-        System.out.println("Ingresar texto de la respuesta incorrecta"+i);
+        System.out.println("Ingresar texto de la respuesta incorrecta "+i);
         ris[i]=sc.nextLine();
     }
 
