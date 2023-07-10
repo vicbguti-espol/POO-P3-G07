@@ -1,6 +1,8 @@
 package com.espol.proyecto.juego;
 
-import com.espol.proyecto.configuracion.AdministracionTerminosAcademicos;
+import com.espol.proyecto.configuracion.*;
+
+import main.java.com.espol.proyecto.configuracion.*;
 
 public class Juego {
     // Atributos
