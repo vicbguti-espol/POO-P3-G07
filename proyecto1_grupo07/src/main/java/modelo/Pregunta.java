@@ -1,6 +1,4 @@
-package main.java.com.espol.proyecto.configuracion;
-
-import com.espol.proyecto.configuracion.TerminoAcademico;
+package modelo;
 
 public class Pregunta {
 private String textop;

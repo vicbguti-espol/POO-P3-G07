@@ -1,8 +1,8 @@
-package main.java.com.espol.proyecto.configuracion;
+package modelo;
 import java.util.*;
 
 public class Nivel {
-    private ArrayList<Preguntas> preguntas;
+    private ArrayList<Pregunta> preguntas;
     private Materia materia;
     private Termino termino;
 

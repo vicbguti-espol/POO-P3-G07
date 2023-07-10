@@ -1,4 +1,4 @@
-package com.espol.proyecto.configuracion;
+package modelo;
 
 // Importar clases
 import java.util.ArrayList;
