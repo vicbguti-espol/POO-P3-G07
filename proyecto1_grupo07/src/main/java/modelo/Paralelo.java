@@ -1,8 +1,7 @@
-package main.java.com.espol.proyecto.configuracion;
+package modelo;
 
 import java.util.*;
 import java.util.Scanner;
-import com.espol.proyecto.configuracion.TerminoAcademico;
 
 public class Paralelo {
     private Materia materia;
@@ -72,6 +71,10 @@ public class Paralelo {
 
     public Materia getMateria() {
         return materia;
+    }
+    
+    public ArrayList <Estudiante> getEstudiantes(){
+        return estudiantes;
     }
 
 

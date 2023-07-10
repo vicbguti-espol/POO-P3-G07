@@ -1,4 +1,4 @@
-package main.java.com.espol.proyecto.configuracion;
+package modelo;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ public static ArrayList<Pregunta> preguntas=new ArrayList<Pregunta>();
 
 Scanner sc = new Scanner(System.in);
 
-public Pregunta(Materia m, String tp, int n, String rc, String[]respuestas){
+public Pregunta(Materia m, String tp, int n, String rc, String[]ris){
     this.textop=tp;
     this.nivel=n;
     this.materia=m;
@@ -49,9 +49,9 @@ public void ingresarPregunta(){
     String pregunta = sc.nextLine();
 
     String[] respuestas = new String[4];
-    
+
     System.out.println("Ingresar texto de la respuesta correcta");
-    respuestas[0]=sc.nextLine();
+    respuestas[0]= sc.nextLine();
 
     for(int i=0;i<ris.length-1;i++){
         System.out.println("Ingresar texto de la respuesta incorrecta "+i);

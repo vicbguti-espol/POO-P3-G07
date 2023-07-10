@@ -1,4 +1,4 @@
-package main.java.com.espol.proyecto.configuracion;
+package modelo;
 import java.util.*;
 
 public class Materia {
@@ -108,6 +108,5 @@ public class Materia {
         else{
             return false;
         }
-        
     }
 }
