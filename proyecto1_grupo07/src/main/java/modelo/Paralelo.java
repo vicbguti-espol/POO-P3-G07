@@ -72,6 +72,10 @@ public class Paralelo {
     public Materia getMateria() {
         return materia;
     }
+    
+    public ArrayList <Estudiante> getEstudiantes(){
+        return estudiantes;
+    }
 
 
 }

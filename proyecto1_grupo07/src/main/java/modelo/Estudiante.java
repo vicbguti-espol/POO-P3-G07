@@ -1,13 +1,15 @@
-package main.java.com.espol.proyecto.configuracion;
-import java.util.*;
+package modelo;
 
 public class Estudiante {
-  private String matricula;
+  private int matricula;
   private String correo;
   public String nombre;
-
-  public static ArrayList<Estudiante> estudiantes=new ArrayList<Estudiante>();
-
   
-
+  public Estudiante(){
+      
+  }
+  
+  public int getMatricula(){
+    return matricula;
+}
 }

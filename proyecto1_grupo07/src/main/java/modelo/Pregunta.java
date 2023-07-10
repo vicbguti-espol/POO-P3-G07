@@ -1,27 +1,45 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Pregunta {
-private String textop;
+private String texto;
 private int nivel;
 private Materia materia;
-private String respuestaCorrecta;
-private String[] respuestasIncorrectas = new String[3];
+private ArrayList<Respuesta> respuestas;
 
-public static ArrayList<Pregunta> preguntas=new ArrayList<Pregunta>();
+private static ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
 
 Scanner sc = new Scanner(System.in);
 
 public Pregunta(Materia m, String tp, int n, String rc, String[]ris){
-    this.textop=tp;
-    this.nivel=n;
-    this.materia=m;
-    this.respuestaCorrecta=rc;
-    this.respuestasIncorrectas=ris;
+    this.texto = tp;
+    this.nivel = n;
+    this.materia = m;
+    this.respuestaCorrecta = rc;
+    this.respuestasIncorrectas = ris;
 }
 
-public String getTextop(){
-    return textop;
+public ArrayList<Respuesta> getRespuestas() {
+    return respuestas;
 }
+
+public String getTexto(){
+    return texto;
+}
+
+public Materia getMateria(){
+    return materia;
+}
+
+public int getNivel(){
+    return nivel;
+}
+
+public static ArrayList<Pregunta> getPreguntas(){
+    return preguntas;
+}
+
 public void ingresarPregunta(){
     System.out.println("Ingresar el codigo de la materia");
     String codmateria = sc.nextLine();
@@ -60,12 +78,6 @@ public void ingresarPregunta(){
 
     preguntas.add(new Pregunta(materia,pregunta,niveluser,rc,ris));
 
-}
-
-public void visualizarPreguntas(){
-    for(Pregunta p: preguntas){
-        System.out.println(preguntas.indexOf(p)+1+". "+p.getTextop());
-    }
 }
 
 public void eliminarPregunta(){

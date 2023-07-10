@@ -8,8 +8,7 @@ package modelo;
  *
  * @author Omen
  */
-public enum Comodin {
-    CINCUENTA,
-    COMPANERO,
-    SALON
+public enum TipoRespuesta {
+    CORRECTA,
+    INCORRECTA
 }
