@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Juego {
@@ -110,9 +111,28 @@ public class Juego {
         return true;
     }
     
+    /**
+     * Método que retorna el literal (S) de la respuesta correcta
+     * @param opcionPregunta
+     * @return 
+     */
+    public String obtenerKeyRespuestaCorrecta(Map<String, Respuesta> opcionPregunta){
+        for (Map.Entry<String, Respuesta> mapEntry: opcionPregunta.entrySet()){
+            Respuesta value = mapEntry.getValue(); 
+            if (value != null && value.getTipo().equals(TipoRespuesta.CORRECTA)){
+                return mapEntry.getKey();
+            }
+        }
+        return null;
+    }
+    
     public void visualizarPreguntas(){
+        // Instanciar scanner
+        Scanner sc = new Scanner(System.in);
         // Obtener preguntas por nivel
         Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = obtenerPreguntasPorNivel();
+        // Valor booleano para terminar el juego
+        boolean end = false;
         // Iterar el map de preguntas por nivel
         for (Map.Entry<Integer, ArrayList<Pregunta>> entry: preguntasPerLvl.entrySet()){
             // Obtener las preguntas del nivel
@@ -122,22 +142,76 @@ public class Juego {
             // Mostrar por pantalla el nivel en que se encuentra
             System.out.println("Nivel" + entry.getKey());
             
-            int stop = 0;
-            for (Pregunta p: preguntas){
+            if (!end){
+                int stop = 0;
+                for (Pregunta p: preguntas){
                 // Obtener las respuestas de la pregunta
                 ArrayList<Respuesta> respuestas = p.getRespuestas();
-                stop++; // Incrementar stop por cada iteración
                 
                 Collections.shuffle(respuestas); // Shuffle de respuestas
                 
-                // Filling the Map in a Loop
-                
+                // Asignar un key value de opción a cada respuesta
+                Map<String, Respuesta> opcionPregunta = new TreeMap<>();
+                opcionPregunta.put("a", respuestas.get(0));
+                opcionPregunta.put("b", respuestas.get(1));
+                opcionPregunta.put("c", respuestas.get(2));
+                opcionPregunta.put("d", respuestas.get(3));
+
+                // Muestra por consola la pregunta
                 System.out.println(preguntas.indexOf(p) + ". " + p.getTexto());
+                
+                // Iterar el map
+                for (Map.Entry<String, Respuesta> mapEntry: opcionPregunta.entrySet()){
+                        // Visualizar pregunta
+                        System.out.println(mapEntry.getKey() + ". " 
+                                + mapEntry.getValue().getTexto()); 
+                }
+                
+                // Solicitar al usuario su respuesta a la pregunta
+                System.out.println("Ingresar opcion válida (S)");
+                String input = sc.nextLine();
+                
+                String comodin = "";
+                
+                // Ingresar comodín en caso de requerirlo
+                if (input.equals("*")){
+                    System.out.println("Ingresar comodín "
+                            + "(cincuenta/companero/salon)");
+                    comodin = sc.nextLine();
+                    
+                    // Solicitar al usuario su respuesta a la pregunta
+                    System.out.println("Ingresar opcion válida (S)");
+                    input = sc.nextLine();
+                }
+                
+                // Agregar comodines utilizados en caso de ser requerido
+                switch(comodin){
+                    case "cincuenta" -> comodinesUtilizados.add(Comodin.CINCUENTA);
+                    case "companero" -> comodinesUtilizados.add(Comodin.COMPANERO);
+                    case "salon" -> comodinesUtilizados.add(Comodin.SALON);
+                    default -> {
+                    }
+                }
+                
+                // Obtener literal correcto
+                String literalCorrecto = obtenerKeyRespuestaCorrecta(opcionPregunta);
+                
+                if (input.equalsIgnoreCase(literalCorrecto)){
+                    // Aumentar el número de preguntas contestadas
+                    nPreguntasContestadas++;
+                    stop++;
+                } else{
+                    end = true;
+                }
                 
                 if (stop == nPreguntasPerLvl){
                     break;
                 }
+                }
+            } else{
+                break;
             }
+            
         }
         
     }
