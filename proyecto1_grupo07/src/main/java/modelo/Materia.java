@@ -101,5 +101,12 @@ public class Materia {
         }
         
     }
-
+    public boolean equals(Object o){
+        if (o != null && getClass()==o.getClass()){
+            return super.equals(o) && o==other.o;
+        }
+        else{
+            return false;
+        }
+    }
 }

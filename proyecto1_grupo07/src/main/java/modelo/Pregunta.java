@@ -1,45 +1,27 @@
 package modelo;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Pregunta {
-private String texto;
+private String textop;
 private int nivel;
 private Materia materia;
-private ArrayList<Respuesta> respuestas;
+private String[] respuestas = new String[4];
 
-private static ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
+public static ArrayList<Pregunta> preguntas=new ArrayList<Pregunta>();
 
 Scanner sc = new Scanner(System.in);
 
 public Pregunta(Materia m, String tp, int n, String rc, String[]ris){
-    this.texto = tp;
-    this.nivel = n;
-    this.materia = m;
-    this.respuestaCorrecta = rc;
-    this.respuestasIncorrectas = ris;
+    this.textop=tp;
+    this.nivel=n;
+    this.materia=m;
+    this.respuestas=respuestas;
 }
 
-public ArrayList<Respuesta> getRespuestas() {
-    return respuestas;
+public String getTextop(){
+    return textop;
 }
-
-public String getTexto(){
-    return texto;
-}
-
-public Materia getMateria(){
-    return materia;
-}
-
-public int getNivel(){
-    return nivel;
-}
-
-public static ArrayList<Pregunta> getPreguntas(){
-    return preguntas;
-}
-
 public void ingresarPregunta(){
     System.out.println("Ingresar el codigo de la materia");
     String codmateria = sc.nextLine();
@@ -65,19 +47,25 @@ public void ingresarPregunta(){
 
     System.out.println("Ingresar el texto de la pregunta");
     String pregunta = sc.nextLine();
-    
+
+    String[] respuestas = new String[4];
+
     System.out.println("Ingresar texto de la respuesta correcta");
-    String rc = sc.nextLine();
+    respuestas[0]= sc.nextLine();
 
-    String[] ris = new String[3];
-
-    for(int i=0;i<ris.length;i++){
+    for(int i=0;i<ris.length-1;i++){
         System.out.println("Ingresar texto de la respuesta incorrecta "+i);
-        ris[i]=sc.nextLine();
+        respuestas[i+1]=sc.nextLine();
     }
 
-    preguntas.add(new Pregunta(materia,pregunta,niveluser,rc,ris));
+    preguntas.add(new Pregunta(materia,pregunta,niveluser,respuestas));
 
+}
+
+public void visualizarPreguntas(){
+    for(Pregunta p: preguntas){
+        System.out.println(preguntas.indexOf(p)+1+". "+p.getTextop());
+    }
 }
 
 public void eliminarPregunta(){
