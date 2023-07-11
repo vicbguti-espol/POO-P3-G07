@@ -125,9 +125,6 @@ public class AdministracionTerminosAcademicos {
         // Pedir los datos del término para buscar su índice en la lista
         int indTermino = this.obtenerIndicePorConsola();
         // Asignar el término para el juego
-        terminoJuego = terminosAcademicos.get(indTermino);
-        
+        terminoJuego = terminosAcademicos.get(indTermino); 
     }
-    
-   
 }
