@@ -9,8 +9,8 @@ package modelo;
  * @author Omen
  */
 public class Respuesta {
-    String texto;
-    TipoRespuesta tipo;
+    private String texto;
+    private TipoRespuesta tipo;
 
     public String getTexto() {
         return texto;
