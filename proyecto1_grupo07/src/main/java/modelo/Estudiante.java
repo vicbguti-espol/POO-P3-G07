@@ -1,9 +1,13 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Estudiante {
-  private int matricula;
+  private String matricula;
   private String correo;
-  public String nombre;
+  private String nombre;
+
+  public static ArrayList <Estudiante> estudiantes = new ArrayList<Estudiante>();
   
     public Estudiante(int matricula, String correo, String nombre) {
         this.matricula = matricula;
@@ -35,7 +39,4 @@ public class Estudiante {
         this.nombre = nombre;
     }
 
-
-  
-  
 }
