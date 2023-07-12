@@ -2,12 +2,99 @@
  *
  * @author joshz
  */
+import java.util.ArrayList;
 import modelo.*;
 import java.util.Scanner;
+
 public class main {
+    static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<TerminoAcademico>();    
+    static int añoActual = 2023;
+    static Scanner sc = new Scanner(System.in);
+    static TerminoAcademico terminoJuego;
+    
+    /**
+     * Pedir datos para obtener un término académico
+     * @return 
+     */
+    public static TerminoAcademico getTerminoConsole(){
+        // Pedir al usuario el año del término académico
+        System.out.println("Ingresar el año del término académico (yyyy)");
+        int añoTer = sc.nextInt();
+        sc.nextLine();
+
+        // Pedir al usuario el número del término académico
+        System.out.println("Ingresar el número del término académico (e.g. 1)");
+        int numTer = sc.nextInt();
+        sc.nextLine();
+        
+        return new TerminoAcademico(numTer, añoTer);
+    }
+    /**
+     * Pedir datos para obtener un índice de término académico existente
+     * @return 
+     */
+    public static int setIndiceConsole(){
+        // Indice del termino académico
+        int indTer = -1;
+        
+        do{
+            // Hallar el índice de el término académico
+            indTer = terminosAcademicos.indexOf(getTerminoConsole());
+            
+            if (indTer == -1){
+                // Pedir al usuario una entrada de no existir el término académico
+                System.out.println("Ingresar un término académico existente");
+            }
+        }while(indTer == -1);
+        
+        return indTer;
+    }
+    /**
+     * Pedir datos para modificar número o año de término académico
+     */
+    public static void setAtributosConsole(){
+        // Pedir datos para obtener índice
+        int indTer = setIndiceConsole();
+        
+        // Pedir al usuario qué dato desea modificar
+        System.out.println("¿Qué desea modificar? (numero/año)");
+        String input = sc.nextLine();
+
+        // Modificar de acuerdo sea el caso
+        switch(input){
+            case "numero" -> {
+                // Pedir al usuario el número por el cual se va modificar
+                System.out.println("Indicar el número (e.g. 1)");
+                int numNew = sc.nextInt();
+                sc.nextLine();
+                // Modificar el número
+                terminosAcademicos.get(indTer).setNumTermino(numNew);
+            }
+            case "año" -> {
+                // Pedir el año por el cual se va modificar
+                System.out.println("Indicar el año (yyyy)");
+                int añoNew = sc.nextInt();
+                sc.nextLine();
+                // Modificar el año
+                terminosAcademicos.get(indTer).setAñoTermino(añoNew);
+            }
+                
+        }
+
+    }
+    /**
+     * Pedir datos para asignar el termino académico de un nuevo juego
+     */
+    public void setTerminoJuegoConsole(){        
+        // Pedir los datos del término para buscar su índice en la lista
+        int indTermino = setIndiceConsole();
+        // Asignar el término para el juego
+        terminoJuego = terminosAcademicos.get(indTermino); 
+    }
+    
+    
     public static int menu(){
         String menu = "Menú\n1) Configuraciones\n2) Nuevo Juego\n3) Reporte\n4) Salir";
-        Scanner sc = new Scanner(System.in);
         int opcionmenu;
         do{
             System.out.println(menu);
@@ -96,6 +183,9 @@ public class main {
         return opcionpreguntas;
     }
     public static void main(String[] args) {
+        
+        terminosAcademicos.add(new TerminoAcademico(1,añoActual));
+        
         int opcionprincipal=0;
         while (opcionprincipal!=4){
             opcionprincipal=menu();

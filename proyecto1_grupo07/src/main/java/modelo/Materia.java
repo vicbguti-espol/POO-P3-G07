@@ -5,8 +5,7 @@ public class Materia {
     private String codigo;
     private String nombre;
     private int cantNiveles;
-
-    public static ArrayList<Materia> materias=new ArrayList<Materia>();
+    public static ArrayList<Materia> materias;
 
 
 
