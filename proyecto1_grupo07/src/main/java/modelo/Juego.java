@@ -43,9 +43,9 @@ public class Juego {
     public Juego(Materia materia, Paralelo paralelo, int matriculaParticipante,
             int matriculaApoyo, int n, String f){
         setPreguntas(materia); // Asignar preguntas por materia
-        asignarEstudiante(paralelo, matriculaParticipante,
+        setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.PARTICIPANTE); // Asignar participante
-        asignarEstudiante(paralelo, matriculaParticipante,
+        setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.APOYO); // Asignar support
         fecha = f; // Asignar fecha
         nPreguntasPerLvl = n; // Set n preguntas por nivel
@@ -55,7 +55,7 @@ public class Juego {
      * Setting de preguntas a partir de una materia
      * @param materia 
      */
-    public void setPreguntas(Materia materia){
+    private void setPreguntas(Materia materia){
         // Iterar la lista de preguntas estáticas
         for (Pregunta p: Pregunta.getPreguntas()){ 
             // Verificar materias iguales
@@ -72,7 +72,7 @@ public class Juego {
      * @param matricula
      * @param tipo 
      */
-    public void setEstudiante(Paralelo paralelo, int matricula,
+    private void setEstudiante(Paralelo paralelo, int matricula,
             TipoEstudiante tipo){
         // Obtener lista de estudiantes en el paralelo
         ArrayList<Estudiante> estudiantes = paralelo.getEstudiantes();
@@ -143,21 +143,24 @@ public class Juego {
      * @param n
      * @return 
      */
-    public Map<Integer, ArrayList<Pregunta>> getPreguntasByLevel(int n){
+    private Map<Integer, ArrayList<Pregunta>> getPreguntasByLevel(int n){
         Map<Integer, ArrayList<Pregunta>> chosen = new TreeMap<>();
         // Obtener map de preguntasPorNivel
         Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel();
         
         
         for (Map.Entry<Integer, ArrayList<Pregunta>> entry: preguntasPerLvl.entrySet()){
-            if (p.size() < n){
-                Collections.shuffle(p);
-                for (int i = 0; i < n; i++){
-                    chosen.put(p.get(i));
-                } 
-            }else{
-                chosen = null;
+            ArrayList<Pregunta> nPreguntasNivel = new ArrayList<Pregunta>();    
+            // Obtener la lista de preguntas del nivel 
+            ArrayList<Pregunta> preguntasNivel = entry.getValue();
+            Collections.shuffle(preguntasNivel); // Shuffle de preguntas
+            
+            for (int i = 0; i < n; i++){
+                // Agregar pregunta a nPreguntasNivel
+                nPreguntasNivel.add(preguntasNivel.get(i));
             }
+            chosen.put(n, nPreguntasNivel);
+        
         }
         return chosen;
     }
@@ -167,9 +170,9 @@ public class Juego {
      * @param opcionPregunta
      * @return 
      */
-    public String obtenerKeyRespuestaCorrecta(Map<String, Respuesta> opcionPregunta){
+    private String obtenerKeyRespuestaCorrecta(Map<String, Respuesta> opcionPregunta){
         for (Map.Entry<String, Respuesta> mapEntry: opcionPregunta.entrySet()){
-            Respuesta value = mapEntry.getValue(); 
+            Respuesta value = mapEntry.getValue(); // Obtener valor de map
             if (value != null && value.getTipo().equals(TipoRespuesta.CORRECTA)){
                 return mapEntry.getKey();
             }
@@ -177,24 +180,32 @@ public class Juego {
         return null;
     }
     
+    /**
+     * Método encargado de la funcionalidad principal del juego
+     */
     public void visualizarPreguntas(){
         
         // Obtener preguntas por nivel
-        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel();
-        // Valor booleano para terminar el juego
-        boolean end = false;
+        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel(nPreguntasPerLvl);
+       // Decalar input para recibir respuesta 
+       String input = "";
+       // Decalar el último literalCorrecto seleccionado
+       String literalCorrecto = "";
+       
+       Iterator<Map.Entry<Integer, ArrayList<Pregunta>>> it = preguntasPerLvl.entrySet().iterator();
         // Iterar el map de preguntas por nivel
-        for (Map.Entry<Integer, ArrayList<Pregunta>> entry: preguntasPerLvl.entrySet()){
-            ArrayList<Pregunta> nPreguntas = getPreguntasByLevel(nPreguntasPerLvl);
+        while ((it.hasNext()) &&  (input.equalsIgnoreCase(literalCorrecto))){
+            Map.Entry<Integer, ArrayList<Pregunta>> entry = (Map.Entry) it;
             // Obtener las preguntas del nivel
             ArrayList<Pregunta> preguntas = entry.getValue(); 
             // Shuffle el ArrayList de las preguntas
             Collections.shuffle(preguntas); 
+            // Nivel de pregunta
+            lvlMax = entry.getKey();
             // Mostrar por pantalla el nivel en que se encuentra
-            System.out.println("Nivel" + entry.getKey());
+            System.out.println("Nivel" + lvlMax);
             
-            if (!end){
-                int stop = 0;
+            do{
                 for (Pregunta p: preguntas){
                 // Obtener las respuestas de la pregunta
                 ArrayList<Respuesta> respuestas = p.getRespuestas();
@@ -220,7 +231,7 @@ public class Juego {
                 
                 // Solicitar al usuario su respuesta a la pregunta
                 System.out.println("Ingresar opcion válida (S)");
-                String input = sc.nextLine();
+                input = sc.nextLine();
                 
                 String comodin = "";
                 
@@ -245,26 +256,12 @@ public class Juego {
                 }
                 
                 // Obtener literal correcto
-                String literalCorrecto = obtenerKeyRespuestaCorrecta(opcionPregunta);
-                
+                literalCorrecto = obtenerKeyRespuestaCorrecta(opcionPregunta);
+                }
                 if (input.equalsIgnoreCase(literalCorrecto)){
-                    // Aumentar el número de preguntas contestadas
-                    nPreguntasContestadas++;
-                    stop++;
-                } else{
-                    end = true;
+                    nPreguntasContestadas++; // Aumentar de responder correctamente
                 }
-                
-                if (stop == nPreguntasPerLvl){
-                    // De alcanzar las preguntas por nivel se continúa al siguiente nivel
-                    break; 
-                }
-                }
-            } else{
-                break;
+            }while(input.equalsIgnoreCase(literalCorrecto));
             }
-            
         }
-        
     }
-}
