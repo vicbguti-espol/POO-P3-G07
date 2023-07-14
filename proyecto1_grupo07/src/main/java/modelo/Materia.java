@@ -5,30 +5,31 @@ public class Materia {
     private String codigo;
     private String nombre;
     private int cantNiveles;
+    public static ArrayList<Materia> materias;
 
-    public static ArrayList<Materia> materias=new ArrayList<Materia>();
 
-    Scanner sc = new Scanner(System.in);
 
-    Materia(String c, String n, int cantidad){
-        this.codigo=c;
-        this.nombre=n;
+    public Materia(String codigo, String nombre, int cantidad){
+        this.codigo=codigo;
+        this.nombre=nombre;
         this.cantNiveles=cantidad;
     }
 
-    public void ingresarMateria(String c, String n, int cantidad){
+    public static void ingresarMateria(){
+        Scanner sc = new Scanner(System.in);
+
         System.out.println("Ingrese el codigo de la materia");
-        codigo=sc.nextLine();
+        String codigo=sc.nextLine();
 
         System.out.println("Ingrese el nombre de la materia");
-        nombre=sc.nextLine();
+        String nombre=sc.nextLine();
 
         System.out.println("Ingrese la cantidad de niveles de la materia");
-        cantNiveles=sc.nextInt();
+        int cantNiveles=sc.nextInt();
         sc.nextLine();
 
         materias.add(new Materia(codigo,nombre,cantNiveles));
-         
+        
     }
 
     public String getCodigo(){
@@ -37,69 +38,97 @@ public class Materia {
     public String getNombre(){
         return nombre;
     }
-    public setNombre(String n){
+    public void setNombre(String n){
         this.nombre=n;
     }
-    public setCantNiveles(int c){
+    public void setCantNiveles(int c){
         this.cantNiveles=c;
     }
     public int getCantNiveles(){
         return cantNiveles;
     }
 
-    public void eliminarMateria(){
+    public static void eliminarMateria(){
+        Scanner sc = new Scanner(System.in);
+
         for (Materia m: materias){
-            System.out.println((materias.indexOf(m)+1)+". "+m.getCodigo()+" "+m.getNombre());
+            System.out.println((materias.indexOf(m)+1)+". "+m.toString());
         }
+
         System.out.println("Ingrese codigo o indice de materia a eliminar");
         if(sc.hasNextInt()){
             int indice=sc.nextInt();
             materias.remove(indice-1);
         }
+
         else if(sc.hasNextLine()){
             String cmateriaeliminar=sc.nextLine();
             Materia i=verificarExistencia(cmateriaeliminar);
-            materias.remove(i);
-        }else{
-            System.out.println("Ingreso invalido");
+            materias.remove(materias.indexOf(i));
         }
     }
 
     public static Materia verificarExistencia(String c){
         for(Materia i: Materia.materias){
-        if (i.getCodigo().equals(c)){
-            return i;
+            if (i.getCodigo().equals(c)){
+                return i;
+            }
         }
-        else{
-            System.out.println("Materia no encontrada");
-        }
-        }
+        System.out.println("Materia no encontrada");
         return null;
     }
     
-    public void editarMateria(Materia x){
+    public static void editarMateria(){
+        Scanner sc = new Scanner(System.in);
+
         for (Materia m: materias){
             System.out.println((materias.indexOf(m)+1)+". "+m.getCodigo()+" "+m.getNombre());
         }
-        System.out.println("Ingrese el codigo o indice de la materia a editar");
-        if(sc.hasNextInt()){
-            System.out.println("Ingrese el nuevo nombre de la materia");
-            materias.get(sc.nextInt()).setNombre(sc.nextLine());
 
-            System.out.println("Ingrese la nueva cantidad de niveles de la materia");
-            materias.get(sc.nextInt()).setCantNiveles(sc.nextInt());
-        }
-        else if(sc.hasNextLine()){
-            Materia m=sc.nextLine().verificarExistencia();
+        System.out.println("Ingrese el codigo o indice de la materia a editar");
+
+        if(sc.hasNextInt()){
+            Materia m = materias.get(sc.nextInt()-1);
+            sc.nextLine();
+
             System.out.println("Ingrese el nuevo nombre de la materia");
             m.setNombre(sc.nextLine());
 
             System.out.println("Ingrese la nueva cantidad de niveles de la materia");
             m.setCantNiveles(sc.nextInt());
-        }else{
-            System.out.println("Ingreso invalido");
+            sc.nextLine();
+        }
+        else if(sc.hasNextLine()){
+            Materia m=verificarExistencia(sc.nextLine());
+
+            System.out.println("Ingrese el nuevo nombre de la materia");
+            m.setNombre(sc.nextLine());
+
+            System.out.println("Ingrese la nueva cantidad de niveles de la materia");
+            m.setCantNiveles(sc.nextInt());
+            sc.nextLine();
         }
         
     }
+    public String toString(){
+        return "Materia con codigo "+codigo+", nombre "+nombre+", tiene "+cantNiveles+" niveles.";
 
+    }
+    //test, borrar
+    public static void main(String[] args) {
+        materias.add(new Materia("0001","FP",3));
+        materias.add(new Materia("0002","FEM",2));
+        materias.add(new Materia("0003","CYS",4));
+        materias.add(new Materia("0004","ARP",1));
+        materias.add(new Materia("0005","CVV",2));
+        materias.add(new Materia("0006","FM",5));
+        //ingresarMateria();
+        //eliminarMateria();
+        //System.out.println(verificarExistencia(sc.nextLine()).toString());
+        for(Materia m: materias){
+            System.out.println(m.toString());
+        }
+
+    }
+    //Implementar equals pedido por Victor
 }

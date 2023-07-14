@@ -13,6 +13,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -28,15 +29,33 @@ public class Juego {
     private int nPreguntasContestadas;
     private ArrayList<Comodin> comodinesUtilizados;
     
-    public Juego(Materia materia, Paralelo paralelo, int matriculaParticipante, int matriculaApoyo, int nPreguntasPerLvl){
-        asignarPreguntas(materia);
-        asignarEstudiante(paralelo, matriculaParticipante, TipoEstudiante.PARTICIPANTE);
-        asignarEstudiante(paralelo, matriculaParticipante, TipoEstudiante.APOYO);
-        fecha = "dd-mm-yyyy";
-        this.nPreguntasPerLvl = nPreguntasPerLvl;
+    // Instanciar scanner
+    static Scanner sc = new Scanner(System.in);
+    
+    /**
+     * Constructor de clase
+     * @param materia
+     * @param paralelo
+     * @param matriculaParticipante
+     * @param matriculaApoyo
+     * @param nPreguntasPerLvl 
+     */
+    public Juego(Materia materia, Paralelo paralelo, int matriculaParticipante,
+            int matriculaApoyo, int n, String f){
+        setPreguntas(materia); // Asignar preguntas por materia
+        setEstudiante(paralelo, matriculaParticipante,
+                TipoEstudiante.PARTICIPANTE); // Asignar participante
+        setEstudiante(paralelo, matriculaParticipante,
+                TipoEstudiante.APOYO); // Asignar support
+        fecha = f; // Asignar fecha
+        nPreguntasPerLvl = n; // Set n preguntas por nivel
     }
     
-    public void asignarPreguntas(Materia materia){
+    /**
+     * Setting de preguntas a partir de una materia
+     * @param materia 
+     */
+    private void setPreguntas(Materia materia){
         // Iterar la lista de preguntas estáticas
         for (Pregunta p: Pregunta.getPreguntas()){ 
             // Verificar materias iguales
@@ -46,41 +65,63 @@ public class Juego {
         }
     }
     
-    public void asignarEstudiante(Paralelo paralelo, int matricula, TipoEstudiante tipo){
+    /**
+     * Establecer el valor de participante o apoyo entre estudiantes de un mismo
+     * paralelo y a partir de la matrícula que este tenga. (0) random
+     * @param paralelo
+     * @param matricula
+     * @param tipo 
+     */
+    private void setEstudiante(Paralelo paralelo, int matricula,
+            TipoEstudiante tipo){
         // Obtener lista de estudiantes en el paralelo
         ArrayList<Estudiante> estudiantes = paralelo.getEstudiantes();
-            
+        // Obtener un índice random
+        int random_index = (int)(Math.random() * estudiantes.size());
+        
+        Estudiante lastStudent = null;
+        TipoEstudiante tp = TipoEstudiante.PARTICIPANTE;
+        TipoEstudiante ts = TipoEstudiante.APOYO;
+        
         if (matricula != 0){
-            for (Estudiante e: estudiantes){
-                int mat = e.getMatricula();
-                if (mat == matricula){
-                    if (tipo.equals(TipoEstudiante.PARTICIPANTE)){
-                        // Asignar participante de tener matrícula
-                        participante = e; 
-                    }
-                    else if (tipo.equals(TipoEstudiante.APOYO)){
-                        // Asignar apoyo de tener matrícula
-                        apoyo = e; 
-                    }
-                    break;
+            // Matrícula variable al iterar
+            int matIte = -1;
+
+            // Definir iterator para el ArrayList estudiantes
+            Iterator<Estudiante> it = estudiantes.iterator();
+
+            // Asignar la siguiente matrícula en lista a matIte
+            while ((matIte != matricula) && (it.hasNext())){
+                lastStudent = it.next();
+                matIte = lastStudent.getMatricula();
+            }
+            
+            if (!(matricula == matIte)){
+                matricula = 0; // De no encontrar matricula pasar a random
+            } else{ // Asignar participante o apoyo en caso de existir matrícula
+                if (tipo.equals(tp)){
+                    participante = lastStudent; 
+                } else if(tipo.equals(ts)){
+                    apoyo = lastStudent;
                 }
             }
-        } else{
-            // Obtener un índice random
-            int random_index = (int)(Math.random() * estudiantes.size());
-            if (tipo.equals(TipoEstudiante.PARTICIPANTE)){
-                        // Asignar participante random de no tener matrícula
-                        participante = estudiantes.get(random_index); 
-            }
-            
-            else if (tipo.equals(TipoEstudiante.APOYO)){
-                        // Asignar apoyo de tener matrícula
-                        apoyo = estudiantes.get(random_index); 
-                    }
+        }
+        
+        
+        if ((matricula == 0) && (tipo.equals(tp))){
+            // Asignar participante random de no tener matrícula
+            participante = estudiantes.get(random_index);
+        } else if ((matricula == 0) && (tipo.equals(ts))){
+            // Asignar apoyo de tener matrícula
+            apoyo = estudiantes.get(random_index); 
         }
     }
     
-    private Map<Integer, ArrayList<Pregunta>> obtenerPreguntasPorNivel(){
+    /**
+     * Obtener preguntas organizadas por nivel en un map
+     * @return 
+     */
+    private Map<Integer, ArrayList<Pregunta>> getPreguntasByLevel(){
         // Crear un hashmap con contadores por niveles
         Map<Integer, ArrayList<Pregunta>> m = new TreeMap<>();
         
@@ -97,18 +138,31 @@ public class Juego {
         return m;
     }
     
-    public boolean verificarNumeroPreguntasPerLevelValido(int n){
+    /**
+     * Devolver n preguntas por nivel
+     * @param n
+     * @return 
+     */
+    private Map<Integer, ArrayList<Pregunta>> getPreguntasByLevel(int n){
+        Map<Integer, ArrayList<Pregunta>> chosen = new TreeMap<>();
         // Obtener map de preguntasPorNivel
-        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = obtenerPreguntasPorNivel();
+        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel();
         
-        for (ArrayList<Pregunta> p: preguntasPerLvl.values()){
-            if (p.size() < n){
-                // Retornar falso en caso de no haber la cantidad requerida 
-                // de preguntas en todos los niveles
-                return false; 
+        
+        for (Map.Entry<Integer, ArrayList<Pregunta>> entry: preguntasPerLvl.entrySet()){
+            ArrayList<Pregunta> nPreguntasNivel = new ArrayList<Pregunta>();    
+            // Obtener la lista de preguntas del nivel 
+            ArrayList<Pregunta> preguntasNivel = entry.getValue();
+            Collections.shuffle(preguntasNivel); // Shuffle de preguntas
+            
+            for (int i = 0; i < n; i++){
+                // Agregar pregunta a nPreguntasNivel
+                nPreguntasNivel.add(preguntasNivel.get(i));
             }
+            chosen.put(n, nPreguntasNivel);
+        
         }
-        return true;
+        return chosen;
     }
     
     /**
@@ -116,9 +170,9 @@ public class Juego {
      * @param opcionPregunta
      * @return 
      */
-    public String obtenerKeyRespuestaCorrecta(Map<String, Respuesta> opcionPregunta){
+    private String obtenerKeyRespuestaCorrecta(Map<String, Respuesta> opcionPregunta){
         for (Map.Entry<String, Respuesta> mapEntry: opcionPregunta.entrySet()){
-            Respuesta value = mapEntry.getValue(); 
+            Respuesta value = mapEntry.getValue(); // Obtener valor de map
             if (value != null && value.getTipo().equals(TipoRespuesta.CORRECTA)){
                 return mapEntry.getKey();
             }
@@ -126,24 +180,32 @@ public class Juego {
         return null;
     }
     
+    /**
+     * Método encargado de la funcionalidad principal del juego
+     */
     public void visualizarPreguntas(){
-        // Instanciar scanner
-        Scanner sc = new Scanner(System.in);
+        
         // Obtener preguntas por nivel
-        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = obtenerPreguntasPorNivel();
-        // Valor booleano para terminar el juego
-        boolean end = false;
+        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel(nPreguntasPerLvl);
+       // Decalar input para recibir respuesta 
+       String input = "";
+       // Decalar el último literalCorrecto seleccionado
+       String literalCorrecto = "";
+       
+       Iterator<Map.Entry<Integer, ArrayList<Pregunta>>> it = preguntasPerLvl.entrySet().iterator();
         // Iterar el map de preguntas por nivel
-        for (Map.Entry<Integer, ArrayList<Pregunta>> entry: preguntasPerLvl.entrySet()){
+        while ((it.hasNext()) &&  (input.equalsIgnoreCase(literalCorrecto))){
+            Map.Entry<Integer, ArrayList<Pregunta>> entry = (Map.Entry) it;
             // Obtener las preguntas del nivel
             ArrayList<Pregunta> preguntas = entry.getValue(); 
             // Shuffle el ArrayList de las preguntas
             Collections.shuffle(preguntas); 
+            // Nivel de pregunta
+            lvlMax = entry.getKey();
             // Mostrar por pantalla el nivel en que se encuentra
-            System.out.println("Nivel" + entry.getKey());
+            System.out.println("Nivel" + lvlMax);
             
-            if (!end){
-                int stop = 0;
+            do{
                 for (Pregunta p: preguntas){
                 // Obtener las respuestas de la pregunta
                 ArrayList<Respuesta> respuestas = p.getRespuestas();
@@ -169,7 +231,7 @@ public class Juego {
                 
                 // Solicitar al usuario su respuesta a la pregunta
                 System.out.println("Ingresar opcion válida (S)");
-                String input = sc.nextLine();
+                input = sc.nextLine();
                 
                 String comodin = "";
                 
@@ -194,25 +256,12 @@ public class Juego {
                 }
                 
                 // Obtener literal correcto
-                String literalCorrecto = obtenerKeyRespuestaCorrecta(opcionPregunta);
-                
+                literalCorrecto = obtenerKeyRespuestaCorrecta(opcionPregunta);
+                }
                 if (input.equalsIgnoreCase(literalCorrecto)){
-                    // Aumentar el número de preguntas contestadas
-                    nPreguntasContestadas++;
-                    stop++;
-                } else{
-                    end = true;
+                    nPreguntasContestadas++; // Aumentar de responder correctamente
                 }
-                
-                if (stop == nPreguntasPerLvl){
-                    break;
-                }
-                }
-            } else{
-                break;
+            }while(input.equalsIgnoreCase(literalCorrecto));
             }
-            
         }
-        
     }
-}
