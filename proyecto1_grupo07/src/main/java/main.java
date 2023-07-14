@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import modelo.*;
 import java.util.Scanner;
 
-public class main {
-    static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<TerminoAcademico>();    
+public class main {    
     static int añoActual = 2023;
-    static Scanner sc = new Scanner(System.in);
     static TerminoAcademico terminoJuego;
     
     /**
@@ -18,6 +16,7 @@ public class main {
      */
     public static TerminoAcademico getTerminoConsole(){
         // Pedir al usuario el año del término académico
+        Scanner sc = new Scanner(System.in);
         System.out.println("Ingresar el año del término académico (yyyy)");
         int añoTer = sc.nextInt();
         sc.nextLine();
@@ -36,7 +35,6 @@ public class main {
     public static int setIndiceConsole(){
         // Indice del termino académico
         int indTer = -1;
-        
         do{
             // Hallar el índice de el término académico
             indTer = terminosAcademicos.indexOf(getTerminoConsole());
@@ -54,6 +52,7 @@ public class main {
      */
     public static void setAtributosConsole(){
         // Pedir datos para obtener índice
+        Scanner sc = new Scanner(System.in);
         int indTer = setIndiceConsole();
         
         // Pedir al usuario qué dato desea modificar
@@ -91,10 +90,43 @@ public class main {
         // Asignar el término para el juego
         terminoJuego = terminosAcademicos.get(indTermino); 
     }
-    
-    
+    public static void ingresarMateria(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el codigo de la materia");
+        String codigo=sc.nextLine();
+
+        System.out.println("Ingrese el nombre de la materia");
+        String nombre=sc.nextLine();
+
+        System.out.println("Ingrese la cantidad de niveles de la materia");
+        int cantNiveles=sc.nextInt();
+        sc.nextLine();
+        Materia m =new Materia(codigo,nombre,cantNiveles);
+        materias.add(m);
+        
+    }
+    public static Pregunta ingresarPregunta(){
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Ingresar el codigo de la materia");
+    Materia mat = Materia.verificarExistencia(sc.nextLine());
+    int n;
+    do{
+        System.out.println("Ingresar el nivel de dificultad");
+        n = sc.nextInt();
+        sc.nextLine();
+    }while(n < 1 || n > mat.getCantNiveles());
+    System.out.println("Ingresar el texto de la pregunta");
+    String pregunta = sc.nextLine();
+    return new Pregunta(pregunta,n,mat);
+}
+    public static int eliminarPregunta(){
+      Scanner sc = new Scanner(System.in);
+      System.out.println("Ingrese el numero de pregunta que desea eliminar");
+      return sc.nextInt()-1);
+  }
     public static int menu(){
         String menu = "Menú\n1) Configuraciones\n2) Nuevo Juego\n3) Reporte\n4) Salir";
+        Scanner sc = new Scanner(System.in);
         int opcionmenu;
         do{
             System.out.println(menu);
@@ -183,7 +215,36 @@ public class main {
         return opcionpreguntas;
     }
     public static void main(String[] args) {
-        
+        ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>();
+        ArrayList<Materia> materias = new ArrayList<>();
+        // Elementos default para probar el codigo
+        materias.add(new Materia("0001","FP",3));
+        materias.add(new Materia("0002","FEM",2));
+        materias.add(new Materia("0003","CYS",4));
+        materias.add(new Materia("0004","ARP",1));
+        materias.add(new Materia("0005","CVV",2));
+        materias.add(new Materia("0006","FM",5));
+        //Lista de preguntas
+        ArrayList<Pregunta> preguntas= new ArrayList<>();
+        //Pregunta 1 de prueba
+        ArrayList<Respuesta> respuestas1 = new ArrayList<>();
+        respuestas1.add(new Respuesta("4",TipoRespuesta.CORRECTA));
+        respuestas1.add(new Respuesta("5",TipoRespuesta.INCORRECTA));
+        respuestas1.add(new Respuesta("0",TipoRespuesta.INCORRECTA));
+        respuestas1.add(new Respuesta("22",TipoRespuesta.INCORRECTA));
+        //Pregunta 2 de prueba
+        ArrayList<Respuesta> respuestas2 = new ArrayList<>();
+        respuestas2.add(new Respuesta("4",TipoRespuesta.INCORRECTA));
+        respuestas2.add(new Respuesta("-2",TipoRespuesta.CORRECTA));
+        respuestas2.add(new Respuesta("0",TipoRespuesta.INCORRECTA));
+        respuestas2.add(new Respuesta("22",TipoRespuesta.INCORRECTA));
+        Pregunta p1= new Pregunta("Cuanto es 2+2?",1,Materia.verificarExistencia("0006"));
+        Pregunta p2= new Pregunta("Cuanto es 10-12?",2,Materia.verificarExistencia("0006"));
+        p1.setRespuestas(respuestas1);
+        p2.setRespuestas(respuestas2);
+        preguntas.add(p1);
+        preguntas.add(p2);
+        ////////////////////////////////
         terminosAcademicos.add(new TerminoAcademico(1,añoActual));
         
         int opcionprincipal=0;
@@ -233,6 +294,10 @@ public class main {
                     }else if(opcionpreguntas==2){
                         //Código para Agregar Preguntas
                     System.out.println("Eligió Agregar pregunta");
+                    
+                    Pregunta p = ingresarPregunta();
+                    p.ingresarRespuestas();
+                    
                     }else if(opcionpreguntas==3){
                         //Código para Eliminar pregunta
                     System.out.println("Eligió Eliminar Pregunta");

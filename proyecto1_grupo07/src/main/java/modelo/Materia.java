@@ -5,31 +5,11 @@ public class Materia {
     private String codigo;
     private String nombre;
     private int cantNiveles;
-    public static ArrayList<Materia> materias;
-
-
-
+    
     public Materia(String codigo, String nombre, int cantidad){
         this.codigo=codigo;
         this.nombre=nombre;
         this.cantNiveles=cantidad;
-    }
-
-    public static void ingresarMateria(){
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Ingrese el codigo de la materia");
-        String codigo=sc.nextLine();
-
-        System.out.println("Ingrese el nombre de la materia");
-        String nombre=sc.nextLine();
-
-        System.out.println("Ingrese la cantidad de niveles de la materia");
-        int cantNiveles=sc.nextInt();
-        sc.nextLine();
-
-        materias.add(new Materia(codigo,nombre,cantNiveles));
-        
     }
 
     public String getCodigo(){
@@ -40,6 +20,9 @@ public class Materia {
     }
     public void setNombre(String n){
         this.nombre=n;
+    }
+    public void setCodigo(String c){
+        this.codigo=c;
     }
     public void setCantNiveles(int c){
         this.cantNiveles=c;
