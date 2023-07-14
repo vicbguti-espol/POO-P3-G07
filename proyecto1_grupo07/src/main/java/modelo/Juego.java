@@ -40,9 +40,10 @@ public class Juego {
      * @param matriculaApoyo
      * @param nPreguntasPerLvl 
      */
-    public Juego(Materia materia, Paralelo paralelo, int matriculaParticipante,
+    public Juego(Materia materia, ArrayList<Pregunta> preguntas, 
+            Paralelo paralelo, int matriculaParticipante,
             int matriculaApoyo, int n, String f){
-        setPreguntas(materia); // Asignar preguntas por materia
+        setPreguntas(materia, preguntas); // Asignar preguntas por materia
         setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.PARTICIPANTE); // Asignar participante
         setEstudiante(paralelo, matriculaParticipante,
@@ -55,9 +56,9 @@ public class Juego {
      * Setting de preguntas a partir de una materia
      * @param materia 
      */
-    private void setPreguntas(Materia materia){
+    private void setPreguntas(Materia materia, ArrayList<Pregunta> preguntas){
         // Iterar la lista de preguntas estáticas
-        for (Pregunta p: Pregunta.getPreguntas()){ 
+        for (Pregunta p: preguntas){ 
             // Verificar materias iguales
             if (p.getMateria().equals(materia)){
                 preguntas.add(p); // Agregar pregunta a preguntas

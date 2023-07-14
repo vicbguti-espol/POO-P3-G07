@@ -31,7 +31,7 @@ public class Materia {
         return cantNiveles;
     }
 
-    public static void eliminarMateria(){
+    public static void eliminarMateria(ArrayList<Materia> materias){
         Scanner sc = new Scanner(System.in);
 
         for (Materia m: materias){
@@ -46,13 +46,13 @@ public class Materia {
 
         else if(sc.hasNextLine()){
             String cmateriaeliminar=sc.nextLine();
-            Materia i=verificarExistencia(cmateriaeliminar);
+            Materia i=verificarExistencia(cmateriaeliminar, materias);
             materias.remove(materias.indexOf(i));
         }
     }
 
-    public static Materia verificarExistencia(String c){
-        for(Materia i: Materia.materias){
+    public static Materia verificarExistencia(String c, ArrayList<Materia> materias){
+        for(Materia i: materias){
             if (i.getCodigo().equals(c)){
                 return i;
             }
@@ -61,7 +61,7 @@ public class Materia {
         return null;
     }
     
-    public static void editarMateria(){
+    public static void editarMateria(ArrayList<Materia> materias){
         Scanner sc = new Scanner(System.in);
 
         for (Materia m: materias){
@@ -82,8 +82,7 @@ public class Materia {
             sc.nextLine();
         }
         else if(sc.hasNextLine()){
-            Materia m=verificarExistencia(sc.nextLine());
-
+            Materia m = verificarExistencia(sc.nextLine(), materias);
             System.out.println("Ingrese el nuevo nombre de la materia");
             m.setNombre(sc.nextLine());
 
@@ -97,21 +96,6 @@ public class Materia {
         return "Materia con codigo "+codigo+", nombre "+nombre+", tiene "+cantNiveles+" niveles.";
 
     }
-    //test, borrar
-    public static void main(String[] args) {
-        materias.add(new Materia("0001","FP",3));
-        materias.add(new Materia("0002","FEM",2));
-        materias.add(new Materia("0003","CYS",4));
-        materias.add(new Materia("0004","ARP",1));
-        materias.add(new Materia("0005","CVV",2));
-        materias.add(new Materia("0006","FM",5));
-        //ingresarMateria();
-        //eliminarMateria();
-        //System.out.println(verificarExistencia(sc.nextLine()).toString());
-        for(Materia m: materias){
-            System.out.println(m.toString());
-        }
 
-    }
     //Implementar equals pedido por Victor
 }

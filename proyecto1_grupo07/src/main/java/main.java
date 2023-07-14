@@ -30,9 +30,10 @@ public class main {
     }
     /**
      * Pedir datos para obtener un índice de término académico existente
+     * @param terminosAcademicos
      * @return 
      */
-    public static int setIndiceConsole(){
+    public static int setIndiceConsole(ArrayList<TerminoAcademico> terminosAcademicos){
         // Indice del termino académico
         int indTer = -1;
         do{
@@ -49,11 +50,12 @@ public class main {
     }
     /**
      * Pedir datos para modificar número o año de término académico
+     * @param terminosAcademicos
      */
-    public static void setAtributosConsole(){
+    public static void setAtributosConsole(ArrayList<TerminoAcademico> terminosAcademicos){
         // Pedir datos para obtener índice
         Scanner sc = new Scanner(System.in);
-        int indTer = setIndiceConsole();
+        int indTer = setIndiceConsole(terminosAcademicos);
         
         // Pedir al usuario qué dato desea modificar
         System.out.println("¿Qué desea modificar? (numero/año)");
@@ -84,13 +86,13 @@ public class main {
     /**
      * Pedir datos para asignar el termino académico de un nuevo juego
      */
-    public void setTerminoJuegoConsole(){        
+    public void setTerminoJuegoConsole(ArrayList<TerminoAcademico> terminosAcademicos){        
         // Pedir los datos del término para buscar su índice en la lista
-        int indTermino = setIndiceConsole();
+        int indTermino = setIndiceConsole(terminosAcademicos);
         // Asignar el término para el juego
         terminoJuego = terminosAcademicos.get(indTermino); 
     }
-    public static void ingresarMateria(){
+    public static void ingresarMateria(ArrayList<Materia> materias) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el codigo de la materia");
         String codigo=sc.nextLine();
@@ -105,24 +107,24 @@ public class main {
         materias.add(m);
         
     }
-    public static Pregunta ingresarPregunta(){
-    Scanner sc = new Scanner(System.in);
-    System.out.println("Ingresar el codigo de la materia");
-    Materia mat = Materia.verificarExistencia(sc.nextLine());
-    int n;
-    do{
-        System.out.println("Ingresar el nivel de dificultad");
-        n = sc.nextInt();
-        sc.nextLine();
-    }while(n < 1 || n > mat.getCantNiveles());
-    System.out.println("Ingresar el texto de la pregunta");
-    String pregunta = sc.nextLine();
-    return new Pregunta(pregunta,n,mat);
-}
+    public static Pregunta ingresarPregunta(ArrayList<Materia> materias){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingresar el codigo de la materia");
+        Materia mat = Materia.verificarExistencia(sc.nextLine(), materias);
+        int n;
+        do{
+            System.out.println("Ingresar el nivel de dificultad");
+            n = sc.nextInt();
+            sc.nextLine();
+        }while(n < 1 || n > mat.getCantNiveles());
+        System.out.println("Ingresar el texto de la pregunta");
+        String pregunta = sc.nextLine();
+        return new Pregunta(pregunta,n,mat);
+    }
     public static int eliminarPregunta(){
       Scanner sc = new Scanner(System.in);
       System.out.println("Ingrese el numero de pregunta que desea eliminar");
-      return sc.nextInt()-1);
+      return (sc.nextInt()-1);
   }
     public static int menu(){
         String menu = "Menú\n1) Configuraciones\n2) Nuevo Juego\n3) Reporte\n4) Salir";
@@ -215,15 +217,21 @@ public class main {
         return opcionpreguntas;
     }
     public static void main(String[] args) {
+        ArrayList<Paralelo> paralelos = new ArrayList();
+        ArrayList<Estudiante> estudiantesP3 = new ArrayList<>();
         ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>();
         ArrayList<Materia> materias = new ArrayList<>();
-        // Elementos default para probar el codigo
+
+        
+        materias.add(new Materia("CCPG1052", 
+                "PROGRAMACIÓN ORIENTADA A OBJETOS",2));
         materias.add(new Materia("0001","FP",3));
         materias.add(new Materia("0002","FEM",2));
         materias.add(new Materia("0003","CYS",4));
         materias.add(new Materia("0004","ARP",1));
         materias.add(new Materia("0005","CVV",2));
         materias.add(new Materia("0006","FM",5));
+        
         //Lista de preguntas
         ArrayList<Pregunta> preguntas= new ArrayList<>();
         //Pregunta 1 de prueba
@@ -238,12 +246,49 @@ public class main {
         respuestas2.add(new Respuesta("-2",TipoRespuesta.CORRECTA));
         respuestas2.add(new Respuesta("0",TipoRespuesta.INCORRECTA));
         respuestas2.add(new Respuesta("22",TipoRespuesta.INCORRECTA));
-        Pregunta p1= new Pregunta("Cuanto es 2+2?",1,Materia.verificarExistencia("0006"));
-        Pregunta p2= new Pregunta("Cuanto es 10-12?",2,Materia.verificarExistencia("0006"));
+        Pregunta p1= new Pregunta("Cuanto es 2+2?",1,
+                Materia.verificarExistencia("0006",materias));
+        Pregunta p2= new Pregunta("Cuanto es 10-12?",2,
+                Materia.verificarExistencia("0006",materias));
         p1.setRespuestas(respuestas1);
         p2.setRespuestas(respuestas2);
         preguntas.add(p1);
         preguntas.add(p2);
+        
+        terminosAcademicos.add(new TerminoAcademico(1,2023));
+        estudiantesP3.add(new Estudiante(202110136,
+                "maactorr@espol.edu.ec", 
+                "ACELDO TORRES MARIA GRAZIA"));
+        estudiantesP3.add(new Estudiante(202108643, 
+                "jcaguila@espol.edu.ec", 
+                "AGUILAR TINOCO JEAN CARLOS"));
+        estudiantesP3.add(new Estudiante(202111928, 
+                "jamorett@espol.edu.ec", 
+                "AMORETTI SANCHEZ JUAN CARLOS"));
+        estudiantesP3.add(new Estudiante(202105946, 
+                "angbeand@espol.edu.ec", 
+                "ANDRADE VELASCO ANGELLO BERNIE"));
+        estudiantesP3.add(new Estudiante(202211355, 
+                "dienarau@espol.edu.ec", 
+                "ARAUJO ORTEGA DIEGO ENZO JAVIER"));
+        estudiantesP3.add(new Estudiante(202104816, 
+                "nfazu@espol.edu.ec", 
+                "AZU PERLAZA NICOLE FERNANDA"));
+        estudiantesP3.add(new Estudiante(202110219, 
+                "ivagbald@espol.edu.ec", 
+                "BALDEON BAQUE IVAN GONZALO"));
+        estudiantesP3.add(new Estudiante(202113056, 
+                "melesbar@espol.edu.ec", 
+                "BARBERAN GALLARDO MELISSA ESTEFANIA"));
+        estudiantesP3.add(new Estudiante(202109328, 
+                "dmbasili@espol.edu.ec", 
+                "BASILIO ACEBO DANIELA MILENA"));
+        estudiantesP3.add(new Estudiante(202210712, 
+                "vicbguti@espol.edu.ec", 
+                "BORBOR GUTIERREZ VICTOR DANIEL"));
+        
+        paralelos.add(new Paralelo(3, materias.get(0), 
+                terminosAcademicos.get(0), estudiantesP3));
         ////////////////////////////////
         terminosAcademicos.add(new TerminoAcademico(1,añoActual));
         
@@ -295,7 +340,7 @@ public class main {
                         //Código para Agregar Preguntas
                     System.out.println("Eligió Agregar pregunta");
                     
-                    Pregunta p = ingresarPregunta();
+                    Pregunta p = ingresarPregunta(materias);
                     p.ingresarRespuestas();
                     
                     }else if(opcionpreguntas==3){

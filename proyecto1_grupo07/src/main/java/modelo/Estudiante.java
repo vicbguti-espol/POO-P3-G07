@@ -3,7 +3,7 @@ package modelo;
 import java.util.ArrayList;
 
 public class Estudiante {
-  private String matricula;
+  private int matricula;
   private String correo;
   private String nombre;
 
