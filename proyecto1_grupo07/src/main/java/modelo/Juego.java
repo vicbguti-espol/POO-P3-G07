@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,7 +16,6 @@ public class Juego {
     private int nPreguntasPerLvl;
     private String fecha;
     private int lvlMax;
-    private String tiempo;
     private int nPreguntasContestadas;
     private ArrayList<Comodin> comodinesUtilizados;
     
@@ -30,10 +30,10 @@ public class Juego {
      * @param matriculaApoyo
      * @param nPreguntasPerLvl 
      */
-    public Juego(Materia materia, ArrayList<Pregunta> preguntas, 
+    public Juego(Materia materia, ArrayList<Pregunta> preguntasMateria, 
             Paralelo paralelo, int matriculaParticipante,
             int matriculaApoyo, int n, String f){
-        setPreguntas(materia, preguntas); // Asignar preguntas por materia
+        preguntas = preguntasMateria; // Asignar preguntas por materia
         setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.PARTICIPANTE); // Asignar participante
         setEstudiante(paralelo, matriculaParticipante,
@@ -46,14 +46,17 @@ public class Juego {
      * Setting de preguntas a partir de una materia
      * @param materia 
      */
-    private void setPreguntas(Materia materia, ArrayList<Pregunta> preguntas){
+    public static ArrayList<Pregunta> getPreguntasMateria(Materia materia, 
+            ArrayList<Pregunta> pregs){
+        ArrayList<Pregunta> preguntasMaterias = new ArrayList<>();
         // Iterar la lista de preguntas estáticas
-        for (Pregunta p: preguntas){ 
+        for (Pregunta p: pregs){ 
             // Verificar materias iguales
             if (p.getMateria().equals(materia)){
-                preguntas.add(p); // Agregar pregunta a preguntas
+                preguntasMaterias.add(p); // Agregar pregunta a preguntas
             }
         }
+        return preguntasMaterias;
     }
     
     /**
@@ -112,7 +115,8 @@ public class Juego {
      * Obtener preguntas organizadas por nivel en un map
      * @return 
      */
-    private Map<Integer, ArrayList<Pregunta>> getPreguntasByLevel(){
+    public static Map<Integer, ArrayList<Pregunta>> getPreguntasByLevel(
+            ArrayList<Pregunta> preguntas){
         // Crear un hashmap con contadores por niveles
         Map<Integer, ArrayList<Pregunta>> m = new TreeMap<>();
         
@@ -137,7 +141,8 @@ public class Juego {
     private Map<Integer, ArrayList<Pregunta>> getPreguntasByLevel(int n){
         Map<Integer, ArrayList<Pregunta>> chosen = new TreeMap<>();
         // Obtener map de preguntasPorNivel
-        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel();
+        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = 
+                getPreguntasByLevel(preguntas);
         
         
         for (Map.Entry<Integer, ArrayList<Pregunta>> entry: preguntasPerLvl.entrySet()){
@@ -154,6 +159,38 @@ public class Juego {
         
         }
         return chosen;
+    }
+    
+    /**
+     * Método para obtener los tamaños de los arreglos de preguntas por nivel
+     * @param preguntas
+     * @return 
+     */
+    public static Map<Integer, Integer> getSizesByLvl(ArrayList<Pregunta> 
+            preguntas){
+        // Obtener Map de preguntas por nivel
+        Map<Integer, ArrayList<Pregunta>> pregByLvl = 
+                Juego.getPreguntasByLevel(preguntas);
+        // Decalar map de tamañanos de listas de preguntas por nivel
+        Map<Integer, Integer> sizesByLvl = new TreeMap<>();
+        // Iterar el map de preguntas por nivel
+        for (Map.Entry<Integer, ArrayList<Pregunta>> entry: 
+                pregByLvl.entrySet()){
+            // Agregar el tamaño del arreglo de preguntas por nivel
+            sizesByLvl.put(entry.getKey(),entry.getValue().size());
+        }
+        return sizesByLvl;
+    }
+    
+
+    public static int getMaxSize(ArrayList<Pregunta> preguntas){
+        // Obtener únicamente los tamaños de arreglos 
+        ArrayList<Integer> sizesByLvl = new ArrayList<>(
+                getSizesByLvl(preguntas).values());
+        // Ordenar los valores de tamaños
+        Collections.sort(sizesByLvl);
+        // Retornar el máximo de preguntas por nivel para el juego
+        return sizesByLvl.get(0);   
     }
     
     /**

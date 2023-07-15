@@ -8,23 +8,12 @@ public class Paralelo {
     private TerminoAcademico termino;
     private ArrayList<Estudiante> estudiantes;
 
-    public Paralelo(int numero, Materia materia, TerminoAcademico termino, ArrayList<Estudiante> estudiantes) {
+    public Paralelo(int numero, Materia materia, TerminoAcademico termino, 
+            ArrayList<Estudiante> estudiantes) {
         this.numero = numero;
         this.materia = materia;
         this.termino = termino;
         this.estudiantes = estudiantes;
-    }
-
-    static Scanner sc = new Scanner(System.in);
-   
-    
-
-    public static void eliminarParalelo(ArrayList<Paralelo> paralelos){
-        for(Paralelo p: paralelos){
-            System.out.println(paralelos.indexOf(p)+1+". "+p.toString());
-        }
-        System.out.println("Ingrese indice de paralelo a eliminar");
-        paralelos.remove(sc.nextInt()-1);
     }
 
     public int getnumero() {

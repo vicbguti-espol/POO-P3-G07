@@ -8,11 +8,12 @@ public class Pregunta {
     private Materia materia;
     private ArrayList<Respuesta> respuestas;
     
-    public Pregunta(String texto, int nivel, Materia materia) {
+    public Pregunta(String texto, int nivel, Materia materia,
+            ArrayList<Respuesta> respuestas) {
         this.texto = texto;
         this.nivel = nivel;
         this.materia = materia;
-        respuestas= new ArrayList<>();
+        this.respuestas = respuestas;
     }
 
     /**
@@ -57,7 +58,27 @@ public class Pregunta {
         respuestas=r;
     }
     
+    public static ArrayList<Pregunta> getPreguntasMateria(ArrayList<Pregunta>
+            preguntas, Materia materia){
+        // Declarar las preguntas de la materia
+        ArrayList<Pregunta> preguntasMateria = new ArrayList<>();
+        for (Pregunta p: preguntas){
+            if (p.getMateria().equals(materia)){
+                preguntasMateria.add(p);
+            }
+        }
+        return preguntasMateria;
+    }
+    
     public String toString(){
-        return " "+texto+ " con opciones de respuesta " + respuestas +" de nivel " +nivel+" pertenece a la materia "+materia.getNombre();
+        String pregunta = "Nivel: " + nivel + "\nPregunta:\n"+ texto + 
+                "\nOpciones de respuesta:\n";
+        // Shuffle de respuestas de la pregunta
+        Collections.shuffle(respuestas);
+        for (int i = 0; i < respuestas.size(); i++){
+            pregunta += (i+1) + ". " + respuestas.get(i) + "\n";
+        }
+        
+        return pregunta;
     }
 }

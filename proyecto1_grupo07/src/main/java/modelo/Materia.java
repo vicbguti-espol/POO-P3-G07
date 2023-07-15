@@ -30,26 +30,6 @@ public class Materia {
     public int getCantNiveles(){
         return cantNiveles;
     }
-
-    public static void eliminarMateria(ArrayList<Materia> materias){
-        Scanner sc = new Scanner(System.in);
-
-        for (Materia m: materias){
-            System.out.println((materias.indexOf(m)+1)+". "+m.toString());
-        }
-
-        System.out.println("Ingrese codigo o indice de materia a eliminar");
-        if(sc.hasNextInt()){
-            int indice=sc.nextInt();
-            materias.remove(indice-1);
-        }
-
-        else if(sc.hasNextLine()){
-            String cmateriaeliminar=sc.nextLine();
-            Materia i=verificarExistencia(cmateriaeliminar, materias);
-            materias.remove(materias.indexOf(i));
-        }
-    }
     
     @ Override
     public String toString(){

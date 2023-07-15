@@ -1,14 +1,11 @@
-/**
- *
- * @author joshz
- */
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import modelo.*;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class main {    
+public class Main {    
     static int añoActual = 2023;
     static TerminoAcademico terminoJuego;
     static Scanner sc = new Scanner(System.in);
@@ -130,7 +127,7 @@ public class main {
      */
     
     /**
-     * Pedir datos para ingresar una nueva materia
+     * Pedir datos para obtener una nueva materia
      * @param materias 
      */
     static Materia getMateriaConsole() {
@@ -165,8 +162,14 @@ public class main {
      * Pedir datos para modificar una materia
      * @param materias 
      */
-    static void setMateria(ArrayList<Materia> materias){
+    static void setMateriaConsole(ArrayList<Materia> materias){
         Map<Integer, Materia> mIndexadas = getMateriasIndexadas(materias);
+        
+        // Obtener una lista de codigos de las materias
+        ArrayList<String> codigos = new ArrayList<>();
+        for (Materia m: materias){
+            codigos.add(m.getCodigo());
+        }
         
         // Mostrar materias por índice
         separador();
@@ -178,6 +181,7 @@ public class main {
         
         System.out.println("Ingrese el codigo o indice de la materia a editar");
 
+        // Acoger el índice de la materia recibido
         if(sc.hasNextInt()){
             Materia m1 = mIndexadas.get(sc.nextInt()-1);
             sc.nextLine();
@@ -186,18 +190,26 @@ public class main {
             System.out.println("Ingrese el nuevo nombre de la materia");
             m2.setNombre(sc.nextLine());
 
-            System.out.println("Ingrese la nueva cantidad de niveles de la materia");
+            System.out.println("Ingrese la nueva cantidad de niveles de "
+                    + "la materia");
             m2.setCantNiveles(sc.nextInt());
             sc.nextLine();
         }
         else if(sc.hasNextLine()){
-            Materia m = getMateriaConsole();
-            // Comprobar la existencia de la materia en materias
-            while (!materias.contains(m)){
-                System.out.println("Ingresar una materia existente");
-                m = getMateriaConsole();
+            // Acoger el código
+            String codigo = sc.nextLine();
+            
+            // Validar la existencia del código 
+            while(!codigos.contains(codigo)){
+                System.out.println("Ingrese un código existente");
+                codigo = sc.nextLine();
             }
             
+            // Obtener el índice de la materia en codigos
+            int indCodigo = codigos.indexOf(codigo);
+            Materia m = materias.get(indCodigo);
+            
+            // Modificar nombre y cantidad de niveles de la materia
             System.out.println("Ingrese el nuevo nombre de la materia");
             m.setNombre(sc.nextLine());
 
@@ -207,52 +219,291 @@ public class main {
         }
         
     }
+    /**
+     * Obtener una materia por consola entre materias disponibles
+     * @param materias
+     * @return 
+     */
+    static Materia getMateriaConsole(ArrayList<Materia> materias){
+        // Dar opciones de materias existentes
+        visualizarMaterias(materias);
+        // Pedir al usuario ingresar el índice de la materia
+        System.out.println("Seleccionar el índice de la materia (e.g 0)");
+        int indMateria = sc.nextInt();
+        sc.nextLine();
+        // Obtener la materia por indexación
+        return materias.get(indMateria);
+    }
+    
+    /**
+     * Métodos de visualización
+     */
+    
+    /**
+     * Mostrar las materias disponibles
+     * @param materias 
+     */
+    static void visualizarMaterias(ArrayList<Materia> materias){
+        separador();
+        // Mostrar las materias indexadas
+        System.out.println("Materias disponibles");
+        int i;
+        for (i = 0; i < materias.size(); i++){
+            System.out.println(i + ". " + materias.get(i));
+        }
+        separador();
+    }
+    /**
+     * Mostrar los términos académicos disponibles
+     * @param paralelos 
+     */
+    static void visualizarTerminosAcademicos(ArrayList<TerminoAcademico> 
+            terminosAcademicos){
+        separador();
+        System.out.println("Términos académicos disponibles");
+        // Mostrar las materias indexadas
+        int i;
+        for (i = 0; i < terminosAcademicos.size(); i++){
+            System.out.println(i + ". " + terminosAcademicos.get(i));
+        }
+        separador();
+    }
+    /**
+     * Mostrar los paralelos disponibles
+     * @param paralelos 
+     */
+    static void visualizarParalelos(ArrayList<Paralelo> paralelos){
+        separador();
+        System.out.println("Paralelos disponibles");
+        // Mostrar las materias indexadas
+        int i;
+        for (i = 0; i < paralelos.size(); i++){
+            System.out.println(i + ". " + paralelos.get(i));
+        }
+        separador();
+        
+    }
+    /**
+     * Mostrar preguntas por materia
+     * @param preguntas
+     * @param m 
+     */
+    static void visualizarPreguntas(ArrayList<Pregunta> preguntasMateria){
+        separador();
+        // Indicar la materia de las preguntas
+        System.out.println("Preguntas de " + 
+                preguntasMateria.get(0).getMateria());
+        
+        // Mostrar preguntas indexadas
+        for (int i = 0; i < preguntasMateria.size(); i++){
+            System.out.println( "Índice: "  + (i+1) + "\n" +  
+                    preguntasMateria.get(i));
+        }
+        separador();
+        
+    }
     
     /**
      * Métodos para configuración de paralelos
      */
     
-    static Paralelo getParaleloConsole(){
-        // Obtener materia y término academico por consola
-        Materia m = getMateriaConsole();    
-        TerminoAcademico t = getTerminoConsole();
-        // Pedir por consola el número de paralelo
-        int n;
-        System.out.println("Ingresar el número del paralelo");
-        while(!sc.hasNextInt()){
-            System.out.println("Ingresar un número entero");
-            sc.next();
-        }
-        n = sc.nextInt();
+    /**
+     * Pedir datos para obtener un paralelo por consola
+     * @param materias
+     * @param terminosAcademicos
+     * @return 
+     */
+    static Paralelo getParaleloConsole(ArrayList<Materia> materias, 
+            ArrayList<TerminoAcademico> terminosAcademicos){
+        // Obtener una materia bajo indexación
+        Materia m = getMateriaConsole(materias);
         
+        // Dar opciones de paralelos existentes
+        visualizarTerminosAcademicos(terminosAcademicos);
+        // Pedir al usuario el índice del paralelo
+        System.out.println("Seleccionar el índice del término académico (e.g 1)");
+        TerminoAcademico t = terminosAcademicos.get(sc.nextInt());
+        sc.nextLine();
+        
+        // Pedir al usuario el número de paralelo
+        System.out.println("Ingresar el número de paralelo");
+        int n = sc.nextInt();
+        sc.nextLine();
+        
+        // Devolver el paralelo
         return new Paralelo(n, m, t, estudiantesP3);
     }
+    /**
+     * Obtener paralelo a partir de paralelos existentes
+     * @param paralelos
+     * @return 
+     */
+    static Paralelo getParaleloConsole(ArrayList<Paralelo> paralelos){
+        // Mostrar los paralelos disponibles
+        visualizarParalelos(paralelos);
+        // Pedir al usuario el paralelo a su elección
+        System.out.println("Ingresar el índice del paralelo (e.g. 0)");
+        return paralelos.get(sc.nextInt());
+    }
     
-    public static Pregunta ingresarPregunta(ArrayList<Materia> materias){
+    /**
+     * Métodos para administración de preguntas
+     */
+    /**
+     * Obtener una pregunta a partir de una entrada del usuario
+     * @param materias
+     * @return 
+     */
+    public static Pregunta getPreguntaConsole(ArrayList<Materia> materias){
         // Obtener materia por consola
-        Materia mat = getMateriaConsole();
-        int n;
+        Materia mat = getMateriaConsole(materias);
+        // Obtener el nivel máximo de la materia
+        int lvlMax = mat.getCantNiveles();
+        // Declarar el nivel de la pregunta
+        int n = 0;
+        // Declarar el ArrayList de las respuestas
+        ArrayList<Respuesta> respuestas = new ArrayList<>();
+        // Pedir al usuario un nivel apropiado al rango de cero al nivel máximo
         do{
-            System.out.println("Ingresar el nivel de dificultad");
+            System.out.println("Ingresar el nivel de dificultad de 0 a " + 
+                    lvlMax);
             n = sc.nextInt();
             sc.nextLine();
-        }while(n < 1 || n > mat.getCantNiveles());
-        System.out.println("Ingresar el texto de la pregunta");
+        }while(n < 1 || n > lvlMax);
+        // Pedir al usuario el ingreso de la pregunta
+        System.out.println("Ingresar el enunciado de la pregunta");
         String pregunta = sc.nextLine();
-        return new Pregunta(pregunta,n,mat);
+        // Pedir al usuario el ingreso de la respuesta correcta
+        System.out.println("Ingresar la respuesta correcta");
+        // Agregar respuesta correcta
+        respuestas.add(new Respuesta(sc.nextLine(), 
+                TipoRespuesta.CORRECTA));
+        // Pedir las tres posibles respuestas restantes
+        for (int i = 1; i < 4; i++){
+            System.out.println("Ingresar la respuesta posible " + i);
+            // Agregar la i-ésima respuesta posible
+            respuestas.add(new Respuesta(sc.nextLine(), 
+                TipoRespuesta.INCORRECTA));
+        }
+        return new Pregunta(pregunta,n,mat, respuestas);
     }
-    public static int eliminarPregunta(){
-      Scanner sc = new Scanner(System.in);
-      System.out.println("Ingrese el numero de pregunta que desea eliminar");
-      return (sc.nextInt()-1);
-  }
+    /**
+     * Obtener una pregunta a partir de seleccionar en preguntas existentes
+     * @param materias
+     * @param preguntas
+     * @return 
+     */
+    public static Pregunta getPreguntaConsole(ArrayList<Materia> materias, 
+        ArrayList<Pregunta> preguntas){
+            // Obtener materia por consola
+            Materia m = getMateriaConsole(materias);
+            // Obtener preguntas por materia
+            ArrayList<Pregunta> preguntasMateria = Pregunta.getPreguntasMateria(preguntas, 
+                      m);
+            // Mostrar las preguntas de la materia
+            visualizarPreguntas(preguntasMateria);
+            // Pedir al usuario el índice de la materia a eliminar
+            System.out.println("Indicar el índice de la pregunta");
+            int indPregunta = sc.nextInt() - 1;
+          return preguntasMateria.get(indPregunta);
+      }
+    
+    /**
+     * Métodos agregados para estudiante 
+     */
+    public static int getMatriculaConsole(Paralelo p, TipoEstudiante tp){
+        // Obtener el arreglo de estudiantes del paralelo
+        ArrayList<Estudiante> estudiantes = p.getEstudiantes();
+        separador();
+        // Mostrar el paralelo
+        System.out.println(p);
+        // Mostrar los estudiantes del paralelo
+        for (Estudiante e: estudiantes){
+            System.out.println(e);
+        }
+        separador();
+        // Pedir al usuario la manera de obtner el estudiante
+        System.out.println("Ingresar la matrícula del estudiante " + tp + " o "
+                + "cero (0) en caso de escoger a un "
+                + "estudiante aleatoriamente");
+        int matricula = sc.nextInt();
+        sc.nextLine();
+        return matricula;
+    }
+    
+    /**
+     * Métodos de juego
+     */
+    
+    /**
+     * Pedir al usuario la cantidad de preguntas por nivel adecuado a las 
+     * condiciones
+     * @param preguntas
+     * @return 
+     */
+    public static int getPreguntasPerLvlConsole(ArrayList<Pregunta> preguntas){
+        // Obtener la cantidad máxima alcanzable en todos los niveles
+        int maxPreguntas = Juego.getMaxSize(preguntas);
+        int preguntasPerLvl = 0;
+
+        // Pedir cantidad de preguntas por nivel
+        System.out.println("Ingresar la cantidad de preguntas por "
+                + "nivel entre 1 y " + maxPreguntas);
+        do{
+            preguntasPerLvl = sc.nextInt();
+        } while((preguntasPerLvl < 1) || (preguntasPerLvl 
+                > maxPreguntas));
+        
+        return preguntasPerLvl;
+    }
+    /**
+     * Obtener la fecha mediante pedido al usuario
+     * @return 
+     */
+    public static String getFechaConsole(){
+        // Pedir al usuario ingresar la fecha
+        System.out.println("Ingresar fecha en formato dd-mm-yy");
+        return sc.nextLine();
+    }
+    /**
+     * Obtener juego mediante pedido de datos al usuario
+     * @param materias
+     * @param paralelos
+     * @param preguntas
+     * @return 
+     */
+    public static Juego getJuegoConsole(ArrayList<Materia> materias, 
+            ArrayList<Paralelo> paralelos, ArrayList<Pregunta> preguntas){
+        // Pedir al usuario la materia
+        Materia m = getMateriaConsole(materias);
+        // Pedir al usuario el paralelo
+        Paralelo p = getParaleloConsole(paralelos);
+        // Obtener las preguntas por materia
+        ArrayList<Pregunta> preguntasMateria = 
+                Juego.getPreguntasMateria(m, preguntas);
+        // Obtener preguntas por nivel pidiendole al usuario
+        int preguntasPerLvl = getPreguntasPerLvlConsole(preguntasMateria);
+        // Obtener matrícula del participante pidiéndole al usuario
+        System.out.println("Ingresar estudiante participante");
+        int matriculaParticipante = getMatriculaConsole(p, 
+                TipoEstudiante.PARTICIPANTE);
+        // Obtener matrícula del estudiante de apoyo pidiéndole al usuario
+        int matriculaApoyo = getMatriculaConsole(p, TipoEstudiante.APOYO);
+        // Obtener fecha pidiéndole al usuario
+        String fecha = getFechaConsole();
+        
+        // Obtener matrícula del participante
+        return new Juego(m, preguntas, p, 
+                matriculaParticipante, matriculaApoyo,
+                preguntasPerLvl, fecha);
+    }
     
     /**
      * Métodos de submenús
      */
     
     /**
-     * Manu main que retorna la opción escogida
+     * Manu Main que retorna la opción escogida
      * @return 
      */
     public static int menu(){
@@ -272,8 +523,14 @@ public class main {
         }while(opcionmenu <1 ||opcionmenu>4);
         return opcionmenu;
     }
+    /**
+     * Muestra el menú de las configuraciones
+     * @return 
+     */
     public static int menuconfig(){
-        String menuconfig = "Menú\n1) Administrar términos académicos\n2) Administrar materias y paralelos\n3) Administrar preguntas\n4) Salir";
+        String menuconfig = "Menú\n1) Administrar términos académicos\n2) "
+                + "Administrar materias y paralelos\n"
+                + "3) Administrar preguntas\n4) Volver al menú principal";
         Scanner sc = new Scanner(System.in);
         int opcionconfiguracion;
         do{
@@ -341,14 +598,21 @@ public class main {
         }while(opcionmaterias <1 ||opcionmaterias>5);
         return opcionmaterias;
     }
+    /**
+     * Menú de preguntas que retorna la opción escogida
+     * @return 
+     */
     public static int menupreguntas(){
-        String menupreguntas = "Menú\n1) Visualizar preguntas\n2) Agregar pregunta\n3) Eliminar pregunta";
+        String menupreguntas = "Menú\n1) Visualizar preguntas\n"
+                + "2) Agregar pregunta\n3) Eliminar pregunta\n"
+                + "4) Volver al menú principal";
         int opcionpreguntas;
         do{
             System.out.println(menupreguntas);
             System.out.println("Escoga una opción");
             while (!sc.hasNextInt()) {
-                System.out.println("Entrada inválida. Por favor, ingrese un número válido del 1 al 4.");
+                System.out.println("Entrada inválida. Por favor, ingrese un"
+                        + " número válido del 1 al 4.");
                 sc.next();
             }
             opcionpreguntas = sc.nextInt();
@@ -360,12 +624,19 @@ public class main {
     }
     
     /**
-     * Funciona como separador para el menú a base de asteriscos
+     * Métodos utilitarios
+     */
+    /**
+     * Separador de texto a base de asteriscos
      */
     static void separador(){
         System.out.println("*".repeat(20));
     }
     
+    /**
+     * Método main principal para mostra al usuario
+     * @param args 
+     */
     public static void main(String[] args) {
         ArrayList<Paralelo> paralelos = new ArrayList();
         ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>();
@@ -420,12 +691,12 @@ public class main {
         respuestas2.add(new Respuesta("-2",TipoRespuesta.CORRECTA));
         respuestas2.add(new Respuesta("0",TipoRespuesta.INCORRECTA));
         respuestas2.add(new Respuesta("22",TipoRespuesta.INCORRECTA));
-        // Pregunta p1= new Pregunta("Cuanto es 2+2?",1, Materia.verificarExistencia("0006",materias));
-        // Pregunta p2= new Pregunta("Cuanto es 10-12?",2, Materia.verificarExistencia("0006",materias));
-        // p1.setRespuestas(respuestas1);
-        // p2.setRespuestas(respuestas2);
-        // preguntas.add(p1);
-        // preguntas.add(p2);
+        Pregunta p1= new Pregunta("Cuanto es 2+2?",1, 
+                materias.get(0), respuestas1);
+        Pregunta p2= new Pregunta("Cuanto es 10-12?",2,
+                materias.get(0), respuestas2);
+        preguntas.add(p1);
+        preguntas.add(p2);
         
         terminosAcademicos.add(new TerminoAcademico(1,2023));
         
@@ -473,21 +744,12 @@ public class main {
                 }else if(opcion1==2){
                     // Codigo para administrar materias y  paralelos
                     System.out.println("Escogio la opcion "+opcion1);
-                    // Imprimir las materias dictadas
-                    separador();
-                    System.out.println("Materias dictadas");
-                    for (Materia m: materias){
-                        System.out.println(m);
-                    }
-                    // Imprimir paralelos dictados
-                    separador();
-                    System.out.println("Paralelos dictados");
-                    for (Paralelo p: paralelos){
-                        System.out.println(p);
-                    }
-                    separador();
+                    // Mostrar materias y paralelos
+                    visualizarMaterias(materias);
+                    visualizarParalelos(paralelos);
                     
-                    int opcionmaterias=menuMaterias();
+                    int opcionmaterias = menuMaterias();
+                    
                     if (opcionmaterias==1){
                         //Código para Ingresar MATERIA
                         System.out.println("Eligió Ingresar Materia");
@@ -496,28 +758,19 @@ public class main {
                     }else if(opcionmaterias==2){
                         //Código para Ingresar Editar MATERIA
                         System.out.println("Eligió Editar Materia");
-                        setMateria(materias);
+                        setMateriaConsole(materias);
                     }else if(opcionmaterias==3){
                         //Código para Agregar PARALELO
                         System.out.println("Eligió Agregar Paralelo");
-                        Paralelo p = getParaleloConsole();
-                        
-                        // Volver a pedir siempre y cuando no exista la materia 
-                        // o el término académico
-                        while ((!materias.contains(p.getMateria()) || 
-                                (!terminosAcademicos.
-                                        contains(p.getTerminoAcademico())))){
-                            System.out.println("Ingresar una materia "
-                                    + "o término académico existente");
-                            p = getParaleloConsole();
-                        }
-                        
+                        Paralelo p = getParaleloConsole(materias, 
+                                terminosAcademicos);
                         paralelos.add(p);
-
                     }else if(opcionmaterias==4){
                         //Código para Eliminar PARALELO
-                    System.out.println("Eligió Configurar "
-                            + "Término para el Juego");
+                        System.out.println("Eligió eliminar paralelo");
+                        Paralelo p = getParaleloConsole(paralelos);
+                        paralelos.remove(p);
+                        
                     }else if(opcionmaterias==5){
                         System.out.println("Eligió retornar al "
                                 + "menú principal");
@@ -528,21 +781,33 @@ public class main {
                     int opcionpreguntas=menupreguntas();
                     if (opcionpreguntas==1){
                         //Código para Visualizar Preguntas
-                    System.out.println("Eligió Visualizar Preguntas");
+                        System.out.println("Eligió Visualizar Preguntas");
+                        // Obtener materia por consola
+                        Materia m = getMateriaConsole(materias);
+                        // Obtener preguntas por materia
+                        ArrayList<Pregunta> preguntasMateria = 
+                                Pregunta.getPreguntasMateria(preguntas,m);
+                        // Mostrar las preguntas de la materia
+                        visualizarPreguntas(preguntasMateria);
                     }else if(opcionpreguntas==2){
                         //Código para Agregar Preguntas
-                    System.out.println("Eligió Agregar pregunta");
-                    
-                    Pregunta p = ingresarPregunta(materias);
-                    p.ingresarRespuestas();
-                    
+                        System.out.println("Eligió Agregar pregunta");
+                        Pregunta p = getPreguntaConsole(materias);
+                        preguntas.add(p);
                     }else if(opcionpreguntas==3){
                         //Código para Eliminar pregunta
-                    System.out.println("Eligió Eliminar Pregunta");
+                        System.out.println("Eligió Eliminar Pregunta");
+                        Pregunta p = getPreguntaConsole(materias, preguntas);
+                        preguntas.remove(p);
+                    }else if(opcionpreguntas==4){
+                        opcionprincipal = 0;
                     }
                 }else if(opcion1==4){
                 opcionprincipal=0;
                 }
+            }else if(opcionprincipal==2){
+                Juego j = getJuegoConsole(materias, paralelos, preguntas);
+                
             }
         }
     }
