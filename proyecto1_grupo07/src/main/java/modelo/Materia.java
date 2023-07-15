@@ -50,52 +50,34 @@ public class Materia {
             materias.remove(materias.indexOf(i));
         }
     }
+    
+    @ Override
+    public String toString(){
+        return "Materia {codigo: " + codigo +", nombre: " + nombre +
+                ", niveles: " + cantNiveles + "}";
 
-    public static Materia verificarExistencia(String c, ArrayList<Materia> materias){
-        for(Materia i: materias){
-            if (i.getCodigo().equals(c)){
-                return i;
-            }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-        System.out.println("Materia no encontrada");
-        return null;
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Materia other = (Materia) obj;
+        if (this.cantNiveles != other.cantNiveles) {
+            return false;
+        }
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        return Objects.equals(this.nombre, other.nombre);
     }
     
-    public static void editarMateria(ArrayList<Materia> materias){
-        Scanner sc = new Scanner(System.in);
-
-        for (Materia m: materias){
-            System.out.println((materias.indexOf(m)+1)+". "+m.getCodigo()+" "+m.getNombre());
-        }
-
-        System.out.println("Ingrese el codigo o indice de la materia a editar");
-
-        if(sc.hasNextInt()){
-            Materia m = materias.get(sc.nextInt()-1);
-            sc.nextLine();
-
-            System.out.println("Ingrese el nuevo nombre de la materia");
-            m.setNombre(sc.nextLine());
-
-            System.out.println("Ingrese la nueva cantidad de niveles de la materia");
-            m.setCantNiveles(sc.nextInt());
-            sc.nextLine();
-        }
-        else if(sc.hasNextLine()){
-            Materia m = verificarExistencia(sc.nextLine(), materias);
-            System.out.println("Ingrese el nuevo nombre de la materia");
-            m.setNombre(sc.nextLine());
-
-            System.out.println("Ingrese la nueva cantidad de niveles de la materia");
-            m.setCantNiveles(sc.nextInt());
-            sc.nextLine();
-        }
-        
-    }
-    public String toString(){
-        return "Materia con codigo "+codigo+", nombre "+nombre+", tiene "+cantNiveles+" niveles.";
-
-    }
-
-    //Implementar equals pedido por Victor
+    
 }

@@ -36,7 +36,7 @@ public class TerminoAcademico {
     
     @Override
     public String toString(){
-        return "numTermino=" + numTermino + ", añoTermino="  + añoTermino;
+        return añoTermino + "-" + numTermino;
     }
     
     public boolean equals(Object o){
