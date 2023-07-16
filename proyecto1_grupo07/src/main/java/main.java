@@ -5,7 +5,7 @@ import modelo.*;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class Main {    
+public class main {    
     static int añoActual = 2023;
     static TerminoAcademico terminoJuego;
     static Scanner sc = new Scanner(System.in);
@@ -410,6 +410,9 @@ public class Main {
     
     /**
      * Métodos agregados para estudiante 
+     * @param p
+     * @param tp
+     * @return 
      */
     public static int getMatriculaConsole(Paralelo p, TipoEstudiante tp){
         // Obtener el arreglo de estudiantes del paralelo
@@ -473,7 +476,7 @@ public class Main {
      * @return 
      */
     public static Juego getJuegoConsole(ArrayList<Materia> materias, 
-            ArrayList<Paralelo> paralelos, ArrayList<Pregunta> preguntas){
+        ArrayList<Paralelo> paralelos, ArrayList<Pregunta> preguntas){
         // Pedir al usuario la materia
         Materia m = getMateriaConsole(materias);
         // Pedir al usuario el paralelo
@@ -493,7 +496,7 @@ public class Main {
         String fecha = getFechaConsole();
         
         // Obtener matrícula del participante
-        return new Juego(m, preguntas, p, 
+        return new Juego(m, preguntasMateria, p, 
                 matriculaParticipante, matriculaApoyo,
                 preguntasPerLvl, fecha);
     }
@@ -674,9 +677,8 @@ public class Main {
                 "BORBOR GUTIERREZ VICTOR DANIEL"));
 
         
-        materias.add(new Materia("CCPG1052", 
-                "PROGRAMACIÓN ORIENTADA A OBJETOS",2));
-        
+        materias.add(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2));
+        materias.add(new Materia("CCPG1000", "ALGEBRA LINEAL",2));
         //Lista de preguntas
         ArrayList<Pregunta> preguntas= new ArrayList<>();
         //Pregunta 1 de prueba
@@ -691,12 +693,31 @@ public class Main {
         respuestas2.add(new Respuesta("-2",TipoRespuesta.CORRECTA));
         respuestas2.add(new Respuesta("0",TipoRespuesta.INCORRECTA));
         respuestas2.add(new Respuesta("22",TipoRespuesta.INCORRECTA));
-        Pregunta p1= new Pregunta("Cuanto es 2+2?",1, 
+        //Pregunta 3 de prueba
+        ArrayList<Respuesta> respuestas3 = new ArrayList<>();
+        respuestas3.add(new Respuesta("0",TipoRespuesta.INCORRECTA));
+        respuestas3.add(new Respuesta("13",TipoRespuesta.CORRECTA));
+        respuestas3.add(new Respuesta("7",TipoRespuesta.INCORRECTA));
+        respuestas3.add(new Respuesta("112",TipoRespuesta.INCORRECTA));
+        //pREGUNTA 4 DE PRUEBA
+        ArrayList<Respuesta> respuestas4 = new ArrayList<>();
+        respuestas4.add(new Respuesta("0",TipoRespuesta.INCORRECTA));
+        respuestas4.add(new Respuesta("2",TipoRespuesta.CORRECTA));
+        respuestas4.add(new Respuesta("7",TipoRespuesta.INCORRECTA));
+        respuestas4.add(new Respuesta("112",TipoRespuesta.INCORRECTA));
+        
+        Pregunta p1= new Pregunta("Cuanto es 2+2?",2, 
                 materias.get(0), respuestas1);
         Pregunta p2= new Pregunta("Cuanto es 10-12?",2,
                 materias.get(0), respuestas2);
+        Pregunta p3= new Pregunta("Cuanto es 1+12",3,
+                materias.get(0), respuestas3);
+        Pregunta p4= new Pregunta("Cuanto es 1+1",3,
+                materias.get(0), respuestas4);
         preguntas.add(p1);
         preguntas.add(p2);
+        preguntas.add(p3);
+        preguntas.add(p4);
         
         terminosAcademicos.add(new TerminoAcademico(1,2023));
         
@@ -807,6 +828,9 @@ public class Main {
                 }
             }else if(opcionprincipal==2){
                 Juego j = getJuegoConsole(materias, paralelos, preguntas);
+                //ArrayList<Pregunta> PreguntasJuego = Juego.getPreguntasMateria(j.getMateriaJuego(), preguntas);
+                //j.setPreguntasParaJuego(PreguntasJuego);
+                j.visualizarPreguntasj();
                 
             }
         }
