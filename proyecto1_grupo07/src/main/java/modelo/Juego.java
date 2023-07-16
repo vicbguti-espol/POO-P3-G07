@@ -19,6 +19,7 @@ public class Juego {
     private int lvlMax;
     private int nPreguntasContestadas;
     private ArrayList<Comodin> comodinesUtilizados;
+    private int segundos=0;
     
     // Instanciar scanner
     static Scanner sc = new Scanner(System.in);
@@ -28,6 +29,27 @@ public class Juego {
     }
     public Materia getMateriaJuego(){
     return materia;
+    }
+    public Estudiante getParticipante(){
+        return participante;
+    }
+    public String getFecha(){
+        return fecha;
+    }
+    public int getMaxlvl(){
+        return lvlMax;
+    }
+    public String getPremio(){
+        return "x";
+    }
+    public int getNPreguntasContestadas(){
+        return nPreguntasContestadas;
+    }
+    public ArrayList<Comodin> getComodines(){
+        return comodinesUtilizados;
+    }
+    public int getSegundos(){
+        return segundos;
     }
     /**
      * Constructor de clase
@@ -39,7 +61,7 @@ public class Juego {
      * @param n
      * @param f 
      */
-    public Juego(Materia materia, ArrayList<Pregunta> preguntasMateria, Paralelo paralelo, int matriculaParticipante,int matriculaApoyo, int n, String f){
+    public Juego(Materia materia, ArrayList<Pregunta> preguntasMateria, Paralelo paralelo, int matriculaParticipante,int matriculaApoyo, int n, String f,ArrayList<Comodin>ComodinesUtilizados){
         this.materia = materia;
         preguntas = preguntasMateria; // Asignar preguntas por materia
         setEstudiante(paralelo, matriculaParticipante,
@@ -48,6 +70,7 @@ public class Juego {
                 TipoEstudiante.APOYO); // Asignar support
         fecha = f; // Asignar fecha
         nPreguntasPerLvl = n; // Set n preguntas por nivel
+        comodinesUtilizados=new ArrayList<Comodin>();
     }
     
     /**
@@ -297,5 +320,56 @@ public class Juego {
     }
     public void setPreguntasParaJuego(ArrayList<Pregunta> pr){
     this.preguntas=pr;
+    }
+    // Ordenar reporte en funcion de la fecha
+    public static ArrayList<Juego> ordenarReporte(ArrayList<Juego> juegos){
+        int indicecomparar=0;
+        // Bubble sort entre listas y fechas
+        for (int i = 0; i < juegos.size() - 1; i++) {
+            for (int j = 0; j < juegos.size() - i - 1; j++) {
+                //Separación de listas
+                String[] fecha1 = juegos.get(j).getFecha().split("-");
+                String[] fecha2 = juegos.get(j + 1).getFecha().split("-");
+                int d1 = Integer.parseInt(fecha1[0]);
+                int m1 = Integer.parseInt(fecha1[1]);
+                int a1 = Integer.parseInt(fecha1[2]);
+                int d2 = Integer.parseInt(fecha2[0]);
+                int m2 = Integer.parseInt(fecha2[1]);
+                int a2 = Integer.parseInt(fecha2[2]);
+                //Comparacion 
+                    if (a1 != a2) {
+                        indicecomparar=Integer.compare(a1,a2);
+                    } else if (m1 != m2) {
+                        indicecomparar=Integer.compare(m1,m2);
+                    } else {
+                        indicecomparar=Integer.compare(d1,d2);
+                    }
+                if (indicecomparar > 0) {
+                    // Swap the positions of the elements
+                    Juego temp = juegos.get(j);
+                    juegos.set(j, juegos.get(j+1));
+                    juegos.set(j+1, temp);
+                }
+            }
+        }
+        return juegos;
+    }
+    public static void generarReporte(){
+        // Sort de todos los juegos registrados
+        juegos=ordenarReporte(juegos);
+        System.out.println("Reporte de Juegos:");
+        for(Juego juego:juegos){
+            //Obtencion de atributos
+            String nombreEstudiante=juego.getParticipante().getNombre();
+            //Format de la impresion de juegos
+            System.out.println(juegos.indexOf(juego)+1+". "+nombreEstudiante+", el dia "+ juego.getFecha() +" jugó por "+juego.getSegundos()+" segundos y contesto "+juego.getNPreguntasContestadas()+" preguntas correctamente");
+            System.out.println("Nivel Máximo alcanzado: "+juego.getMaxlvl()+" \nPremio: "+juego.getPremio());
+            if(juego.getComodines()!=null){
+                for (Comodin c: juego.getComodines())
+                System.out.println(c.name()); 
+            }
+            
+        }
+        
     }
 }
