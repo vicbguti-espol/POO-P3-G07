@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Juego {
+    private Materia materia;
     private ArrayList<Pregunta> preguntas;
     private Estudiante participante;
     private Estudiante apoyo;
@@ -22,17 +23,24 @@ public class Juego {
     // Instanciar scanner
     static Scanner sc = new Scanner(System.in);
     
+    public ArrayList<Pregunta> getPreguntasdeJuego(){
+    return preguntas;
+    }
+    public Materia getMateriaJuego(){
+    return materia;
+    }
     /**
      * Constructor de clase
      * @param materia
+     * @param preguntasMateria
      * @param paralelo
      * @param matriculaParticipante
      * @param matriculaApoyo
-     * @param nPreguntasPerLvl 
+     * @param n
+     * @param f 
      */
-    public Juego(Materia materia, ArrayList<Pregunta> preguntasMateria, 
-            Paralelo paralelo, int matriculaParticipante,
-            int matriculaApoyo, int n, String f){
+    public Juego(Materia materia, ArrayList<Pregunta> preguntasMateria, Paralelo paralelo, int matriculaParticipante,int matriculaApoyo, int n, String f){
+        this.materia = materia;
         preguntas = preguntasMateria; // Asignar preguntas por materia
         setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.PARTICIPANTE); // Asignar participante
@@ -45,9 +53,10 @@ public class Juego {
     /**
      * Setting de preguntas a partir de una materia
      * @param materia 
+     * @param pregs 
+     * @return  
      */
-    public static ArrayList<Pregunta> getPreguntasMateria(Materia materia, 
-            ArrayList<Pregunta> pregs){
+    public static ArrayList<Pregunta> getPreguntasMateria(Materia materia, ArrayList<Pregunta> pregs){
         ArrayList<Pregunta> preguntasMaterias = new ArrayList<>();
         // Iterar la lista de preguntas estáticas
         for (Pregunta p: pregs){ 
@@ -211,85 +220,82 @@ public class Juego {
     /**
      * Método encargado de la funcionalidad principal del juego
      */
-    public void visualizarPreguntas(){
-        
+    public void visualizarPreguntasj(){
         // Obtener preguntas por nivel
         Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel(nPreguntasPerLvl);
-       // Decalar input para recibir respuesta 
-       String input = "";
-       // Decalar el último literalCorrecto seleccionado
-       String literalCorrecto = "";
-       
-       Iterator<Map.Entry<Integer, ArrayList<Pregunta>>> it = preguntasPerLvl.entrySet().iterator();
+        // Decalar input para recibir respuesta 
+        String input;
+        // Decalar el último literalCorrecto seleccionado
+        String literalCorrecto;
+        Iterator<Map.Entry<Integer, ArrayList<Pregunta>>> it = preguntasPerLvl.entrySet().iterator();
         // Iterar el map de preguntas por nivel
-        while ((it.hasNext()) &&  (input.equalsIgnoreCase(literalCorrecto))){
-            Map.Entry<Integer, ArrayList<Pregunta>> entry = (Map.Entry) it;
+        boolean continuar = true;
+        while (it.hasNext() &&  continuar){
+            Map.Entry<Integer, ArrayList<Pregunta>> entry = it.next(); //CORRIGIENDO
             // Obtener las preguntas del nivel
-            ArrayList<Pregunta> preguntas = entry.getValue(); 
+            ArrayList<Pregunta> lpreguntas = entry.getValue(); 
+            
             // Shuffle el ArrayList de las preguntas
-            Collections.shuffle(preguntas); 
+            Collections.shuffle(lpreguntas); 
             // Nivel de pregunta
             lvlMax = entry.getKey();
             // Mostrar por pantalla el nivel en que se encuentra
             System.out.println("Nivel" + lvlMax);
-            
-            do{
-                for (Pregunta p: preguntas){
-                // Obtener las respuestas de la pregunta
-                ArrayList<Respuesta> respuestas = p.getRespuestas();
-                
-                Collections.shuffle(respuestas); // Shuffle de respuestas
-                
-                // Asignar un key value de opción a cada respuesta
-                Map<String, Respuesta> opcionPregunta = new TreeMap<>();
-                opcionPregunta.put("a", respuestas.get(0));
-                opcionPregunta.put("b", respuestas.get(1));
-                opcionPregunta.put("c", respuestas.get(2));
-                opcionPregunta.put("d", respuestas.get(3));
-
-                // Muestra por consola la pregunta
-                System.out.println(preguntas.indexOf(p) + ". " + p.getTexto());
-                
-                // Iterar el map
-                for (Map.Entry<String, Respuesta> mapEntry: opcionPregunta.entrySet()){
+            boolean respuestaCorrecta=true;
+            for (Pregunta p: lpreguntas){
+                if (respuestaCorrecta){
+                    // Obtener las respuestas de la pregunta
+                    ArrayList<Respuesta> respuestas = p.getRespuestas();
+                    Collections.shuffle(respuestas); // Shuffle de respuestas
+                    // Asignar un key value de opción a cada respuesta
+                    Map<String, Respuesta> opcionPregunta = new TreeMap<>();
+                    opcionPregunta.put("A", respuestas.get(0));
+                    opcionPregunta.put("B", respuestas.get(1));
+                    opcionPregunta.put("C", respuestas.get(2));
+                    opcionPregunta.put("D", respuestas.get(3));
+                    // Muestra por consola la pregunta
+                    System.out.println(lpreguntas.indexOf(p) + ". " + p.getTexto());
+                    // Iterar el map
+                    for (Map.Entry<String, Respuesta> mapEntry: opcionPregunta.entrySet()){
                         // Visualizar pregunta
-                        System.out.println(mapEntry.getKey() + ". " 
-                                + mapEntry.getValue().getTexto()); 
-                }
-                
-                // Solicitar al usuario su respuesta a la pregunta
-                System.out.println("Ingresar opcion válida (S)");
-                input = sc.nextLine();
-                
-                String comodin = "";
-                
-                // Ingresar comodín en caso de requerirlo
-                if (input.equals("*")){
-                    System.out.println("Ingresar comodín "
-                            + "(cincuenta/companero/salon)");
-                    comodin = sc.nextLine();
-                    
+                        System.out.println(mapEntry.getKey() + ". " + mapEntry.getValue().getTexto()); 
+                    }
                     // Solicitar al usuario su respuesta a la pregunta
-                    System.out.println("Ingresar opcion válida (S)");
+                    System.out.println("Ingresar opcion válida (A,B,C,D)");
                     input = sc.nextLine();
-                }
+                    String comodin = "";
+                    // Ingresar comodín en caso de requerirlo
+                    if (input.equals("*")){
+                        System.out.println("Ingresar comodín " + "(cincuenta/companero/salon)");
+                        comodin = sc.nextLine();
+                        // Solicitar al usuario su respuesta a la pregunta
+                        System.out.println("Ingresar opcion válida (A,B,C,D)");
+                        input = sc.nextLine();
+                    }
+                    // Agregar comodines utilizados en caso de ser requerido
+                    switch(comodin){
+                        case "cincuenta" -> comodinesUtilizados.add(Comodin.CINCUENTA);
+                        case "companero" -> comodinesUtilizados.add(Comodin.COMPANERO);
+                        case "salon" -> comodinesUtilizados.add(Comodin.SALON);
+                        default -> {}
+                    }
                 
-                // Agregar comodines utilizados en caso de ser requerido
-                switch(comodin){
-                    case "cincuenta" -> comodinesUtilizados.add(Comodin.CINCUENTA);
-                    case "companero" -> comodinesUtilizados.add(Comodin.COMPANERO);
-                    case "salon" -> comodinesUtilizados.add(Comodin.SALON);
-                    default -> {
+                    // Obtener literal correcto
+                    literalCorrecto = obtenerKeyRespuestaCorrecta(opcionPregunta);
+                    if (input.equalsIgnoreCase(literalCorrecto.toLowerCase())){
+                        nPreguntasContestadas++; // Aumentar de responder correctamente
+                    } else {
+                        System.out.println("RESPUESTA INCORRECTA");
+                        respuestaCorrecta=false;
                     }
                 }
-                
-                // Obtener literal correcto
-                literalCorrecto = obtenerKeyRespuestaCorrecta(opcionPregunta);
-                }
-                if (input.equalsIgnoreCase(literalCorrecto)){
-                    nPreguntasContestadas++; // Aumentar de responder correctamente
-                }
-            }while(input.equalsIgnoreCase(literalCorrecto));
+            }
+            if (!respuestaCorrecta){
+                continuar=false;
             }
         }
     }
+    public void setPreguntasParaJuego(ArrayList<Pregunta> pr){
+    this.preguntas=pr;
+    }
+}

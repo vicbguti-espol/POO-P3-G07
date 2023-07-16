@@ -71,12 +71,18 @@ public class Pregunta {
     }
     
     public String toString(){
+        ArrayList<String> literales = new ArrayList<>();
+        literales.add("A");
+        literales.add("B");
+        literales.add("C");
+        literales.add("D");
         String pregunta = "Nivel: " + nivel + "\nPregunta:\n"+ texto + 
                 "\nOpciones de respuesta:\n";
         // Shuffle de respuestas de la pregunta
         Collections.shuffle(respuestas);
         for (int i = 0; i < respuestas.size(); i++){
-            pregunta += (i+1) + ". " + respuestas.get(i) + "\n";
+            
+            pregunta += literales.get(i) + ". " + respuestas.get(i) + "\n";
         }
         
         return pregunta;
