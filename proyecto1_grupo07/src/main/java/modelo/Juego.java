@@ -242,10 +242,10 @@ public class Juego {
                 
                 // Asignar un key value de opción a cada respuesta
                 Map<String, Respuesta> opcionPregunta = new TreeMap<>();
-                opcionPregunta.put("a", respuestas.get(0));
-                opcionPregunta.put("b", respuestas.get(1));
-                opcionPregunta.put("c", respuestas.get(2));
-                opcionPregunta.put("d", respuestas.get(3));
+                opcionPregunta.put("A", respuestas.get(0));
+                opcionPregunta.put("B", respuestas.get(1));
+                opcionPregunta.put("C", respuestas.get(2));
+                opcionPregunta.put("D", respuestas.get(3));
 
                 // Muestra por consola la pregunta
                 System.out.println(preguntas.indexOf(p) + ". " + p.getTexto());

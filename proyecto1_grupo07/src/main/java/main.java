@@ -808,6 +808,7 @@ public class Main {
             }else if(opcionprincipal==2){
                 Juego j = getJuegoConsole(materias, paralelos, preguntas);
                 
+                
             }
         }
     }
