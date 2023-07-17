@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.Objects;
+
 public class Respuesta {
     private String texto;
     private TipoRespuesta tipo;
@@ -27,6 +29,24 @@ public class Respuesta {
 
     public void setTipo(TipoRespuesta tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Respuesta other = (Respuesta) obj;
+        if (!Objects.equals(this.texto, other.texto)) {
+            return false;
+        }
+        return this.tipo == other.tipo;
     }
    
     

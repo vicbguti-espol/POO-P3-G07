@@ -399,8 +399,7 @@ public class main {
             // Obtener materia por consola
             Materia m = getMateriaConsole(materias);
             // Obtener preguntas por materia
-            ArrayList<Pregunta> preguntasMateria = Pregunta.getPreguntasMateria(preguntas, 
-                      m);
+            ArrayList<Pregunta> preguntasMateria = Pregunta.getPreguntasMateria(preguntas, m);
             // Mostrar las preguntas de la materia
             visualizarPreguntas(preguntasMateria);
             // Pedir al usuario el índice de la materia a eliminar

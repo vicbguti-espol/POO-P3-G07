@@ -24,30 +24,6 @@ public class Juego {
     // Instanciar scanner
     static Scanner sc = new Scanner(System.in);
     
-    public ArrayList<Pregunta> getPreguntasdeJuego(){
-    return preguntas;
-    }
-    public Materia getMateriaJuego(){
-    return materia;
-    }
-    public Estudiante getParticipante(){
-        return participante;
-    }
-    public String getFecha(){
-        return fecha;
-    }
-    public int getMaxlvl(){
-        return lvlMax;
-    }
-    public String getPremio(){
-        return premio;
-    }
-    public int getNPreguntasContestadas(){
-        return nPreguntasContestadas;
-    }
-    public ArrayList<Comodin> getComodines(){
-        return comodinesUtilizados;
-    }
     /**
      * Constructor de clase
      * @param materia
@@ -71,6 +47,31 @@ public class Juego {
         fecha = f; // Asignar fecha
         nPreguntasPerLvl = n; // Set n preguntas por nivel
         comodinesUtilizados=new ArrayList<Comodin>();
+    }
+    
+    public ArrayList<Pregunta> getPreguntasdeJuego(){
+    return preguntas;
+    }
+    public Materia getMateriaJuego(){
+    return materia;
+    }
+    public Estudiante getParticipante(){
+        return participante;
+    }
+    public String getFecha(){
+        return fecha;
+    }
+    public int getMaxlvl(){
+        return lvlMax;
+    }
+    public String getPremio(){
+        return premio;
+    }
+    public int getNPreguntasContestadas(){
+        return nPreguntasContestadas;
+    }
+    public ArrayList<Comodin> getComodines(){
+        return comodinesUtilizados;
     }
     
     /**
@@ -239,21 +240,15 @@ public class Juego {
         // Declarar la última respuesta escogida
         Respuesta r = new Respuesta();
         
-        // Declarar contador de niveles superados
-        int nivelesSuperados = 0;
-        
-        
         // Iterar el map de preguntas por nivel
         while (it.hasNext() &&  (r.getTipo().equals(TipoRespuesta.CORRECTA))){
             Map.Entry<Integer, ArrayList<Pregunta>> entry = it.next();
             
-            if(nivelesSuperados > 0){
+            if (lvlMax > 0){
                 System.out.println("Ingresar el premio que el estudiante "
                         + "ha obtenido al superar el nivel");
                 premio = sc.nextLine();
             }
-            
-            nivelesSuperados++;
             // Obtener las preguntas del nivel
             ArrayList<Pregunta> lpreguntas = entry.getValue(); 
             
@@ -307,6 +302,7 @@ public class Juego {
                         // Solicitar al usuario su respuesta a la pregunta
                         System.out.println("Ingresar opcion válida (A,B,C,D)");
                         input = sc.nextLine();
+                        
                 }
 
                 switch (input.toUpperCase()){
@@ -329,11 +325,12 @@ public class Juego {
                     System.out.println("Respuesta Incorrecta :(");
                 }
             }
+            if (r.getTipo().equals(TipoRespuesta.CORRECTA)){
+                lvlMax++;
+            }     
         }
-        // Asignar el valor del nivel máximo alcanzado
-        lvlMax = nivelesSuperados;
         
-        if (nivelesSuperados == materia.getCantNiveles()){
+        if (lvlMax == materia.getCantNiveles()){
             System.out.println("Asignar el premio para el estudiante ganador. "
                     + "FELICITACIONES!");
             premio = sc.nextLine();
@@ -386,6 +383,7 @@ public class Juego {
             System.out.println(juegos.indexOf(juego)+1+". "+nombreEstudiante+", el dia "+ juego.getFecha() + " y contesto "+ juego.getNPreguntasContestadas()+" preguntas correctamente");
             System.out.println("Nivel Máximo alcanzado: "+juego.getMaxlvl()+" \nPremio: "+juego.getPremio());
             if(juego.getComodines()!=null){
+                System.out.println("Comodines utilizados:");
                 for (Comodin c: juego.getComodines())
                 System.out.println(c.name()); 
             }

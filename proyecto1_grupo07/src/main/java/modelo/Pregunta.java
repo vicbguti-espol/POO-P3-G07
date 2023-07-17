@@ -64,12 +64,15 @@ public class Pregunta {
     }
     
     public static Pregunta copy(Pregunta p){
+        ArrayList<Respuesta> respuestas = new ArrayList<>(p.getRespuestas());
+        int nivel = p.getNivel();
         return new Pregunta(p.getTexto(), 
-                p.getNivel(), p.getMateria(), 
-                p.getRespuestas());
+                nivel, p.getMateria(), 
+                respuestas);
     }
     
     public void removeRespuestasIncorrectas(int n){
+        
         // Crear iterador de respuestas 
         Iterator<Respuesta> it = respuestas.iterator();
         // Declarar contador cada que se elimine una respuesta equívoca
