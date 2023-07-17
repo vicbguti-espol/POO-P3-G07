@@ -4,6 +4,10 @@ public class Respuesta {
     private String texto;
     private TipoRespuesta tipo;
     
+    public Respuesta(){
+        tipo = TipoRespuesta.CORRECTA;
+    }
+    
     public Respuesta(String texto, TipoRespuesta tipo){
         this.texto = texto;
         this.tipo = tipo;

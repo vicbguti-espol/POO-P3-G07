@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Juego {
+    private Materia materia;
     private ArrayList<Pregunta> preguntas;
     private Estudiante participante;
     private Estudiante apoyo;
@@ -18,21 +19,50 @@ public class Juego {
     private int lvlMax;
     private int nPreguntasContestadas;
     private ArrayList<Comodin> comodinesUtilizados;
+    private String premio;
     
     // Instanciar scanner
     static Scanner sc = new Scanner(System.in);
     
+    public ArrayList<Pregunta> getPreguntasdeJuego(){
+    return preguntas;
+    }
+    public Materia getMateriaJuego(){
+    return materia;
+    }
+    public Estudiante getParticipante(){
+        return participante;
+    }
+    public String getFecha(){
+        return fecha;
+    }
+    public int getMaxlvl(){
+        return lvlMax;
+    }
+    public String getPremio(){
+        return premio;
+    }
+    public int getNPreguntasContestadas(){
+        return nPreguntasContestadas;
+    }
+    public ArrayList<Comodin> getComodines(){
+        return comodinesUtilizados;
+    }
     /**
      * Constructor de clase
      * @param materia
+     * @param preguntasMateria
      * @param paralelo
      * @param matriculaParticipante
      * @param matriculaApoyo
-     * @param nPreguntasPerLvl 
+     * @param n
+     * @param f 
+     * @param ComodinesUtilizados 
      */
     public Juego(Materia materia, ArrayList<Pregunta> preguntasMateria, 
-            Paralelo paralelo, int matriculaParticipante,
-            int matriculaApoyo, int n, String f){
+            Paralelo paralelo, int matriculaParticipante,int matriculaApoyo,
+            int n, String f){
+        this.materia = materia;
         preguntas = preguntasMateria; // Asignar preguntas por materia
         setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.PARTICIPANTE); // Asignar participante
@@ -40,14 +70,16 @@ public class Juego {
                 TipoEstudiante.APOYO); // Asignar support
         fecha = f; // Asignar fecha
         nPreguntasPerLvl = n; // Set n preguntas por nivel
+        comodinesUtilizados=new ArrayList<Comodin>();
     }
     
     /**
      * Setting de preguntas a partir de una materia
      * @param materia 
+     * @param pregs 
+     * @return  
      */
-    public static ArrayList<Pregunta> getPreguntasMateria(Materia materia, 
-            ArrayList<Pregunta> pregs){
+    public static ArrayList<Pregunta> getPreguntasMateria(Materia materia, ArrayList<Pregunta> pregs){
         ArrayList<Pregunta> preguntasMaterias = new ArrayList<>();
         // Iterar la lista de preguntas estáticas
         for (Pregunta p: pregs){ 
@@ -144,7 +176,6 @@ public class Juego {
         Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = 
                 getPreguntasByLevel(preguntas);
         
-        
         for (Map.Entry<Integer, ArrayList<Pregunta>> entry: preguntasPerLvl.entrySet()){
             ArrayList<Pregunta> nPreguntasNivel = new ArrayList<Pregunta>();    
             // Obtener la lista de preguntas del nivel 
@@ -155,7 +186,7 @@ public class Juego {
                 // Agregar pregunta a nPreguntasNivel
                 nPreguntasNivel.add(preguntasNivel.get(i));
             }
-            chosen.put(n, nPreguntasNivel);
+            chosen.put(entry.getKey(), nPreguntasNivel);
         
         }
         return chosen;
@@ -194,102 +225,173 @@ public class Juego {
     }
     
     /**
-     * Método que retorna el literal (S) de la respuesta correcta
-     * @param opcionPregunta
-     * @return 
-     */
-    private String obtenerKeyRespuestaCorrecta(Map<String, Respuesta> opcionPregunta){
-        for (Map.Entry<String, Respuesta> mapEntry: opcionPregunta.entrySet()){
-            Respuesta value = mapEntry.getValue(); // Obtener valor de map
-            if (value != null && value.getTipo().equals(TipoRespuesta.CORRECTA)){
-                return mapEntry.getKey();
-            }
-        }
-        return null;
-    }
-    
-    /**
      * Método encargado de la funcionalidad principal del juego
      */
     public void visualizarPreguntas(){
-        
         // Obtener preguntas por nivel
-        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel(nPreguntasPerLvl);
-       // Decalar input para recibir respuesta 
-       String input = "";
-       // Decalar el último literalCorrecto seleccionado
-       String literalCorrecto = "";
-       
-       Iterator<Map.Entry<Integer, ArrayList<Pregunta>>> it = preguntasPerLvl.entrySet().iterator();
+        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl =
+                getPreguntasByLevel(nPreguntasPerLvl);
+        // Declarar input para recibir respuesta 
+        String input;
+        Iterator<Map.Entry<Integer, ArrayList<Pregunta>>> it = 
+                preguntasPerLvl.entrySet().iterator();
+        
+        // Declarar la última respuesta escogida
+        Respuesta r = new Respuesta();
+        
+        // Declarar contador de niveles superados
+        int nivelesSuperados = 0;
+        
+        
         // Iterar el map de preguntas por nivel
-        while ((it.hasNext()) &&  (input.equalsIgnoreCase(literalCorrecto))){
-            Map.Entry<Integer, ArrayList<Pregunta>> entry = (Map.Entry) it;
-            // Obtener las preguntas del nivel
-            ArrayList<Pregunta> preguntas = entry.getValue(); 
-            // Shuffle el ArrayList de las preguntas
-            Collections.shuffle(preguntas); 
-            // Nivel de pregunta
-            lvlMax = entry.getKey();
-            // Mostrar por pantalla el nivel en que se encuentra
-            System.out.println("Nivel" + lvlMax);
+        while (it.hasNext() &&  (r.getTipo().equals(TipoRespuesta.CORRECTA))){
+            Map.Entry<Integer, ArrayList<Pregunta>> entry = it.next();
             
-            do{
-                for (Pregunta p: preguntas){
-                // Obtener las respuestas de la pregunta
-                ArrayList<Respuesta> respuestas = p.getRespuestas();
+            if(nivelesSuperados > 0){
+                System.out.println("Ingresar el premio que el estudiante "
+                        + "ha obtenido al superar el nivel");
+                premio = sc.nextLine();
+            }
+            
+            nivelesSuperados++;
+            // Obtener las preguntas del nivel
+            ArrayList<Pregunta> lpreguntas = entry.getValue(); 
+            
+            // Shuffle el ArrayList de las preguntas
+            Collections.shuffle(lpreguntas); 
+            
+            // Crear un iterador con lpreguntas
+            Iterator<Pregunta> pit = lpreguntas.iterator();
+            while ((pit.hasNext() && 
+                    (r.getTipo().equals(TipoRespuesta.CORRECTA)))){
                 
-                Collections.shuffle(respuestas); // Shuffle de respuestas
-                
-                // Asignar un key value de opción a cada respuesta
-                Map<String, Respuesta> opcionPregunta = new TreeMap<>();
-                opcionPregunta.put("A", respuestas.get(0));
-                opcionPregunta.put("B", respuestas.get(1));
-                opcionPregunta.put("C", respuestas.get(2));
-                opcionPregunta.put("D", respuestas.get(3));
-
+                Pregunta pOriginal = pit.next();
+                Pregunta p = Pregunta.copy(pOriginal);
+                int indRespuesta = -1;
                 // Muestra por consola la pregunta
-                System.out.println(preguntas.indexOf(p) + ". " + p.getTexto());
-                
-                // Iterar el map
-                for (Map.Entry<String, Respuesta> mapEntry: opcionPregunta.entrySet()){
-                        // Visualizar pregunta
-                        System.out.println(mapEntry.getKey() + ". " 
-                                + mapEntry.getValue().getTexto()); 
-                }
-                
+                System.out.println(p);
                 // Solicitar al usuario su respuesta a la pregunta
-                System.out.println("Ingresar opcion válida (S)");
+                System.out.println("Ingresar opcion válida (A,B,C,D)");
+                System.out.println("Ingresar (*) de requerir comodín");
                 input = sc.nextLine();
-                
                 String comodin = "";
-                
-                // Ingresar comodín en caso de requerirlo
+
                 if (input.equals("*")){
-                    System.out.println("Ingresar comodín "
-                            + "(cincuenta/companero/salon)");
-                    comodin = sc.nextLine();
-                    
-                    // Solicitar al usuario su respuesta a la pregunta
-                    System.out.println("Ingresar opcion válida (S)");
-                    input = sc.nextLine();
+                    System.out.println("Ingresar comodín " +
+                                "(cincuenta/companero/salon)");
+                        comodin = sc.nextLine();
+                        // Agregar comodines utilizados en caso de ser requerido
+                        switch(comodin.toLowerCase()){
+                            case "cincuenta" -> { comodinesUtilizados.
+                                    add(Comodin.CINCUENTA);
+                                    p.removeRespuestasIncorrectas(2);
+                                    System.out.println(p);
+                                    break;    
+                            }
+                            
+                            case "companero" -> {
+                                comodinesUtilizados.add(Comodin.COMPANERO);
+                                System.out.println("Consultar a " + 
+                                        apoyo.getNombre());
+                                break;
+                            }
+                                    
+                            case "salon" -> {
+                                comodinesUtilizados.add(Comodin.SALON);
+                                System.out.println("¿Qué dice el salón?");
+                                break;
+                            }
+                            default -> {}
+                        }
+                        // Muestra por consola la pregunta
+                        System.out.println(p);
+                        // Solicitar al usuario su respuesta a la pregunta
+                        System.out.println("Ingresar opcion válida (A,B,C,D)");
+                        input = sc.nextLine();
                 }
-                
-                // Agregar comodines utilizados en caso de ser requerido
-                switch(comodin){
-                    case "cincuenta" -> comodinesUtilizados.add(Comodin.CINCUENTA);
-                    case "companero" -> comodinesUtilizados.add(Comodin.COMPANERO);
-                    case "salon" -> comodinesUtilizados.add(Comodin.SALON);
+
+                switch (input.toUpperCase()){
+                    case "A" -> indRespuesta = 0;
+                    case "B" -> indRespuesta = 1;
+                    case "C" -> indRespuesta = 2;
+                    case "D" -> indRespuesta = 3;
                     default -> {
-                    }
+                     }
                 }
+                // Asignar la última respuesta escogida
+                r = p.getRespuestas().get(indRespuesta);
                 
-                // Obtener literal correcto
-                literalCorrecto = obtenerKeyRespuestaCorrecta(opcionPregunta);
+                if (r.getTipo().equals(TipoRespuesta.CORRECTA)){
+                    System.out.println("*".repeat(20));
+                    System.out.println("Respuesta Correcta!");
+                    nPreguntasContestadas++; 
+                }else{
+                    System.out.println("*".repeat(20));
+                    System.out.println("Respuesta Incorrecta :(");
                 }
-                if (input.equalsIgnoreCase(literalCorrecto)){
-                    nPreguntasContestadas++; // Aumentar de responder correctamente
-                }
-            }while(input.equalsIgnoreCase(literalCorrecto));
             }
         }
+        // Asignar el valor del nivel máximo alcanzado
+        lvlMax = nivelesSuperados;
+        
+        if (nivelesSuperados == materia.getCantNiveles()){
+            System.out.println("Asignar el premio para el estudiante ganador. "
+                    + "FELICITACIONES!");
+            premio = sc.nextLine();
+        }
     }
+    public void setPreguntasParaJuego(ArrayList<Pregunta> pr){
+        this.preguntas=pr;
+    }
+    // Ordenar reporte en funcion de la fecha
+    public static ArrayList<Juego> ordenarReporte(ArrayList<Juego> juegos){
+        int indicecomparar=0;
+        // Bubble sort entre listas y fechas
+        for (int i = 0; i < juegos.size() - 1; i++) {
+            for (int j = 0; j < juegos.size() - i - 1; j++) {
+                //Separación de listas
+                String[] fecha1 = juegos.get(j).getFecha().split("-");
+                String[] fecha2 = juegos.get(j + 1).getFecha().split("-");
+                int d1 = Integer.parseInt(fecha1[0]);
+                int m1 = Integer.parseInt(fecha1[1]);
+                int a1 = Integer.parseInt(fecha1[2]);
+                int d2 = Integer.parseInt(fecha2[0]);
+                int m2 = Integer.parseInt(fecha2[1]);
+                int a2 = Integer.parseInt(fecha2[2]);
+                //Comparacion 
+                    if (a1 != a2) {
+                        indicecomparar=Integer.compare(a1,a2);
+                    } else if (m1 != m2) {
+                        indicecomparar=Integer.compare(m1,m2);
+                    } else {
+                        indicecomparar=Integer.compare(d1,d2);
+                    }
+                if (indicecomparar > 0) {
+                    // Swap the positions of the elements
+                    Juego temp = juegos.get(j);
+                    juegos.set(j, juegos.get(j+1));
+                    juegos.set(j+1, temp);
+                }
+            }
+        }
+        return juegos;
+    }
+    public static void generarReporte(ArrayList<Juego> juegos){
+        // Sort de todos los juegos registrados
+        juegos=ordenarReporte(juegos);
+        System.out.println("Reporte de Juegos:");
+        for(Juego juego:juegos){
+            //Obtencion de atributos
+            String nombreEstudiante=juego.getParticipante().getNombre();
+            //Format de la impresion de juegos
+            System.out.println(juegos.indexOf(juego)+1+". "+nombreEstudiante+", el dia "+ juego.getFecha() + " y contesto "+ juego.getNPreguntasContestadas()+" preguntas correctamente");
+            System.out.println("Nivel Máximo alcanzado: "+juego.getMaxlvl()+" \nPremio: "+juego.getPremio());
+            if(juego.getComodines()!=null){
+                for (Comodin c: juego.getComodines())
+                System.out.println(c.name()); 
+            }
+            
+        }
+        
+    }
+}

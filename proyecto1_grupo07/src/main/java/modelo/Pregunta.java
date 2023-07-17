@@ -8,6 +8,10 @@ public class Pregunta {
     private Materia materia;
     private ArrayList<Respuesta> respuestas;
     
+    public Pregunta(){
+        
+    }
+    
     public Pregunta(String texto, int nivel, Materia materia,
             ArrayList<Respuesta> respuestas) {
         this.texto = texto;
@@ -23,17 +27,6 @@ public class Pregunta {
         return texto;
     }
 
-    public void ingresarRespuestas(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingresar texto de la respuesta correcta");
-        String a = sc.nextLine();
-        respuestas.add(new Respuesta(a,TipoRespuesta.CORRECTA));
-        for(int i=0;i<3;i++){
-            System.out.println("Ingresar texto de la respuesta incorrecta "+(i+1));
-            String b = sc.nextLine();
-            respuestas.add(new Respuesta(b,TipoRespuesta.INCORRECTA));
-        }
-}
     public int getNivel(){
         return nivel;
     }
@@ -70,15 +63,70 @@ public class Pregunta {
         return preguntasMateria;
     }
     
+    public static Pregunta copy(Pregunta p){
+        return new Pregunta(p.getTexto(), 
+                p.getNivel(), p.getMateria(), 
+                p.getRespuestas());
+    }
+    
+    public void removeRespuestasIncorrectas(int n){
+        // Crear iterador de respuestas 
+        Iterator<Respuesta> it = respuestas.iterator();
+        // Declarar contador cada que se elimine una respuesta equívoca
+        int contador = 0;
+        // Remover n respuestas equívocas
+        while (it.hasNext() && (contador < n)){
+            Respuesta r = it.next();
+            if (r.getTipo().equals(TipoRespuesta.INCORRECTA)){
+                it.remove();
+                contador++;
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pregunta other = (Pregunta) obj;
+        if (this.nivel != other.nivel) {
+            return false;
+        }
+        if (!Objects.equals(this.texto, other.texto)) {
+            return false;
+        }
+        if (!Objects.equals(this.materia, other.materia)) {
+            return false;
+        }
+        return Objects.equals(this.respuestas, other.respuestas);
+    }
+    
+    @Override
     public String toString(){
+        ArrayList<String> literales = new ArrayList<>();
+        literales.add("A");
+        literales.add("B");
+        literales.add("C");
+        literales.add("D");
         String pregunta = "Nivel: " + nivel + "\nPregunta:\n"+ texto + 
                 "\nOpciones de respuesta:\n";
         // Shuffle de respuestas de la pregunta
         Collections.shuffle(respuestas);
         for (int i = 0; i < respuestas.size(); i++){
-            pregunta += (i+1) + ". " + respuestas.get(i) + "\n";
+            
+            pregunta += literales.get(i) + ". " + respuestas.get(i) + "\n";
         }
         
         return pregunta;
     }
-}
+    }
+
+    
+
