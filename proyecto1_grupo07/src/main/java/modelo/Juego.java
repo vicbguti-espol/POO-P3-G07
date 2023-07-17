@@ -285,7 +285,6 @@ public class Juego {
                             case "cincuenta" -> { comodinesUtilizados.
                                     add(Comodin.CINCUENTA);
                                     p.removeRespuestasIncorrectas(2);
-                                    System.out.println(p);
                                     break;    
                             }
                             
