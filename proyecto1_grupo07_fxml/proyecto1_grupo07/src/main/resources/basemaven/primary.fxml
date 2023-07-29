@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basemaven.PrimaryController">
+   <top>
+      <AnchorPane prefHeight="112.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox layoutY="8.0" prefHeight="32.0" prefWidth="1024.0">
+               <children>
+                  <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="31.0" prefWidth="171.0" text="Generar Reporte" />
+                  <Separator prefHeight="0.0" prefWidth="598.0" />
+                  <MenuBar prefHeight="29.0" prefWidth="308.0">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="Configuraciones">
+                        <items>
+                          <MenuItem fx:id="mItemTermino" mnemonicParsing="false" text="Administrar términos académicos" />
+                              <MenuItem fx:id="mItemMateria" mnemonicParsing="false" text="Administrar materias y paralelos" />
+                              <MenuItem fx:id="mItemPregunta" mnemonicParsing="false" text="Administrar preguntas" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="455.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="405.0" prefWidth="1024.0">
+               <children>
+                  <HBox prefHeight="96.0" prefWidth="1024.0">
+                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="105.0" prefWidth="33.0" visible="false" />
+                        <Label prefHeight="105.0" prefWidth="578.0" text="Polipreguntas">
+                           <font>
+                              <Font size="72.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btnJuego" alignment="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="344.0" text="Nuevo Juego" textAlignment="CENTER">
+                           <font>
+                              <Font size="46.0" />
+                           </font>
+                        </Button>
+                        <Separator orientation="VERTICAL" prefHeight="105.0" prefWidth="61.0" visible="false" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
