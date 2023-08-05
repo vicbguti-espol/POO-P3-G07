@@ -34,7 +34,7 @@ public class Paralelo {
 
     @ Override
     public String toString(){
-        return "Paralelo {materia: " + materia.getNombre() + ", paralelo: " + numero + ", termino: " + termino + "}";
+        return String.valueOf(numero);
     }
 
 

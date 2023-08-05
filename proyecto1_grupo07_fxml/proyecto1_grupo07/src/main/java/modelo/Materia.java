@@ -33,8 +33,7 @@ public class Materia {
     
     @ Override
     public String toString(){
-        return "Materia {codigo: " + codigo +", nombre: " + nombre +
-                ", niveles: " + cantNiveles + "}";
+        return nombre;
 
     }
 
