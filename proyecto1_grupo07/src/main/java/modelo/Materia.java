@@ -3,9 +3,12 @@ import java.io.*;
 import java.util.*;
 
 public class Materia implements Serializable{
+    private static final String path="Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\materias.ser";
+    private static final long serialVersionUID = 1;
     private String codigo;
     private String nombre;
     private int cantNiveles;
+    public static ArrayList<Materia> materias = cargarMaterias();
     
     public Materia(String codigo, String nombre, int cantidad){
         this.codigo=codigo;
@@ -60,57 +63,47 @@ public class Materia implements Serializable{
         return Objects.equals(this.nombre, other.nombre);
     }
     public static void main(String[] args) {
-        for(Materia m: cargarMateriasseria("archivo/Materia.type")){
-            System.out.print(m.toString());
-            
+        for(Materia m:materias){
+            System.out.println(m.toString());
         }
     }
-    public static ArrayList<Materia> cargarMateriasarchi(String path){
-        ArrayList<Materia> lfinal=new ArrayList<>();
-        try{
-            BufferedWriter writer=new BufferedWriter(new FileWriter(path,true));
-            writer.write("CCPG1000,ALGEBRA LINEAL,2");
-            writer.newLine();
-            writer.close();
-        }
-        catch(Exception e){
+    /*public static void subirArchivo(){
+      try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(new ArrayList<Materia>(Arrays.asList(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2),new Materia("CCPG1000", "ALGEBRA LINEAL",2))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }  
+    }/* */
+
+    public static ArrayList<Materia> cargarMaterias() {
+        //subirArchivo();
+        ArrayList<Materia> materiascargadas = new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
+            materiascargadas= (ArrayList<Materia>) in.readObject();
+        } catch (EOFException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            BufferedReader reader=new BufferedReader(new FileReader(path));
-            String line="";
-            while((line=reader.readLine())!=null){
-                String[] elementos=line.split(",");
-                lfinal.add(new Materia(elementos[0], elementos[1], Integer.valueOf(elementos[2])));
-            }
-            reader.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return lfinal;
+        return materiascargadas;
     }
-    public static ArrayList<Materia> cargarMateriasseria(String path){
-        ArrayList<Materia> lfinal=new ArrayList<>();
-        try{
-            ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(path,true));
-            out.writeObject(new Materia("CCPG1000", "ALGEBRA LINEAL",2));
-            out.close();
+    // Para editar una materia seria necesario eliminarla y agregarla nuevamente en tiempo de compilacion.
+    public static void agregarMateria(Materia m){
+        if(!materias.contains(m)){
+            materias.add(m);
         }
-        catch(Exception e){
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(materias);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
-            ObjectInputStream in=new ObjectInputStream(new FileInputStream(path));
-            Object o=in.readObject();
-            Materia m=(Materia)o;
-            lfinal.add(m);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return lfinal;
     }
-    
-    
+    public static void eliminarMateria(Materia m){
+            materias.remove(m);
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(materias);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
