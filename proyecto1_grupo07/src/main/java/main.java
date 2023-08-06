@@ -8,11 +8,7 @@ import java.util.TreeMap;
 public class main {    
     static int añoActual = 2023;
     static TerminoAcademico terminoJuego;
-    static Scanner sc = new Scanner(System.in);
-    // Estudiantes ejemplares en reemplazo a archivos
-    static ArrayList<Estudiante> estudiantesP3 = new ArrayList<>();
-    static ArrayList<Juego> juegos = new ArrayList<>();
-    
+    static Scanner sc = new Scanner(System.in);    
     /**
      * Métodos de configuración de términos académicos
      */
@@ -332,7 +328,7 @@ public class main {
         sc.nextLine();
         
         // Devolver el paralelo
-        return new Paralelo(n, m, t, estudiantesP3);
+        return new Paralelo(n, m, t, Estudiante.estudiantes);
     }
     /**
      * Obtener paralelo a partir de paralelos existentes
@@ -652,11 +648,8 @@ public class main {
      * Método main principal para mostra al usuario
      * @param args 
      */
-    public static void main(String[] args) {
-        ArrayList<Paralelo> paralelos = new ArrayList();
-        ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>();
-        ArrayList<Materia> materias = new ArrayList<>();
-        
+    public static void main(String[] args) { 
+        ArrayList<Estudiante> estudiantesP3 = new ArrayList<>();
         estudiantesP3.add(new Estudiante(202110136,
             "maactorr@espol.edu.ec", 
             "ACELDO TORRES MARIA GRAZIA"));
@@ -689,10 +682,10 @@ public class main {
                 "BORBOR GUTIERREZ VICTOR DANIEL"));
 
         
-        materias.add(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2));
-        materias.add(new Materia("CCPG1000", "ALGEBRA LINEAL",2));
+        Materia.materias.add(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2));
+        Materia.materias.add(new Materia("CCPG1000", "ALGEBRA LINEAL",2));
         //Lista de preguntas
-        ArrayList<Pregunta> preguntas= new ArrayList<>();
+        
         //Pregunta 1 de prueba
         ArrayList<Respuesta> respuestas1 = new ArrayList<>();
         respuestas1.add(new Respuesta("4",TipoRespuesta.CORRECTA));
@@ -719,23 +712,23 @@ public class main {
         respuestas4.add(new Respuesta("112",TipoRespuesta.INCORRECTA));
         
         Pregunta p1= new Pregunta("Cuanto es 2+2?",2, 
-                materias.get(0), respuestas1);
+                Materia.materias.get(0), respuestas1);
         Pregunta p2= new Pregunta("Cuanto es 10-12?",2,
-                materias.get(0), respuestas2);
+                Materia.materias.get(0), respuestas2);
         Pregunta p3= new Pregunta("Cuanto es 1+12",3,
-                materias.get(0), respuestas3);
+                Materia.materias.get(0), respuestas3);
         Pregunta p4= new Pregunta("Cuanto es 1+1",3,
-                materias.get(0), respuestas4);
-        preguntas.add(p1);
-        preguntas.add(p2);
-        preguntas.add(p3);
-        preguntas.add(p4);
+                Materia.materias.get(0), respuestas4);
+        Pregunta.preguntas.add(p1);
+        Pregunta.preguntas.add(p2);
+        Pregunta.preguntas.add(p3);
+        Pregunta.preguntas.add(p4);
         
-        terminosAcademicos.add(new TerminoAcademico(1,2023));
+        TerminoAcademico.terminosAcademicos.add(new TerminoAcademico(1,2023));
         
         
-        paralelos.add(new Paralelo(3, materias.get(0), 
-                terminosAcademicos.get(0), estudiantesP3));
+        Paralelo.paralelos.add(new Paralelo(3, Materia.materias.get(0), 
+                TerminoAcademico.terminosAcademicos.get(0), estudiantesP3));
         ////////////////////////////////
         
         int opcionprincipal=0;
@@ -750,7 +743,7 @@ public class main {
                     separador();
                     System.out.println("Términos académicos disponibles");
                     // Imprimir el listado de términos académicos
-                    for (TerminoAcademico t: terminosAcademicos){
+                    for (TerminoAcademico t: TerminoAcademico.terminosAcademicos){
                         System.out.println(t);
                     }
                     separador();
@@ -758,18 +751,18 @@ public class main {
                     if (opcionterminos==1){
                         //Código para Ingresar terminos academicos
                         System.out.println("Eligió Ingresar Término Académico");
-                        TerminoAcademico t = getTerminoValidado(terminosAcademicos);
+                        TerminoAcademico t = getTerminoValidado(TerminoAcademico.terminosAcademicos);
                         // Agregar el término académico validado
-                        terminosAcademicos.add(t);
+                        TerminoAcademico.terminosAcademicos.add(t);
                     }else if(opcionterminos==2){
                         //Código para Ingresar editar academicos
                         System.out.println("Eligió Editar Término Académico");
-                        setAtributosConsole(terminosAcademicos);
+                        setAtributosConsole(TerminoAcademico.terminosAcademicos);
                     }else if(opcionterminos==3){
                         //Código para configurar terminos academicos
                         System.out.println("Eligió Configurar Término "
                                 + "para el Juego");
-                        setTerminoJuegoConsole(terminosAcademicos);
+                        setTerminoJuegoConsole(TerminoAcademico.terminosAcademicos);
                     } else if(opcionterminos==4){
                         //Código para configurar terminos academicos
                         System.out.println("Eligió retornar al menú principal");
@@ -778,8 +771,8 @@ public class main {
                     // Codigo para administrar materias y  paralelos
                     System.out.println("Escogio la opcion "+opcion1);
                     // Mostrar materias y paralelos
-                    visualizarMaterias(materias);
-                    visualizarParalelos(paralelos);
+                    visualizarMaterias(Materia.materias);
+                    visualizarParalelos(Paralelo.paralelos);
                     
                     int opcionmaterias = menuMaterias();
                     
@@ -787,22 +780,22 @@ public class main {
                         //Código para Ingresar MATERIA
                         System.out.println("Eligió Ingresar Materia");
                         Materia m = getMateriaConsole();
-                        materias.add(m);
+                        Materia.materias.add(m);
                     }else if(opcionmaterias==2){
                         //Código para Ingresar Editar MATERIA
                         System.out.println("Eligió Editar Materia");
-                        setMateriaConsole(materias);
+                        setMateriaConsole(Materia.materias);
                     }else if(opcionmaterias==3){
                         //Código para Agregar PARALELO
                         System.out.println("Eligió Agregar Paralelo");
-                        Paralelo p = getParaleloConsole(materias, 
-                                terminosAcademicos);
-                        paralelos.add(p);
+                        Paralelo p = getParaleloConsole(Materia.materias, 
+                                TerminoAcademico.terminosAcademicos);
+                        Paralelo.paralelos.add(p);
                     }else if(opcionmaterias==4){
                         //Código para Eliminar PARALELO
                         System.out.println("Eligió eliminar paralelo");
-                        Paralelo p = getParaleloConsole(paralelos);
-                        paralelos.remove(p);
+                        Paralelo p = getParaleloConsole(Paralelo.paralelos);
+                        Paralelo.paralelos.remove(p);
                         
                     }else if(opcionmaterias==5){
                         System.out.println("Eligió retornar al "
@@ -816,22 +809,22 @@ public class main {
                         //Código para Visualizar Preguntas
                         System.out.println("Eligió Visualizar Preguntas");
                         // Obtener materia por consola
-                        Materia m = getMateriaConsole(materias);
+                        Materia m = getMateriaConsole(Materia.materias);
                         // Obtener preguntas por materia
                         ArrayList<Pregunta> preguntasMateria = 
-                                Pregunta.getPreguntasMateria(preguntas,m);
+                                Pregunta.getPreguntasMateria(Pregunta.preguntas,m);
                         // Mostrar las preguntas de la materia
                         visualizarPreguntas(preguntasMateria);
                     }else if(opcionpreguntas==2){
                         //Código para Agregar Preguntas
                         System.out.println("Eligió Agregar pregunta");
-                        Pregunta p = getPreguntaConsole(materias);
-                        preguntas.add(p);
+                        Pregunta p = getPreguntaConsole(Materia.materias);
+                        Pregunta.preguntas.add(p);
                     }else if(opcionpreguntas==3){
                         //Código para Eliminar pregunta
                         System.out.println("Eligió Eliminar Pregunta");
-                        Pregunta p = getPreguntaConsole(materias, preguntas);
-                        preguntas.remove(p);
+                        Pregunta p = getPreguntaConsole(Materia.materias, Pregunta.preguntas);
+                        Pregunta.preguntas.remove(p);
                     }else if(opcionpreguntas==4){
                         opcionprincipal = 0;
                     }
@@ -841,14 +834,14 @@ public class main {
             }else if(opcionprincipal==2){
                 System.out.println("Escogió iniciar Juego, Éxitos!");
                 // Declarar el objeto Juego
-                Juego j = getJuegoConsole(materias, paralelos, preguntas);
+                Juego j = getJuegoConsole(Materia.materias, Paralelo.paralelos, Pregunta.preguntas);
                 separador();
                 // Empezar el juego
                 j.visualizarPreguntas();
                 // Agregar juego a juegos para el reporte
-                juegos.add(j);
+                Juego.juegos.add(j);
             } else if(opcionprincipal==3){
-                Juego.generarReporte(juegos);
+                //Juego.generarReporte(Juego.juegos);
             }
         }
     }

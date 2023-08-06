@@ -1,10 +1,14 @@
 package modelo;
+import java.io.*;
 import java.util.*;
 
-public class Materia {
+public class Materia implements Serializable{
+    private static final String path="Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\materias.ser";
+    private static final long serialVersionUID = 1;
     private String codigo;
     private String nombre;
     private int cantNiveles;
+    public static ArrayList<Materia> materias = cargarMaterias();
     
     public Materia(String codigo, String nombre, int cantidad){
         this.codigo=codigo;
@@ -58,6 +62,48 @@ public class Materia {
         }
         return Objects.equals(this.nombre, other.nombre);
     }
-    
-    
+    public static void main(String[] args) {
+        for(Materia m:materias){
+            System.out.println(m.toString());
+        }
+    }
+    /*public static void subirArchivo(){
+      try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(new ArrayList<Materia>(Arrays.asList(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2),new Materia("CCPG1000", "ALGEBRA LINEAL",2))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }  
+    }/* */
+
+    public static ArrayList<Materia> cargarMaterias() {
+        //subirArchivo();
+        ArrayList<Materia> materiascargadas = new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
+            materiascargadas= (ArrayList<Materia>) in.readObject();
+        } catch (EOFException e) {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return materiascargadas;
+    }
+    // Para editar una materia seria necesario eliminarla y agregarla nuevamente en tiempo de compilacion.
+    public static void agregarMateria(Materia m){
+        if(!materias.contains(m)){
+            materias.add(m);
+        }
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(materias);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void eliminarMateria(Materia m){
+            materias.remove(m);
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(materias);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

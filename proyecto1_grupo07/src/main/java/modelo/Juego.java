@@ -1,15 +1,29 @@
 package modelo;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
-public class Juego {
+public class Juego implements Serializable, Comparable<Juego>{
+    private static final long serialVersionUID=1;
+    private static final String path="Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\reporte.ser";
+    public static ArrayList<Juego> juegos = new ArrayList<>();
     private Materia materia;
     private ArrayList<Pregunta> preguntas;
     private Estudiante participante;
@@ -78,7 +92,7 @@ public class Juego {
      * Setting de preguntas a partir de una materia
      * @param materia 
      * @param pregs 
-     * @return  
+     * @return ArrayList
      */
     public static ArrayList<Pregunta> getPreguntasMateria(Materia materia, ArrayList<Pregunta> pregs){
         ArrayList<Pregunta> preguntasMaterias = new ArrayList<>();
@@ -339,56 +353,43 @@ public class Juego {
     public void setPreguntasParaJuego(ArrayList<Pregunta> pr){
         this.preguntas=pr;
     }
-    // Ordenar reporte en funcion de la fecha
-    public static ArrayList<Juego> ordenarReporte(ArrayList<Juego> juegos){
-        int indicecomparar=0;
-        // Bubble sort entre listas y fechas
-        for (int i = 0; i < juegos.size() - 1; i++) {
-            for (int j = 0; j < juegos.size() - i - 1; j++) {
-                //Separación de listas
-                String[] fecha1 = juegos.get(j).getFecha().split("-");
-                String[] fecha2 = juegos.get(j + 1).getFecha().split("-");
-                int d1 = Integer.parseInt(fecha1[0]);
-                int m1 = Integer.parseInt(fecha1[1]);
-                int a1 = Integer.parseInt(fecha1[2]);
-                int d2 = Integer.parseInt(fecha2[0]);
-                int m2 = Integer.parseInt(fecha2[1]);
-                int a2 = Integer.parseInt(fecha2[2]);
-                //Comparacion 
-                    if (a1 != a2) {
-                        indicecomparar=Integer.compare(a1,a2);
-                    } else if (m1 != m2) {
-                        indicecomparar=Integer.compare(m1,m2);
-                    } else {
-                        indicecomparar=Integer.compare(d1,d2);
-                    }
-                if (indicecomparar > 0) {
-                    // Swap the positions of the elements
-                    Juego temp = juegos.get(j);
-                    juegos.set(j, juegos.get(j+1));
-                    juegos.set(j+1, temp);
-                }
-            }
+
+    @Override
+    public int compareTo(Juego j) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date date1 = dateFormat.parse(this.getFecha());
+            Date date2 = dateFormat.parse(j.getFecha());
+            return date2.compareTo(date1); // Compare in reverse order for newest to oldest
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Handle parsing exception as needed
         }
+        return 0; // Default value if unable to compare
+    }
+    // Ordenar reporte en funcion de la fecha
+    public ArrayList<Juego> ordenarReporte(ArrayList<Juego> juegos){
+        Collections.sort(juegos);
         return juegos;
     }
-    public static void generarReporte(ArrayList<Juego> juegos){
-        // Sort de todos los juegos registrados
-        juegos=ordenarReporte(juegos);
-        System.out.println("Reporte de Juegos:");
-        for(Juego juego:juegos){
-            //Obtencion de atributos
-            String nombreEstudiante=juego.getParticipante().getNombre();
-            //Format de la impresion de juegos
-            System.out.println(juegos.indexOf(juego)+1+". "+nombreEstudiante+", el dia "+ juego.getFecha() + " y contesto "+ juego.getNPreguntasContestadas()+" preguntas correctamente");
-            System.out.println("Nivel Máximo alcanzado: "+juego.getMaxlvl()+" \nPremio: "+juego.getPremio());
-            if(juego.getComodines()!=null){
-                System.out.println("Comodines utilizados:");
-                for (Comodin c: juego.getComodines())
-                System.out.println(c.name()); 
-            }
-            
+    public static ArrayList<Juego> cargarJuegos(){
+        ArrayList<Juego> juegoscargados = new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
+            juegoscargados= (ArrayList<Juego>) in.readObject();
+        } catch (EOFException e) {
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
+        return juegoscargados;
     }
+    public static void agregarJuego(Juego j){
+            juegos.add(j);
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(juegos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
