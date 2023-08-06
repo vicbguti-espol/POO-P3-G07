@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 
 public class Materia implements Serializable{
-    private static final String path="Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\materias.ser";
+    private static final String path="archivo\\materias.ser";
     private static final long serialVersionUID = 1;
     private String codigo;
     private String nombre;

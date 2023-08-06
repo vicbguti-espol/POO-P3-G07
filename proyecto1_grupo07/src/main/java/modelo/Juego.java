@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 
 public class Juego implements Serializable, Comparable<Juego>{
     private static final long serialVersionUID=1;
-    private static final String path="Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\reporte.ser";
+    private static final String path="archivo\\reporte.ser";
     public static ArrayList<Juego> juegos = new ArrayList<>();
     private Materia materia;
     private ArrayList<Pregunta> preguntas;

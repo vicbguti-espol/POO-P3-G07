@@ -17,7 +17,7 @@ public class TerminoAcademico implements Serializable {
     private int añoTermino;
     //public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>();
     public static ArrayList<TerminoAcademico> terminosAcademicos = cargarTerminosAcademicos();
-    private static final String path="Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\terminos.ser";
+    private static final String path="archivo\\terminos.ser";
     
     // Constructor
     public TerminoAcademico(int numTermino, int añoTermino){
