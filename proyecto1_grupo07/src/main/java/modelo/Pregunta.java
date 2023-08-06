@@ -16,7 +16,7 @@ public class Pregunta implements Serializable {
     private ArrayList<Respuesta> respuestas;
     //public static ArrayList<Pregunta> preguntas= new ArrayList<>();
     public static ArrayList<Pregunta> preguntas= cargarPreguntas();
-    private static final String path="Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\preguntas.ser";
+    private static final String path="archivo\\preguntas.ser";
     
     public Pregunta(){
         

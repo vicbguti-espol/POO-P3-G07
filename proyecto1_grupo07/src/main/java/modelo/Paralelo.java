@@ -16,7 +16,7 @@ public class Paralelo implements Serializable {
     //public static ArrayList<Paralelo> paralelos = new ArrayList();
     public static ArrayList<Paralelo> paralelos = cargarParalelos();
     private static final long serialVersionUID = 1;
-    private static final String path="Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\paralelos.ser";
+    private static final String path="archivo\\paralelos.ser";
 
     public Paralelo(int numero, Materia materia, TerminoAcademico termino, ArrayList<Estudiante> estudiantes) {
         this.numero = numero;
