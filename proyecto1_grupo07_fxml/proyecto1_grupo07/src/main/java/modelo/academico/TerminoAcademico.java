@@ -1,4 +1,4 @@
-package modelo;
+package modelo.academico;
 
 // Importar clases
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
-package modelo;
+package modelo.academico;
 
+import modelo.academico.TerminoAcademico;
 import java.util.*;
 
 public class Paralelo {

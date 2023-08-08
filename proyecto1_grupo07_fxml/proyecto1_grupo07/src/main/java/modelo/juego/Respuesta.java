@@ -1,5 +1,6 @@
-package modelo;
+package modelo.juego;
 
+import modelo.juego.TipoRespuesta;
 import java.util.Objects;
 
 public class Respuesta {

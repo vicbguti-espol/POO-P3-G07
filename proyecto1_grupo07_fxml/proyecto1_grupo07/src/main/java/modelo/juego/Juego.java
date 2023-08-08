@@ -1,5 +1,9 @@
-package modelo;
+package modelo.juego;
 
+import modelo.juego.Pregunta;
+import modelo.juego.Respuesta;
+import modelo.juego.TipoEstudiante;
+import modelo.juego.TipoRespuesta;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,6 +12,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import modelo.academico.Estudiante;
+import modelo.academico.Materia;
+import modelo.academico.Paralelo;
 
 public class Juego {
     private Materia materia;

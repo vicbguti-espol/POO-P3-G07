@@ -1,4 +1,4 @@
-package modelo;
+package modelo.academico;
 import java.util.*;
 
 public class Materia {

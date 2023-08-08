@@ -1,6 +1,9 @@
-package modelo;
+package modelo.juego;
 
+import modelo.juego.Respuesta;
+import modelo.juego.TipoRespuesta;
 import java.util.*;
+import modelo.academico.Materia;
 
 public class Pregunta {
     private String texto;
