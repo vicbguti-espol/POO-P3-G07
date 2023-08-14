@@ -36,25 +36,25 @@ public class TerminosController{
     @FXML
     private ComboBox cmbTerminos;
     
-    List<TerminoAcademico> terminos = TerminoAcademico.
-                cargarTerminosAcademicos(App.pathTer);
+    //List<TerminoAcademico> terminos = TerminoAcademico.
+    //            cargarTerminosAcademicos(App.pathTer);
     /**
      * Initializes the controller class.
      */
     @FXML
     private void initialize(){
-        System.out.println(terminos);
+        System.out.println(TerminoAcademico.terminosAcademicos);
         //cargar combobox
-        cmbTerminos.getItems().setAll(terminos);
+        cmbTerminos.getItems().setAll(TerminoAcademico.terminosAcademicos);
         
         //asignar a cada columna el atributo del objeto correspondiente
         colAño.setCellValueFactory(new PropertyValueFactory<>("añoTermino"));
         colTermino.setCellValueFactory(new PropertyValueFactory<>("numTermino"));
         
         //datos en tableview
-        tvTerminosAcademicos.getItems().setAll(terminos);
+        tvTerminosAcademicos.getItems().setAll(TerminoAcademico.terminosAcademicos);
     }
-    
+    /*
     @FXML
     private void editarTermino() throws IOException {
         TerminoAcademico t = (TerminoAcademico) tvTerminosAcademicos.getSelectionModel().getSelectedItem();
@@ -69,5 +69,5 @@ public class TerminosController{
         ct.llenarCampos(e);
         App.changeRoot(root);
     }
-    
+    */
 }

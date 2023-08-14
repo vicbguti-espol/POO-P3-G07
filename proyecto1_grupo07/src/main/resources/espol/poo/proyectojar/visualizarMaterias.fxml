@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="bpCentral" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.visualizarMateriasController">
+   <top>
+      <VBox alignment="CENTER" prefHeight="79.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Materia">
+               <font>
+                  <Font name="System Bold" size="33.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btneditarMateria" mnemonicParsing="false" text="Editar Materia" />
+            <Button fx:id="btnagregarMateria" mnemonicParsing="false" text="Agregar Materia" />
+            <Button mnemonicParsing="false" onAction="#eliminarMateria" text="Eliminar Materia" />
+            <Button fx:id="btnSalir" mnemonicParsing="false" text="Salir">
+               <HBox.margin>
+                  <Insets left="165.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

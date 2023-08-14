@@ -1,18 +1,23 @@
 package modelo.juego;
 
+import modelo.academico.*;
 import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
-import modelo.juego.Respuesta;
-import modelo.juego.TipoRespuesta;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
-import modelo.academico.Materia;
 
-public class Pregunta {
+public class Pregunta implements Serializable {
+    private static final long serialVersionUID = 1;
     private String texto;
     private int nivel;
     private Materia materia;
     private ArrayList<Respuesta> respuestas;
+    //public static ArrayList<Pregunta> preguntas= new ArrayList<>();
+    public static ArrayList<Pregunta> preguntas= cargarPreguntas();
+    private static final String path="archivo\\preguntas.ser";
     
     public Pregunta(){
         
@@ -26,23 +31,6 @@ public class Pregunta {
         this.respuestas = respuestas;
     }
 
-    /**
-     * Obtener un arreglo de tipo Pregunta a partir de una ruta de archivo
-     * @param pathPreguntas
-     * @return 
-     */
-    public static ArrayList<Pregunta> cargarPreguntas(String pathPreguntas) {
-        ArrayList<Pregunta> preguntascargadas = new ArrayList<>();
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(pathPreguntas))) {
-            preguntascargadas= (ArrayList<Pregunta>) in.readObject();
-        } catch (EOFException e) {
-
-        } catch (Exception e) {
-            System.out.println(e);;
-        }
-        return preguntascargadas;
-    }
-    
     /**
     * Getters y setters
     */
@@ -74,8 +62,6 @@ public class Pregunta {
         respuestas=r;
     }
     
-    
-    
     public static ArrayList<Pregunta> getPreguntasMateria(ArrayList<Pregunta>
             preguntas, Materia materia){
         // Declarar las preguntas de la materia
@@ -91,9 +77,7 @@ public class Pregunta {
     public static Pregunta copy(Pregunta p){
         ArrayList<Respuesta> respuestas = new ArrayList<>(p.getRespuestas());
         int nivel = p.getNivel();
-        return new Pregunta(p.getTexto(), 
-                nivel, p.getMateria(), 
-                respuestas);
+        return new Pregunta(p.getTexto(), nivel, p.getMateria(), respuestas);
     }
     
     public void removeRespuestasIncorrectas(int n){
@@ -154,7 +138,58 @@ public class Pregunta {
         
         return pregunta;
     }
+    public static void main(String[] args) {
+        //subirArchivo();
+        //eliminarPregunta(preguntas.get(0));
+        for(Pregunta p: preguntas){
+            System.out.println(p.toString());
+        }
+        
     }
+    public static void subirArchivo() {
+        preguntas.add(new Pregunta("Cuanto es 2+2?",2, Materia.materias.get(0), new ArrayList<>(Arrays.asList(new Respuesta("4",TipoRespuesta.CORRECTA),new Respuesta("5",TipoRespuesta.INCORRECTA),new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("22",TipoRespuesta.INCORRECTA)))));
+        preguntas.add(new Pregunta("Cuanto es 10-12?",2,Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("4",TipoRespuesta.INCORRECTA),new Respuesta("-2",TipoRespuesta.CORRECTA),new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("22",TipoRespuesta.INCORRECTA)))));
+        preguntas.add(new Pregunta("Cuanto es 1+12",3, Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("13",TipoRespuesta.CORRECTA),new Respuesta("7",TipoRespuesta.INCORRECTA),new Respuesta("112",TipoRespuesta.INCORRECTA)))));
+        preguntas.add(new Pregunta("Cuanto es 1+1",3, Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("2",TipoRespuesta.CORRECTA),new Respuesta("7",TipoRespuesta.INCORRECTA),new Respuesta("112",TipoRespuesta.INCORRECTA)))));
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(preguntas);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
+
+    public static ArrayList<Pregunta> cargarPreguntas() {
+        ArrayList<Pregunta> preguntascargadas = new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
+            preguntascargadas= (ArrayList<Pregunta>) in.readObject();
+        } catch (EOFException e) {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return preguntascargadas;
+    }
+    // Para editar una materia seria necesario eliminarla y agregarla nuevamente en tiempo de compilacion.
+    public static void agregarPregunta(Pregunta p){
+        if(!preguntas.contains(p)){
+            preguntas.add(p);
+        }
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(preguntas);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void eliminarPregunta(Pregunta p){
+            preguntas.remove(p);
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(preguntas);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+}
 
     
 

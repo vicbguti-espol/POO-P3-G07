@@ -1,9 +1,10 @@
 package modelo.juego;
 
-import modelo.juego.TipoRespuesta;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Respuesta {
+public class Respuesta implements Serializable{
+    private static final long serialVersionUID = 1;
     private String texto;
     private TipoRespuesta tipo;
     

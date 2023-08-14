@@ -1,36 +1,20 @@
 package modelo.academico;
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Materia implements Serializable{
+    private static final String path="archivo\\materias.ser";
+    private static final long serialVersionUID = 1;
     private String codigo;
     private String nombre;
     private int cantNiveles;
+    public static ArrayList<Materia> materias = cargarMaterias();
     
     public Materia(String codigo, String nombre, int cantidad){
         this.codigo=codigo;
         this.nombre=nombre;
         this.cantNiveles=cantidad;
     }
-    
-    /**
-     * Obtener arreglo de materias a partir de una ruta de archivo
-     * @param pathMaterias
-     * @return 
-     */
-    public static ArrayList<Materia> cargarMaterias(String pathMaterias) {
-        //subirArchivo();
-        ArrayList<Materia> materiascargadas = new ArrayList<>();
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(pathMaterias))) {
-            materiascargadas = (ArrayList<Materia>) in.readObject();
-        } catch (EOFException e) {
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return materiascargadas;
-    }
-    
 
     public String getCodigo(){
         return codigo;
@@ -53,7 +37,8 @@ public class Materia implements Serializable{
     
     @ Override
     public String toString(){
-        return nombre;
+        return "Materia {codigo: " + codigo +", nombre: " + nombre +
+                ", niveles: " + cantNiveles + "}";
 
     }
 
@@ -77,6 +62,56 @@ public class Materia implements Serializable{
         }
         return Objects.equals(this.nombre, other.nombre);
     }
-    
-    
+    /*public static void subirArchivo(){
+      try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(new ArrayList<Materia>(Arrays.asList(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2),new Materia("CCPG1000", "ALGEBRA LINEAL",2))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }  
+    }/* */
+
+    public static ArrayList<Materia> cargarMaterias() {
+        //subirArchivo();
+        ArrayList<Materia> materiascargadas = new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
+            materiascargadas= (ArrayList<Materia>) in.readObject();
+        } catch (EOFException e) {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return materiascargadas;
+    }
+    // Para editar una materia seria necesario eliminarla y agregarla nuevamente en tiempo de compilacion.
+    public static void agregarMateria(Materia m){
+        if(!materias.contains(m)){
+            materias.add(m);
+        }
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(materias);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void editarMateria(Materia mantigua, String nombre, int cantNiveles){
+        if(materias.contains(mantigua)){
+            materias.remove(materias.indexOf(mantigua));
+        }
+        mantigua.setNombre(nombre);
+        mantigua.setCantNiveles(cantNiveles);
+        materias.add(mantigua);
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(materias);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void eliminarMateria(Materia m){
+        materias.remove(m);
+        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
+            out.writeObject(materias);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
