@@ -8,7 +8,8 @@ public class Materia implements Serializable{
     private String codigo;
     private String nombre;
     private int cantNiveles;
-    public static ArrayList<Materia> materias = cargarMaterias();
+    //public static ArrayList<Materia> materias = cargarMaterias();
+    public static ArrayList<Materia> materias = new ArrayList<>(Arrays.asList(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2),new Materia("CCPG1000", "ALGEBRA LINEAL",2)));
     
     public Materia(String codigo, String nombre, int cantidad){
         this.codigo=codigo;
