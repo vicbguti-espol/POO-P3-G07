@@ -14,8 +14,8 @@ public class Paralelo implements Serializable {
     private TerminoAcademico termino;
     private ArrayList<Estudiante> estudiantes;
     private String rutaEstudiantes;
-    //public static ArrayList<Paralelo> paralelos = new ArrayList();
-    public static ArrayList<Paralelo> paralelos = cargarParalelos();
+    public static ArrayList<Paralelo> paralelos = new ArrayList<>(Arrays.asList(new Paralelo(3, Materia.materias.get(0), TerminoAcademico.terminosAcademicos.get(0), Estudiante.cargarEstudiantes("archivo\\CCPG1052-3-2023-1.txt"))));
+    //public static ArrayList<Paralelo> paralelos = cargarParalelos();
     private static final long serialVersionUID = 1;
     private static final String path="archivo\\paralelos.ser";
 

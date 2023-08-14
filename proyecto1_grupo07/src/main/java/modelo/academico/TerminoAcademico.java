@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 // Importar clases
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class TerminoAcademico implements Serializable {
@@ -16,7 +17,8 @@ public class TerminoAcademico implements Serializable {
     private int numTermino;
     private int añoTermino;
     //public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>();
-    public static ArrayList<TerminoAcademico> terminosAcademicos = cargarTerminosAcademicos();
+    //public static ArrayList<TerminoAcademico> terminosAcademicos = cargarTerminosAcademicos();
+    public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>(Arrays.asList(new TerminoAcademico(1, 2023)));
     private static final String path="archivo\\terminos.ser";
     
     // Constructor
