@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +39,11 @@ public class TerminosController{
     
     //List<TerminoAcademico> terminos = TerminoAcademico.
     //            cargarTerminosAcademicos(App.pathTer);
+    
+    @FXML
+    private void switchToPrimary(ActionEvent event) throws IOException{
+        App.setRoot("primary");
+    }
     /**
      * Initializes the controller class.
      */
@@ -54,10 +60,13 @@ public class TerminosController{
         //datos en tableview
         tvTerminosAcademicos.getItems().setAll(TerminoAcademico.terminosAcademicos);
     }
-    /*
+    
+    
+    
     @FXML
     private void editarTermino() throws IOException {
         TerminoAcademico t = (TerminoAcademico) tvTerminosAcademicos.getSelectionModel().getSelectedItem();
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("datos.fxml"));//no tiene el controlador especificado
         DatosController ct = new DatosController();
 
@@ -68,6 +77,6 @@ public class TerminosController{
         ct.llenarCombo(Departamento.cargarDepartamentos(App.pathDep));
         ct.llenarCampos(e);
         App.changeRoot(root);
+        */
     }
-    */
 }

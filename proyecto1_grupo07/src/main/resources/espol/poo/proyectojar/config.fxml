@@ -10,7 +10,7 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Términos Académicos" />
+            <Button mnemonicParsing="false" onAction="#switchToTer" prefHeight="26.0" prefWidth="162.0" text="Términos Académicos" />
             <Button mnemonicParsing="false" onAction="#switchtoMaterias" prefHeight="26.0" prefWidth="162.0" text="Materias" />
             <Button mnemonicParsing="false" onAction="#switchtoParalelos" prefHeight="26.0" prefWidth="162.0" text="Paralelos" />
             <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Preguntas" />

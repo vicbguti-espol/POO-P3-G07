@@ -31,6 +31,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#editarTermino" text="Editar Término" />
                   <Button mnemonicParsing="false" text="Agregar Término Académico" />
+                  <Button mnemonicParsing="false" onAction="#switchToPrimary" text="Regresar" />
                </children>
             </HBox>
          </children>

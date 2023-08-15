@@ -19,5 +19,10 @@ public class ConfigController {
     private void switchToPrimary(ActionEvent event) throws IOException{
         App.setRoot("primary");
     }
+    
+    @FXML
+    private void switchToTer(ActionEvent event) throws IOException{
+        App.setRoot("terminos");
+    }
 }
 
