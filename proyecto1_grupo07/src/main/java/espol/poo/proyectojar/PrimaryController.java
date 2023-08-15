@@ -9,13 +9,9 @@ public class PrimaryController {
     private void switchtoNuevoJuego(ActionEvent event)throws IOException  {
         App.setRoot("nuevoJuego");
     }
-
+    
     @FXML
-    private void switchtoParalelos(ActionEvent event)throws IOException  {
-        App.setRoot("visualizarParalelos");
-    }
-    @FXML
-    private void switchtoMaterias(ActionEvent event)throws IOException  {
-        App.setRoot("visualizarMaterias");
+    private void switchToConfig(ActionEvent event) throws IOException {
+        App.setRoot("config");
     }
 }

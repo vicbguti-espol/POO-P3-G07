@@ -4,6 +4,7 @@
  */
 package espol.poo.proyectojar;
 
+import java.io.IOException;
 import modelo.academico.*;
 import java.util.Random;
 import java.net.URL;
@@ -164,6 +165,12 @@ public class NuevoJuegoController implements Initializable {
             btnnuevoJuego.setDisable(false);
         }
     }
+    
+    @FXML
+    private void switchToPrimary(ActionEvent event) throws IOException{
+        App.setRoot("primary");
+    }
+    
     
     @FXML
     private void iniciarJuego(ActionEvent event) {
