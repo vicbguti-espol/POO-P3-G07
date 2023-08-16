@@ -17,4 +17,5 @@ espol\poo\proyectojar\SecondaryController.class
 modelo\academico\Materia.class
 modelo\juego\Comodin.class
 modelo\academico\Estudiante.class
+espol\poo\proyectojar\DatosTerController.class
 espol\poo\proyectojar\visualizarMateriasController.class

@@ -15,7 +15,8 @@ public class App extends Application {
 
     private static Scene scene;
     
-    public static String pathTer = "archivos/terminos.ser";
+    
+    public static int añoActual = 2023;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -31,6 +32,11 @@ public class App extends Application {
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+    
+    //metodo para cambiar el contenido de la escena
+    public static void changeRoot(Parent rootNode) {
+        scene.setRoot(rootNode);
     }
 
     public static void main(String[] args) {

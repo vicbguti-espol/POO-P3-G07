@@ -19,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import modelo.academico.*;
@@ -44,6 +45,8 @@ public class TerminosController{
     private void switchToPrimary(ActionEvent event) throws IOException{
         App.setRoot("primary");
     }
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -66,17 +69,17 @@ public class TerminosController{
     @FXML
     private void editarTermino() throws IOException {
         TerminoAcademico t = (TerminoAcademico) tvTerminosAcademicos.getSelectionModel().getSelectedItem();
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("datos.fxml"));//no tiene el controlador especificado
-        DatosController ct = new DatosController();
-
+        
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("datosTer.fxml"));
+        DatosTerController ct = new DatosTerController();
         fxmlLoader.setController(ct);//se asigna el controlador
 
-        VBox root = (VBox) fxmlLoader.load();
-
-        ct.llenarCombo(Departamento.cargarDepartamentos(App.pathDep));
-        ct.llenarCampos(e);
+        BorderPane root = (BorderPane) fxmlLoader.load();
+        
+        ct.llenarCombos();
+        ct.setDefault(t);
         App.changeRoot(root);
-        */
+        
     }
 }
