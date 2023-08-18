@@ -25,6 +25,51 @@ public class Juego {
     private Estudiante participante;
     private Estudiante apoyo;
     private int nPreguntasPerLvl;
+    private String fecha;
+    private int lvlMax;
+    private int nPreguntasContestadas;
+    private ArrayList<Comodin> comodinesUtilizados;
+    private String premio;
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
+    }
+
+    public void setPreguntas(ArrayList<Pregunta> preguntas) {
+        this.preguntas = preguntas;
+    }
+
+    public void setParticipante(Estudiante participante) {
+        this.participante = participante;
+    }
+
+    public void setApoyo(Estudiante apoyo) {
+        this.apoyo = apoyo;
+    }
+
+    public void setnPreguntasPerLvl(int nPreguntasPerLvl) {
+        this.nPreguntasPerLvl = nPreguntasPerLvl;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setLvlMax(int lvlMax) {
+        this.lvlMax = lvlMax;
+    }
+
+    public void setnPreguntasContestadas(int nPreguntasContestadas) {
+        this.nPreguntasContestadas = nPreguntasContestadas;
+    }
+
+    public void setComodinesUtilizados(ArrayList<Comodin> comodinesUtilizados) {
+        this.comodinesUtilizados = comodinesUtilizados;
+    }
+
+    public void setPremio(String premio) {
+        this.premio = premio;
+    }
 
     public Materia getMateria() {
         return materia;
@@ -55,11 +100,7 @@ public class Juego {
     }
 
 
-    private String fecha;
-    private int lvlMax;
-    private int nPreguntasContestadas;
-    private ArrayList<Comodin> comodinesUtilizados;
-    private String premio;
+    
     
     // Instanciar scanner
     static Scanner sc = new Scanner(System.in);
@@ -89,14 +130,7 @@ public class Juego {
         comodinesUtilizados=new ArrayList<Comodin>();
     }
     
-    /**
-     * Constructor de Juego sin argumentos
-     */
-    public Juego(){
-        
-    }
-    
-    
+
     /**
      * Obtener un arreglo de tipo Juego a partir de una ruta de archivo
      * @param pathJuegos
@@ -313,119 +347,7 @@ public class Juego {
         return sizesByLvl.get(0);   
     }
     
-    /**
-     * Método encargado de la funcionalidad principal del juego
-     */
-    public void visualizarPreguntas(){
-        // Obtener preguntas por nivel
-        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl =
-                getPreguntasByLevel(nPreguntasPerLvl);
-        // Declarar input para recibir respuesta 
-        String input;
-        Iterator<Map.Entry<Integer, ArrayList<Pregunta>>> it = 
-                preguntasPerLvl.entrySet().iterator();
-        
-        // Declarar la última respuesta escogida
-        Respuesta r = new Respuesta();
-        
-        // Iterar el map de preguntas por nivel
-        while (it.hasNext() &&  (r.getTipo().equals(TipoRespuesta.CORRECTA))){
-            Map.Entry<Integer, ArrayList<Pregunta>> entry = it.next();
-            
-            if (lvlMax > 0){
-                System.out.println("Ingresar el premio que el estudiante "
-                        + "ha obtenido al superar el nivel");
-                premio = sc.nextLine();
-            }
-            // Obtener las preguntas del nivel
-            ArrayList<Pregunta> lpreguntas = entry.getValue(); 
-            
-            // Shuffle el ArrayList de las preguntas
-            Collections.shuffle(lpreguntas); 
-            
-            // Crear un iterador con lpreguntas
-            Iterator<Pregunta> pit = lpreguntas.iterator();
-            while ((pit.hasNext() && 
-                    (r.getTipo().equals(TipoRespuesta.CORRECTA)))){
-                
-                Pregunta pOriginal = pit.next();
-                Pregunta p = Pregunta.copy(pOriginal);
-                int indRespuesta = -1;
-                // Muestra por consola la pregunta
-                System.out.println(p);
-                // Solicitar al usuario su respuesta a la pregunta
-                System.out.println("Ingresar opcion válida (A,B,C,D)");
-                System.out.println("Ingresar (*) de requerir comodín");
-                input = sc.nextLine();
-                String comodin = "";
-
-                if (input.equals("*")){
-                    System.out.println("Ingresar comodín " +
-                                "(cincuenta/companero/salon)");
-                        comodin = sc.nextLine();
-                        // Agregar comodines utilizados en caso de ser requerido
-                        switch(comodin.toLowerCase()){
-                            case "cincuenta": 
-                                comodinesUtilizados.add(Comodin.CINCUENTA);
-                                p.removeRespuestasIncorrectas(2);
-                                break;
-                            
-                            case "companero": 
-                                comodinesUtilizados.add(Comodin.COMPANERO);
-                                System.out.println("Consultar a " + 
-                                        apoyo.getNombre());
-                                break;
-                                    
-                            case "salon": 
-                                comodinesUtilizados.add(Comodin.SALON);
-                                System.out.println("¿Qué dice el salón?");
-                                break;
-                            default:
-                                break;
-                        }
-                        // Muestra por consola la pregunta
-                        System.out.println(p);
-                        // Solicitar al usuario su respuesta a la pregunta
-                        System.out.println("Ingresar opcion válida (A,B,C,D)");
-                        input = sc.nextLine();
-                        
-                }
-
-                switch (input.toUpperCase()){
-                    case "A":
-                        indRespuesta = 0;
-                    case "B":
-                        indRespuesta = 1;
-                    case "C":
-                        indRespuesta = 2;
-                    case "D":
-                        indRespuesta = 3;
-                    default:
-                        break;
-                }
-                // Asignar la última respuesta escogida
-                r = p.getRespuestas().get(indRespuesta);
-                
-                if (r.getTipo().equals(TipoRespuesta.CORRECTA)){
-                    System.out.println("*".repeat(20));
-                    System.out.println("Respuesta Correcta!");
-                    nPreguntasContestadas++; 
-                }else{
-                    System.out.println("*".repeat(20));
-                    System.out.println("Respuesta Incorrecta :(");
-                }
-            }
-            if (r.getTipo().equals(TipoRespuesta.CORRECTA)){
-                lvlMax++;
-            }     
-        }
-        
-        if (lvlMax == materia.getCantNiveles()){
-            System.out.println("Asignar el premio para el estudiante ganador. "
-                    + "FELICITACIONES!");
-            premio = sc.nextLine();
-        }
-    }
+    
     public void setPreguntasParaJuego(ArrayList<Pregunta> pr){
         this.preguntas=pr;
     }

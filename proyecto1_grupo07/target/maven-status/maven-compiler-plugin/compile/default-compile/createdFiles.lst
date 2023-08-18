@@ -13,11 +13,15 @@ espol\poo\proyectojar\ConfParalelosController.class
 modelo\juego\TipoRespuesta.class
 modelo\juego\Pregunta.class
 modelo\juego\Respuesta.class
+espol\poo\proyectojar\JuegoController.class
+espol\poo\proyectojar\JuegoController$Temporizador.class
 espol\poo\proyectojar\PrimaryController.class
 espol\poo\proyectojar\ConfMateriasController.class
 espol\poo\proyectojar\SecondaryController.class
 modelo\academico\Materia.class
 modelo\juego\Comodin.class
 modelo\academico\Estudiante.class
+modelo\juego\NivelPregunta.class
+espol\poo\proyectojar\JuegoController$Manejador.class
 espol\poo\proyectojar\DatosTerController.class
 espol\poo\proyectojar\visualizarMateriasController.class

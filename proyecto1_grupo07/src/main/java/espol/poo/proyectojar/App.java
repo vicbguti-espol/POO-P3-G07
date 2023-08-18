@@ -20,8 +20,10 @@ public class App extends Application {
     
     
     public static int añoActual = 2023;
-    public static Juego juego = new Juego();
+    public static Juego juego;
     public static TerminoAcademico terminoJuego = new TerminoAcademico(); 
+    
+    public static int tiempoJuego = 60;
 
     @Override
     public void start(Stage stage) throws IOException {
