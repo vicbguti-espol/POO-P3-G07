@@ -4,7 +4,7 @@
  */
 package espol.poo.proyectojar;
 
-import modelo.academico.Materia;
+import modelo.academico.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -69,37 +69,36 @@ public class ConfMateriasController implements Initializable {
     }
 
     @FXML
-    private void agregarMateria(ActionEvent event) {
-            if(txtCodigo.getText()==null||txtNombre.getText()==null||txtNiveles.getText()==null){
-                Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Advertencia");
-                alert.setHeaderText("Falta uno o mas atributos en la materia");
-                alert.setContentText("¿Desea proceder?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
-                    if(visualizarMateriasController.materiaEditable==null){
-                        Materia.agregarMateria(new Materia(txtCodigo.getText(),txtNombre.getText(),Integer.parseInt(txtNiveles.getText())));
-                    }
-                    else{
-                        Materia.editarMateria(visualizarMateriasController.materiaEditable,txtNombre.getText(),Integer.parseInt(txtNiveles.getText()));
-                    }
-                    Alert agregado= new Alert(AlertType.INFORMATION);
-                    agregado.setTitle("Agregado Exitosamente");
-                    agregado.setContentText("Cambios guardados exitosamente");
-                    agregado.showAndWait();
-                } 
-            }else{
+    private void agregarMateria(ActionEvent event) throws IOException{
+        if("".equals(txtCodigo.getText())||"".equals(txtNombre.getText())||"".equals(txtNiveles.getText())){
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText("Falta uno o mas atributos en la materia");
+            alert.showAndWait();
             if(visualizarMateriasController.materiaEditable==null){
-                        Materia.agregarMateria(new Materia(txtCodigo.getText(),txtNombre.getText(),Integer.parseInt(txtNiveles.getText())));
-                    }
-                    else{
-                        Materia.editarMateria(visualizarMateriasController.materiaEditable,txtNombre.getText(),Integer.parseInt(txtNiveles.getText()));
-                    }
+                Materia.agregarMateria(new Materia(txtCodigo.getText(),txtNombre.getText(),Integer.parseInt(txtNiveles.getText())));
+            }
+            else{
+                Materia.editarMateria(visualizarMateriasController.materiaEditable,txtNombre.getText(),Integer.parseInt(txtNiveles.getText()));
+            }
             Alert agregado= new Alert(AlertType.INFORMATION);
             agregado.setTitle("Agregado Exitosamente");
             agregado.setContentText("Cambios guardados exitosamente");
             agregado.showAndWait();
-            }
+            App.setRoot("visualizarMaterias");
+        }else{
+        if(visualizarMateriasController.materiaEditable==null){
+                    Materia.agregarMateria(new Materia(txtCodigo.getText(),txtNombre.getText(),Integer.parseInt(txtNiveles.getText())));
+                }
+                else{
+                    Materia.editarMateria(visualizarMateriasController.materiaEditable,txtNombre.getText(),Integer.parseInt(txtNiveles.getText()));
+                }
+        Alert agregado= new Alert(AlertType.INFORMATION);
+        agregado.setTitle("Agregado Exitosamente");
+        agregado.setContentText("Cambios guardados exitosamente");
+        agregado.showAndWait();
+        App.setRoot("visualizarMaterias");
+        }
 
     }    
 }

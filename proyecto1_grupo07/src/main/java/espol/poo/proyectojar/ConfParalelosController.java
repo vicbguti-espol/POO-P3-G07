@@ -6,6 +6,8 @@ package espol.poo.proyectojar;
 
 import modelo.academico.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -60,28 +62,68 @@ public class ConfParalelosController implements Initializable {
     }    
     
     @FXML
-    private void agregarParalelo(ActionEvent event) {
-        int numeroParalelo=Integer.parseInt(cmbNParalelo.getValue());
-        Materia matParalelo=Materia.materias.get(Materia.materias.indexOf(cmbMateria.getValue()));
-        int indice=0;
-        for(TerminoAcademico t:TerminoAcademico.terminosAcademicos) {
-            String[] elementos= cmbTermino.getValue().split("-");
-            if(new TerminoAcademico(Integer.parseInt(elementos[0]),Integer.parseInt(elementos[1])).equals(t)){
-                indice=TerminoAcademico.terminosAcademicos.indexOf(t);
-            }
-        }
-        TerminoAcademico tParalelo=TerminoAcademico.terminosAcademicos.get(indice);
-        if(archivoCarga!=null){
-            Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(archivoCarga.getPath())));
-        }else if(archivoCarga==null){
-         Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(txtPath.getText())));
-        }else{
+    private void agregarParalelo(ActionEvent event) throws IOException{
+        Materia matParalelo=null;
+        TerminoAcademico tParalelo=null;
+        int numeroParalelo=0;
+        if(cmbMateria.getValue()==null||cmbNParalelo.getValue()==null||cmbTermino.getValue()==null){
+            Alert faltaatributos=new Alert(AlertType.ERROR);
+            faltaatributos.setTitle("Error de Usuario");
+            faltaatributos.setContentText("Ha dejado campos vacios");
+            faltaatributos.showAndWait();
+        }else if(archivoCarga==null&&"".equals(txtPath.getText())){
             Alert faltaest=new Alert(AlertType.ERROR);
             faltaest.setTitle("Error en la carga de estudiantes");
-            faltaest.setContentText("No selecciono ningún método de carga. Intene nuevamente");
+            faltaest.setContentText("No selecciono ningún método de carga. Intente nuevamente");
             faltaest.showAndWait();
         }
+        else{
+            numeroParalelo=Integer.parseInt(cmbNParalelo.getValue());
+            for(Materia m: Materia.materias){
+                if(m.getNombre().equals(cmbMateria.getValue())){
+                    matParalelo=m;
+                }
+            }
+            for(TerminoAcademico t:TerminoAcademico.terminosAcademicos) {
+                String[] elementos= cmbTermino.getValue().split("-");
+                TerminoAcademico tprueba= new TerminoAcademico(Integer.parseInt(elementos[0].trim()),Integer.parseInt(elementos[1].trim()));
+                if(tprueba.equals(tprueba)){
+                    tParalelo=t;
+                }
+            }
+            for (Paralelo p:Paralelo.paralelos){
+                if(p.getnumero()==numeroParalelo&&p.getMateria().equals(matParalelo)&&p.getTerminoAcademico().equals(tParalelo)){
+                    Alert error=new Alert(AlertType.ERROR);    
+                    error.setTitle("Paralelo Existente");
+                    error.setContentText("El paralelo ya existe. Por favor ingrese valores válidos");
+                    error.showAndWait();
+                }else if(archivoCarga==null){
+                    try{
+                        Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(archivoCarga.getPath())));             
+                        Alert faltaest=new Alert(AlertType.INFORMATION);
+                        faltaest.setTitle("Guardado");
+                        faltaest.setContentText("Paralelo guardado exitosamente");
+                        faltaest.showAndWait();
+                        App.setRoot("visualizarParalelos");
+                    }
+                    catch(FileNotFoundException e){
+                        Alert rutanovalida=new Alert(AlertType.ERROR);    
+                        rutanovalida.setTitle("Paralelo Existente");
+                        rutanovalida.setContentText("La ruta no contiene un archivo o no estan en el formato válido");
+                        rutanovalida.showAndWait();
+                    }
+                }else if(archivoCarga!=null){
+                        Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(txtPath.getText())));
+                        Alert faltaest=new Alert(AlertType.INFORMATION);
+                        faltaest.setTitle("Guardado");
+                        faltaest.setContentText("Paralelo guardado exitosamente");
+                        faltaest.showAndWait();
+                        App.setRoot("visualizarParalelos");
+                }
+            }
+        }
     }
+            
 
     @FXML
     private void switchtoVisualizarParalelos(ActionEvent event) {
