@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import modelo.academico.TerminoAcademico;
+
+import modelo.juego.Juego;
 
 /**
  * JavaFX App
@@ -17,6 +20,10 @@ public class App extends Application {
     
     
     public static int añoActual = 2023;
+    public static Juego juego;
+    public static TerminoAcademico terminoJuego = new TerminoAcademico(); 
+    
+    public static int tiempoJuego = 60;
 
     @Override
     public void start(Stage stage) throws IOException {

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -21,7 +22,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import modelo.juego.Juego;
+import modelo.juego.Pregunta;
 /**
  * FXML Controller class
  *
@@ -171,7 +175,7 @@ public class NuevoJuegoController implements Initializable {
     }
     
     @FXML
-    private void iniciarJuego(ActionEvent event) {
+    private void iniciarJuego(ActionEvent event) throws IOException{
         if(apoyoSeleccionado==null){
             if(Integer.parseInt(txtMatApoyo.getText())==partSeleccionado.getMatricula()){
                 Alert partRedudante=new Alert(AlertType.ERROR);
@@ -196,7 +200,37 @@ public class NuevoJuegoController implements Initializable {
         System.out.println(cantPregNivSeleccionado);
         System.out.println(partSeleccionado.toString()+", con apoyo:"+ apoyoSeleccionado.toString());
         //INICIAR JUEGO CON LAS VARIABLES DEFINIDAS
-        //App.setRoot("Juego");
+        ArrayList<Pregunta> preguntasMateria = 
+                Juego.getPreguntasMateria(matSeleccionada, 
+                        Pregunta.preguntas);
+        
+        App.juego = new Juego(matSeleccionada, preguntasMateria, 
+                parSeleccionado,
+                partSeleccionado.getMatricula(), 
+                apoyoSeleccionado.getMatricula(),
+                cantPregNivSeleccionado, 
+                String.valueOf(java.time.LocalDate.now()));
+        
+        
+        // Cargar FXML con el controlador
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("juego.fxml"));
+        JuegoController ct = new JuegoController();
+        fxmlLoader.setController(ct);
+        
+        BorderPane root = new BorderPane();
+        try{
+            root = (BorderPane) fxmlLoader.load();
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        
+        App.changeRoot(root); 
+    }
+   
+    @FXML
+    private void switchToPrimary(ActionEvent event) throws IOException{
+        App.setRoot("primary");
+        
     }
     @FXML
     private void switchToPrimary(ActionEvent event)throws IOException{

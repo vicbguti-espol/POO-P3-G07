@@ -1,8 +1,10 @@
 package modelo.academico;
 
+import espol.poo.excepciones.TerminoExistenteException;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -18,13 +20,17 @@ public class TerminoAcademico implements Serializable {
     private int añoTermino;
     //public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>();
     public static ArrayList<TerminoAcademico> terminosAcademicos = cargarTerminosAcademicos();
-    //public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>(Arrays.asList(new TerminoAcademico(1, 2023)));
+    // public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>(Arrays.asList(new TerminoAcademico(1, 2023)));
     private static final String path="archivo\\terminos.ser";
     
     // Constructor
     public TerminoAcademico(int numTermino, int añoTermino){
         this.numTermino = numTermino;
         this.añoTermino = añoTermino;
+    }
+    
+    public TerminoAcademico(){
+        
     }
     
     // Getters
@@ -45,22 +51,8 @@ public class TerminoAcademico implements Serializable {
         this.añoTermino = añoTermino;
     }
     
-    @Override
-    public String toString(){
-        return añoTermino + "-" + numTermino;
-    }
     
-    public boolean equals(Object o){
-        if (o == this){
-            return true;
-        }
-        if (o != null && getClass() == o.getClass()){
-            TerminoAcademico ter = (TerminoAcademico) o;
-            return this.numTermino == ter.getNumTermino() && this.añoTermino == ter.getAñoTermino();
-        } else{
-           return false;
-        }
-    }
+    
     public static void main(String[] args) {
         subirArchivo();
     }
@@ -84,22 +76,68 @@ public class TerminoAcademico implements Serializable {
         }
         return terminoscargados;
     }
-    public static void agregarTerminosAcademicos(TerminoAcademico t){
-        if(!terminosAcademicos.contains(t)){
-            terminosAcademicos.add(t);
-        }
+    
+    /**
+     * Escribir la lista de términos una vez es modificada
+     */
+    private static void escribirLista() throws IOException{
         try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
             out.writeObject(terminosAcademicos);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
-    public static void eliminarTerminosAcademicos(TerminoAcademico t){
-        terminosAcademicos.remove(t);
-        try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
-            out.writeObject(terminosAcademicos);
-        } catch (Exception e) {
-            e.printStackTrace();
+    
+    /**
+     * Agregar un término académico
+     * @param t
+     */
+    public static void agregarTerminosAcademicos(TerminoAcademico t) throws IOException, TerminoExistenteException{
+        if(!terminosAcademicos.contains(t)){
+            terminosAcademicos.add(t);
+            escribirLista();
+        } else{
+            throw new TerminoExistenteException();
         }
+    }
+    
+    /**
+     * Eliminar un término académico de la lista de términos académicos
+     * @param t 
+     */
+    public static void eliminarTerminosAcademicos(TerminoAcademico t){
+        if (terminosAcademicos.contains(t)){
+            terminosAcademicos.remove(t);
+            try{
+                escribirLista();
+            } catch(IOException i){
+                System.out.println("Error en escritura una vez eliminado un "
+                        + "objeto");
+            } catch(Exception e){
+                System.out.println(e);
+            }
+            
+        }
+        
+    }
+    
+    /**
+     * Comprobar que dos términos académicos son iguales
+     * @param o
+     * @return 
+     */
+    public boolean equals(Object o){
+        if (o == this){
+            return true;
+        }
+        if (o != null && getClass() == o.getClass()){
+            TerminoAcademico ter = (TerminoAcademico) o;
+            return this.numTermino == ter.getNumTermino() && this.añoTermino == ter.getAñoTermino();
+        } else{
+           return false;
+        }
+    }
+    
+    @Override
+    public String toString(){
+        return añoTermino + "-" + numTermino;
     }
 }
