@@ -31,16 +31,15 @@ public class visualizarParalelosController implements Initializable {
     @FXML
     private Button btnagregarParalelo;
     @FXML
-    private Button btneliminarParalelo;
-    @FXML
     private Button btnSalir;
     @FXML
-    private TableView<Paralelo> tvParalelos=new TableView<Paralelo>();;
+    private TableView<Paralelo> tvParalelos=new TableView<Paralelo>();
     @FXML
     private BorderPane bpCentral;
     
     private Paralelo paraleloEliminable;
-    private ObservableList<Paralelo> listaParalelos;
+    
+    ObservableList<Paralelo> listaParalelos=FXCollections.observableArrayList(Paralelo.paralelos);;
     /**
      * Initializes the controller class.
      */
@@ -48,8 +47,8 @@ public class visualizarParalelosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tvParalelos.setOnMouseClicked(e->{
             Paralelo selectedParalelo = tvParalelos.getSelectionModel().getSelectedItem();
-            if (selectedParalelo != null) {
-             paraleloEliminable = selectedParalelo;
+            if (selectedParalelo!=null){
+                paraleloEliminable=selectedParalelo;
             }
         });
         btnSalir.setOnMouseClicked(e ->{
@@ -67,7 +66,6 @@ public class visualizarParalelosController implements Initializable {
                 ex.printStackTrace();
             }
         });
-        listaParalelos=FXCollections.observableArrayList(Paralelo.paralelos);
         bpCentral.setPadding(new javafx.geometry.Insets(10));
         bpCentral.setCenter(llenarTableViewParalelos());
     }    
@@ -92,10 +90,10 @@ public class visualizarParalelosController implements Initializable {
     }
     @FXML
     private void eliminarParalelo(ActionEvent event){
-        if (paraleloEliminable != null) {
-            Paralelo.paralelos.remove(paraleloEliminable);
-            //SERIALIZABLE
-            //Paralelo.eliminarParalelos(paraleloEliminable);
+        System.out.println("ASASSASA");
+        Paralelo p=paraleloEliminable;
+        if (p != null) {
+            Paralelo.eliminarParalelos(p);
             tvParalelos.setItems(FXCollections.observableArrayList(Paralelo.paralelos));
         }
         else{

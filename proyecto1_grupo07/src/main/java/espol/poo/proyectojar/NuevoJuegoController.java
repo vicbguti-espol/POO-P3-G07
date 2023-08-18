@@ -232,5 +232,9 @@ public class NuevoJuegoController implements Initializable {
         App.setRoot("primary");
         
     }
+    @FXML
+    private void switchToPrimary(ActionEvent event)throws IOException{
+        App.setRoot("primary");
+    }
 
 }

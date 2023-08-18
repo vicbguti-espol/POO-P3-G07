@@ -24,7 +24,7 @@
       <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnagregarParalelo" mnemonicParsing="false" text="Agregar Paralelo" />
-            <Button mnemonicParsing="false" text="Eliminar Paralelo" />
+            <Button mnemonicParsing="false" onAction="#eliminarParalelo" text="Eliminar Paralelo" />
             <Button fx:id="btnSalir" centerShape="false" mnemonicParsing="false" text="Salir">
                <HBox.margin>
                   <Insets left="260.0" />

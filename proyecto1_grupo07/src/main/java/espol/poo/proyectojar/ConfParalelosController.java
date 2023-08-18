@@ -99,7 +99,7 @@ public class ConfParalelosController implements Initializable {
                     error.showAndWait();
                 }else if(archivoCarga==null){
                     try{
-                        Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(archivoCarga.getPath())));             
+                        Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(txtPath.getText())));             
                         Alert faltaest=new Alert(AlertType.INFORMATION);
                         faltaest.setTitle("Guardado");
                         faltaest.setContentText("Paralelo guardado exitosamente");
@@ -108,17 +108,17 @@ public class ConfParalelosController implements Initializable {
                     }
                     catch(FileNotFoundException e){
                         Alert rutanovalida=new Alert(AlertType.ERROR);    
-                        rutanovalida.setTitle("Paralelo Existente");
+                        rutanovalida.setTitle("Error de archivo");
                         rutanovalida.setContentText("La ruta no contiene un archivo o no estan en el formato válido");
                         rutanovalida.showAndWait();
                     }
                 }else if(archivoCarga!=null){
-                        Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(txtPath.getText())));
-                        Alert faltaest=new Alert(AlertType.INFORMATION);
-                        faltaest.setTitle("Guardado");
-                        faltaest.setContentText("Paralelo guardado exitosamente");
-                        faltaest.showAndWait();
-                        App.setRoot("visualizarParalelos");
+                    Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(archivoCarga.getPath())));
+                    Alert faltaest=new Alert(AlertType.INFORMATION);
+                    faltaest.setTitle("Guardado");
+                    faltaest.setContentText("Paralelo guardado exitosamente");
+                    faltaest.showAndWait();
+                    App.setRoot("visualizarParalelos");
                 }
             }
         }

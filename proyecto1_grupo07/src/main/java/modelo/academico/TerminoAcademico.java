@@ -54,12 +54,9 @@ public class TerminoAcademico implements Serializable {
     
     
     public static void main(String[] args) {
-        eliminarTerminosAcademicos(new TerminoAcademico(1,2020));
-        for(TerminoAcademico t: terminosAcademicos){
-            System.out.println(t.toString());
-        }
+        subirArchivo();
     }
-    /*public static void subirArchivo(){
+    public static void subirArchivo(){
         terminosAcademicos.add(new TerminoAcademico(1, 2023));
         try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
             out.writeObject(terminosAcademicos);
@@ -67,7 +64,7 @@ public class TerminoAcademico implements Serializable {
             e.printStackTrace();
         }
 
-    }*/
+    }
     public static ArrayList<TerminoAcademico>cargarTerminosAcademicos(){
         ArrayList<TerminoAcademico> terminoscargados = new ArrayList<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {

@@ -8,8 +8,8 @@ public class Materia implements Serializable{
     private String codigo;
     private String nombre;
     private int cantNiveles;
-    //public static ArrayList<Materia> materias = cargarMaterias();
-    public static ArrayList<Materia> materias = new ArrayList<>(Arrays.asList(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2),new Materia("CCPG1000", "ALGEBRA LINEAL",2)));
+    public static ArrayList<Materia> materias = cargarMaterias();
+    //public static ArrayList<Materia> materias = new ArrayList<>(Arrays.asList(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2),new Materia("CCPG1000", "ALGEBRA LINEAL",2)));
     
     public Materia(String codigo, String nombre, int cantidad){
         this.codigo=codigo;
@@ -63,13 +63,16 @@ public class Materia implements Serializable{
         }
         return Objects.equals(this.nombre, other.nombre);
     }
-    /*public static void subirArchivo(){
+    public static void main(String[]args){
+        subirArchivo();
+    }
+    public static void subirArchivo(){
       try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
             out.writeObject(new ArrayList<Materia>(Arrays.asList(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2),new Materia("CCPG1000", "ALGEBRA LINEAL",2))));
         } catch (Exception e) {
             e.printStackTrace();
         }  
-    }/* */
+    }
 
     public static ArrayList<Materia> cargarMaterias() {
         //subirArchivo();
