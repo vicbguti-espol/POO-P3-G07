@@ -5,6 +5,7 @@
 package espol.poo.proyectojar;
 
 import modelo.academico.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,15 +33,17 @@ public class visualizarMateriasController implements Initializable {
     @FXML
     private BorderPane bpCentral;
     @FXML
-    private TableView<Materia> tvMaterias;
+    private TableView<Materia> tvMaterias=new TableView<Materia>();;
     
     static Materia materiaEditable;
+    ObservableList<Materia> listaMaterias=FXCollections.observableArrayList(Materia.materias);
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        btneditarMateria.setOnMouseClicked(e->{
+        /*btneditarMateria.setOnMouseClicked(e->{
+            
         tvMaterias.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
         if (newSelection != null) {
             String editCodigo = newSelection.getCodigo();
@@ -57,9 +60,34 @@ public class visualizarMateriasController implements Initializable {
             alert.setContentText("Seleccione una materia");
             alert.showAndWait();
         }
-        });});
+        });});*/
+        tvMaterias.setOnMouseClicked(e->{
+            Materia selectedMateria = tvMaterias.getSelectionModel().getSelectedItem();
+            if (selectedMateria != null) {
+            materiaEditable = selectedMateria;
+            }
+        });
+        btneditarMateria.setOnMouseClicked(e->{
+            //Materia m = (Materia) tvMaterias.getSelectionModel().getSelectedItem();
+            Materia m = materiaEditable;
+            if (m != null) {
+                materiaEditable=m;
+                try{
+                App.setRoot("confMaterias");
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }   
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setContentText("Seleccione una materia");
+                alert.showAndWait();
+            }
+        });
         btnagregarMateria.setOnMouseClicked(e->{
             try{
+                materiaEditable=null;
                 App.setRoot("confMaterias");
             }catch(Exception ex){
                 ex.printStackTrace();
@@ -80,18 +108,15 @@ public class visualizarMateriasController implements Initializable {
     }
     @FXML
     private TableView<Materia> llenarTableViewMaterias() {
-        ObservableList<Materia> listaMaterias=FXCollections.observableArrayList(Materia.materias);
-        
         TableColumn<Materia,String> tcCodigo=new TableColumn<>("Codigo");
-        tcCodigo.setCellValueFactory(new PropertyValueFactory<>("Código"));
+        tcCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         
         TableColumn<Materia,String> tcNombre=new TableColumn<>("Nombre de Materia");
-        tcCodigo.setCellValueFactory(new PropertyValueFactory<>("Nombre de Materia"));
+        tcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         
         TableColumn<Materia,String> tcNiveles=new TableColumn<>("N° de niveles");
-        tcCodigo.setCellValueFactory(new PropertyValueFactory<>("N° de niveles"));
+        tcNiveles.setCellValueFactory(new PropertyValueFactory<>("cantNiveles"));
         
-        tvMaterias=new TableView<Materia>();
         tvMaterias.getColumns().addAll(tcCodigo,tcNombre,tcNiveles);
         tvMaterias.setColumnResizePolicy(tvMaterias.CONSTRAINED_RESIZE_POLICY);
         tvMaterias.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
@@ -102,11 +127,13 @@ public class visualizarMateriasController implements Initializable {
         
     @FXML
     private void eliminarMateria(ActionEvent event) {
-        tvMaterias.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-        if (newSelection != null) {
-            String elimCodigo = newSelection.getCodigo();
-            Materia.eliminarMateria(Materia.materias.get(Materia.materias.indexOf(elimCodigo)));
-            llenarTableViewMaterias();
+        //Materia m = (Materia) tvMaterias.getSelectionModel().getSelectedItem();
+        Materia m=materiaEditable;
+        if (m != null) {
+            Materia.materias.remove(m);
+            //IMPLEMENTAR CON SERIALIZABLE
+            //Materia.eliminarMateria(m);
+            tvMaterias.setItems(FXCollections.observableArrayList(Materia.materias));
         }
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -114,6 +141,5 @@ public class visualizarMateriasController implements Initializable {
             alert.setContentText("Seleccione una materia");
             alert.showAndWait();
         }
-        });
     }
 }

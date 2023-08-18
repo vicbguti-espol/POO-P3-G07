@@ -7,6 +7,7 @@ package espol.poo.proyectojar;
 import modelo.academico.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,14 +35,23 @@ public class visualizarParalelosController implements Initializable {
     @FXML
     private Button btnSalir;
     @FXML
-    private TableView<Paralelo> tvParalelos;
+    private TableView<Paralelo> tvParalelos=new TableView<Paralelo>();;
     @FXML
     private BorderPane bpCentral;
+    
+    private Paralelo paraleloEliminable;
+    private ObservableList<Paralelo> listaParalelos;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tvParalelos.setOnMouseClicked(e->{
+            Paralelo selectedParalelo = tvParalelos.getSelectionModel().getSelectedItem();
+            if (selectedParalelo != null) {
+             paraleloEliminable = selectedParalelo;
+            }
+        });
         btnSalir.setOnMouseClicked(e ->{
           try{
             App.setRoot("primary");
@@ -57,24 +67,22 @@ public class visualizarParalelosController implements Initializable {
                 ex.printStackTrace();
             }
         });
+        listaParalelos=FXCollections.observableArrayList(Paralelo.paralelos);
         bpCentral.setPadding(new javafx.geometry.Insets(10));
         bpCentral.setCenter(llenarTableViewParalelos());
     }    
     
     @FXML
     private TableView<Paralelo> llenarTableViewParalelos() {
-        ObservableList<Paralelo> listaParalelos=FXCollections.observableArrayList(Paralelo.paralelos);
-        
         TableColumn<Paralelo,String> tcNumero=new TableColumn<>("Numero");
-        tcNumero.setCellValueFactory(new PropertyValueFactory<>("Numero"));
+        tcNumero.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getnumero())));
         
         TableColumn<Paralelo,String> tcMateria=new TableColumn<>("Nombre de Materia");
-        tcMateria.setCellValueFactory(new PropertyValueFactory<>("Nombre de Materia"));
+        tcMateria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMateria().getNombre()));
         
         TableColumn<Paralelo,String> tcTermino=new TableColumn<>("Término Académico");
-        tcTermino.setCellValueFactory(new PropertyValueFactory<>("Término Académico"));
+        tcTermino.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTerminoAcademico().toString()));
         
-        tvParalelos=new TableView<Paralelo>();
         tvParalelos.getColumns().addAll(tcNumero,tcMateria,tcTermino);
         tvParalelos.setColumnResizePolicy(tvParalelos.CONSTRAINED_RESIZE_POLICY);
         tvParalelos.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
@@ -84,10 +92,11 @@ public class visualizarParalelosController implements Initializable {
     }
     @FXML
     private void eliminarParalelo(ActionEvent event){
-        tvParalelos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-        if (newSelection != null) {
-            Paralelo.eliminarParalelos(Paralelo.paralelos.get(Paralelo.paralelos.indexOf(newSelection)));
-            llenarTableViewParalelos();
+        if (paraleloEliminable != null) {
+            Paralelo.paralelos.remove(paraleloEliminable);
+            //SERIALIZABLE
+            //Paralelo.eliminarParalelos(paraleloEliminable);
+            tvParalelos.setItems(FXCollections.observableArrayList(Paralelo.paralelos));
         }
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -95,7 +104,6 @@ public class visualizarParalelosController implements Initializable {
             alert.setContentText("Seleccione un paralelo");
             alert.showAndWait();
         }
-        });
     }
 
 }
