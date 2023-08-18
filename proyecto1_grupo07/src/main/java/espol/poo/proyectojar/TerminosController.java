@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 import javafx.scene.control.TableColumn;
@@ -37,6 +39,14 @@ public class TerminosController{
     private TableColumn<TerminoAcademico, Integer> colTermino;
     @FXML
     private ComboBox cmbTerminos;
+    @FXML
+    private Button btnEditar;
+    @FXML
+    private Button btnAgregar;
+    @FXML
+    private Button guardarTermino;
+    
+    private Integer metodo;
     
     //List<TerminoAcademico> terminos = TerminoAcademico.
     //            cargarTerminosAcademicos(App.pathTer);
@@ -62,24 +72,64 @@ public class TerminosController{
         
         //datos en tableview
         tvTerminosAcademicos.getItems().setAll(TerminoAcademico.terminosAcademicos);
+        
+        // Escoger el método entre editar y agregar según el click del botón
+        btnEditar.setOnMouseClicked(e -> 
+            {
+                metodo = 0;
+                editarTermino();
+            });
+        btnAgregar.setOnMouseClicked(e -> 
+            {
+                metodo = 1;
+                editarTermino();
+            });
+        
+        // Manejar el evento para guardar término del juego 
+        guardarTermino.setOnMouseClicked(e -> guardarTerminoJuego());
+        
+        // Ubicar valor por default del término del juego 
+        cmbTerminos.setValue(App.terminoJuego);
     }
     
     
+    private void guardarTerminoJuego(){
+        App.terminoJuego =(TerminoAcademico) cmbTerminos.getValue();
+        // Mostrar alerta de agregación exitosa
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Resultado de la operación");
+            alert.setContentText("Término de juego guardado exitosamente");
+            
+            alert.showAndWait();
+    }
     
-    @FXML
-    private void editarTermino() throws IOException {
-        TerminoAcademico t = (TerminoAcademico) tvTerminosAcademicos.getSelectionModel().getSelectedItem();
-        
-        
+    private void editarTermino() {
+        // Cargar fxml
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("datosTer.fxml"));
         DatosTerController ct = new DatosTerController();
         fxmlLoader.setController(ct);//se asigna el controlador
-
-        BorderPane root = (BorderPane) fxmlLoader.load();
+        
+        BorderPane root = new BorderPane();
+        try{
+            root = (BorderPane) fxmlLoader.load();
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        
+        
+        if (metodo.equals(0)){
+            // Obtener la selección del tableView
+            TerminoAcademico t = (TerminoAcademico) tvTerminosAcademicos.
+                    getSelectionModel().getSelectedItem();
+            ct.setDefault(t);
+        }
+        
+        if (metodo.equals(1)){
+            ct.setDefault();
+        }
         
         ct.llenarCombos();
-        ct.setDefault(t);
-        App.changeRoot(root);
-        
-    }
+        App.changeRoot(root); }
+    
 }

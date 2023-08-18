@@ -19,6 +19,7 @@
                <children>
                   <Label text="Término para Juego" />
                   <ComboBox fx:id="cmbTerminos" prefWidth="150.0" />
+                  <Button fx:id="guardarTermino" mnemonicParsing="false" text="Guardar" />
                </children>
             </HBox>
             <TableView fx:id="tvTerminosAcademicos" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0">
@@ -29,8 +30,8 @@
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#editarTermino" text="Editar Término" />
-                  <Button mnemonicParsing="false" text="Agregar Término Académico" />
+                  <Button fx:id="btnEditar" mnemonicParsing="false" text="Editar Término" />
+                  <Button fx:id="btnAgregar" mnemonicParsing="false" text="Agregar Término Académico" />
                   <Button mnemonicParsing="false" onAction="#switchToPrimary" text="Regresar" />
                </children>
             </HBox>

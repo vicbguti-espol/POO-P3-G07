@@ -5,7 +5,9 @@ modelo\juego\TipoEstudiante.class
 espol\poo\proyectojar\visualizarParalelosController.class
 espol\poo\proyectojar\App.class
 module-info.class
+espol\poo\excepciones\TerminoExistenteException.class
 espol\poo\proyectojar\NuevoJuegoController.class
+modelo\juego\Juego.class
 modelo\academico\TerminoAcademico.class
 espol\poo\proyectojar\ConfParalelosController.class
 modelo\juego\TipoRespuesta.class

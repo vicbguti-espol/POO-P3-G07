@@ -1,5 +1,6 @@
 package espol.poo.proyectojar;
 
+import espol.poo.excepciones.TerminoExistenteException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -13,6 +14,7 @@ import javafx.scene.control.ComboBox;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import modelo.academico.TerminoAcademico;
 
@@ -21,6 +23,17 @@ public class DatosTerController{
     ComboBox cmbAño;
     @FXML
     ComboBox cmbTermino;
+    @FXML
+    Label lblEdTer;
+    
+    Integer metodo;
+    TerminoAcademico terminoDefault;
+    ArrayList<TerminoAcademico> terminos;
+    
+    @FXML
+    private void initialize(){
+        terminos = TerminoAcademico.terminosAcademicos;
+    }
     
     /**
      * Volver a la pantalla inicial de términos
@@ -36,6 +49,9 @@ public class DatosTerController{
      * Llenar los combos de año y término
      */
     public void llenarCombos(){
+        // Indicar el título de selección
+        lblEdTer.setText("Editar Término Académico");
+        
         // Crear una lista de años de 1958 (fundación espol) a el año actual
         List<Integer> años = new ArrayList<>();
         for (int i = 1958; i < App.añoActual + 1; i++){
@@ -43,65 +59,78 @@ public class DatosTerController{
         }
         
         // Crear una lista de terminos 0 - PAE, 1 - 1PAO, 2 - 2PAO
-        List<Integer> terminos = new ArrayList<>();
+        List<Integer> terminosAc = new ArrayList<>();
         for (int i = 0; i < 3; i++){
-            terminos.add(i);
+            terminosAc.add(i);
         }
         
         // Llenar el combo de año
         cmbAño.getItems().setAll(años);
         // Llenar el combo de terminos
-        cmbTermino.getItems().setAll(terminos);
+        cmbTermino.getItems().setAll(terminosAc);
     }
     
     /**
      * Llenar los combos con los datos de un término
      */
     public void setDefault(TerminoAcademico t){
+        terminoDefault = t;
         // Set de los valores de los comboBox
         cmbAño.setValue(t.getAñoTermino());
         cmbTermino.setValue(t.getNumTermino());
     }
     
+    public void setDefault(){
+        cmbAño.setValue(App.añoActual);
+        cmbAño.setDisable(true);
+    }
+            
+    /**
+     * Guardar término
+     */        
     public void guardarTermino(){
-        ArrayList<TerminoAcademico> terminos = TerminoAcademico.terminosAcademicos;
         System.out.println("Guardando término");
-        /*
-        RadioButton selectedRadioButton = (RadioButton) genero.getSelectedToggle();
-        String genero = selectedRadioButton.getText();
-        System.out.println(genero);
         
-        Empleado e = new Empleado(txtCedula.getText(), 
-                                  txtNombre.getText(), 
-                                  (Departamento) cmbDepartamento.getValue(),
-                                   Genero.valueOf(genero.toUpperCase()));
-
-        if (empleados.contains(e)){
-            int ind = empleados.indexOf(e);
-            empleados.set(ind, e);
-        }else{
-            empleados.add(e);//agregar empleado a la lista
-        }
-        System.out.println("Nuevo Empleado:" + e);
+        // Obtener los datos seleccionados en los comboBox
+        Integer selAño = (Integer) cmbAño.getValue();
+        Integer selTermino = (Integer) cmbTermino.getValue();
         
-        //serializar la lista
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.pathEmpleados))){
-            out.writeObject(empleados);
-            out.flush();
-
-            //mostrar informacion
+        // Instanciar un nuevo término académico con los datos del comboBox
+        TerminoAcademico t1 = new 
+            TerminoAcademico(selTermino, selAño);
+        
+        // Remover el termino seleccionado en edición de término académico
+        TerminoAcademico.eliminarTerminosAcademicos(terminoDefault);
+        
+        // Agregar un término académico en caso de no existir
+        try{
+            TerminoAcademico.agregarTerminosAcademicos(t1);
+            
+            // Mostrar alerta de agregación exitosa
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText("Resultado de la operación");
-            alert.setContentText("Nueva persona agregada exitosamente");
-
+            alert.setContentText("Nuevo término agregado exitosamente");
+            
             alert.showAndWait();
-            App.setRoot("primary");
+            // Cambiar a la pantalla main de términos
+            App.setRoot("terminos");
 
-        } catch (IOException ex) {
-            System.out.println("IOException:" + ex.getMessage());
-        } 
-*/
+            
+        } catch(IOException i){
+            System.out.println(i);
+        } catch (TerminoExistenteException t){
+            // Mostrar alerta de agregación exitosa
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Resultado de la operación");
+            alert.setContentText("Término actualmente en existencia");
+            
+            alert.showAndWait();
+            
+        }
+        
     }
+    
     
 }
