@@ -16,8 +16,8 @@ public class Pregunta implements Serializable {
     private Materia materia;
     private ArrayList<Respuesta> respuestas;
     //public static ArrayList<Pregunta> preguntas= new ArrayList<>();
-    //public static ArrayList<Pregunta> preguntas= cargarPreguntas();
-    public static ArrayList<Pregunta> preguntas= new ArrayList<>(Arrays.asList(new Pregunta("Cuanto es 2+2?",2, Materia.materias.get(0), new ArrayList<>(Arrays.asList(new Respuesta("4",TipoRespuesta.CORRECTA),new Respuesta("5",TipoRespuesta.INCORRECTA),new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("22",TipoRespuesta.INCORRECTA)))),new Pregunta("Cuanto es 10-12?",2,Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("4",TipoRespuesta.INCORRECTA),new Respuesta("-2",TipoRespuesta.CORRECTA),new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("22",TipoRespuesta.INCORRECTA)))),new Pregunta("Cuanto es 1+12",3, Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("13",TipoRespuesta.CORRECTA),new Respuesta("7",TipoRespuesta.INCORRECTA),new Respuesta("112",TipoRespuesta.INCORRECTA)))),new Pregunta("Cuanto es 1+1",3, Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("2",TipoRespuesta.CORRECTA),new Respuesta("7",TipoRespuesta.INCORRECTA),new Respuesta("112",TipoRespuesta.INCORRECTA))))));
+    public static ArrayList<Pregunta> preguntas= cargarPreguntas();
+    //public static ArrayList<Pregunta> preguntas= new ArrayList<>(Arrays.asList(new Pregunta("Cuanto es 2+2?",2, Materia.materias.get(0), new ArrayList<>(Arrays.asList(new Respuesta("4",TipoRespuesta.CORRECTA),new Respuesta("5",TipoRespuesta.INCORRECTA),new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("22",TipoRespuesta.INCORRECTA)))),new Pregunta("Cuanto es 10-12?",2,Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("4",TipoRespuesta.INCORRECTA),new Respuesta("-2",TipoRespuesta.CORRECTA),new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("22",TipoRespuesta.INCORRECTA)))),new Pregunta("Cuanto es 1+12",3, Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("13",TipoRespuesta.CORRECTA),new Respuesta("7",TipoRespuesta.INCORRECTA),new Respuesta("112",TipoRespuesta.INCORRECTA)))),new Pregunta("Cuanto es 1+1",3, Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("2",TipoRespuesta.CORRECTA),new Respuesta("7",TipoRespuesta.INCORRECTA),new Respuesta("112",TipoRespuesta.INCORRECTA))))));
     private static final String path="archivo\\preguntas.ser";
     
     public Pregunta(){
@@ -140,7 +140,7 @@ public class Pregunta implements Serializable {
         return pregunta;
     }
     public static void main(String[] args) {
-        //subirArchivo();
+        subirArchivo();
         //eliminarPregunta(preguntas.get(0));
         for(Pregunta p: preguntas){
             System.out.println(p.toString());

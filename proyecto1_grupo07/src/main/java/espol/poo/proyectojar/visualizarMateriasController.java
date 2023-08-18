@@ -36,35 +36,17 @@ public class visualizarMateriasController implements Initializable {
     private TableView<Materia> tvMaterias=new TableView<Materia>();;
     
     static Materia materiaEditable;
+    
     ObservableList<Materia> listaMaterias=FXCollections.observableArrayList(Materia.materias);
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        /*btneditarMateria.setOnMouseClicked(e->{
-            
-        tvMaterias.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-        if (newSelection != null) {
-            String editCodigo = newSelection.getCodigo();
-            materiaEditable=Materia.materias.get(Materia.materias.indexOf(editCodigo));
-            try{
-            App.setRoot("confMaterias");
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }   
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
-            alert.setContentText("Seleccione una materia");
-            alert.showAndWait();
-        }
-        });});*/
         tvMaterias.setOnMouseClicked(e->{
             Materia selectedMateria = tvMaterias.getSelectionModel().getSelectedItem();
             if (selectedMateria != null) {
-            materiaEditable = selectedMateria;
+                materiaEditable = selectedMateria;
             }
         });
         btneditarMateria.setOnMouseClicked(e->{
@@ -130,9 +112,9 @@ public class visualizarMateriasController implements Initializable {
         //Materia m = (Materia) tvMaterias.getSelectionModel().getSelectedItem();
         Materia m=materiaEditable;
         if (m != null) {
-            Materia.materias.remove(m);
+            //Materia.materias.remove(m);
             //IMPLEMENTAR CON SERIALIZABLE
-            //Materia.eliminarMateria(m);
+            Materia.eliminarMateria(m);
             tvMaterias.setItems(FXCollections.observableArrayList(Materia.materias));
         }
         else{

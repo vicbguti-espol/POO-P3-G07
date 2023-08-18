@@ -4,6 +4,7 @@
  */
 package espol.poo.proyectojar;
 
+import java.io.IOException;
 import modelo.academico.*;
 
 import java.util.Random;
@@ -196,6 +197,10 @@ public class NuevoJuegoController implements Initializable {
         System.out.println(partSeleccionado.toString()+", con apoyo:"+ apoyoSeleccionado.toString());
         //INICIAR JUEGO CON LAS VARIABLES DEFINIDAS
         //App.setRoot("Juego");
+    }
+    @FXML
+    private void switchToPrimary(ActionEvent event)throws IOException{
+        App.setRoot("primary");
     }
 
 }

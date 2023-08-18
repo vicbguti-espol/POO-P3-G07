@@ -17,8 +17,8 @@ public class TerminoAcademico implements Serializable {
     private int numTermino;
     private int añoTermino;
     //public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>();
-    //public static ArrayList<TerminoAcademico> terminosAcademicos = cargarTerminosAcademicos();
-    public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>(Arrays.asList(new TerminoAcademico(1, 2023)));
+    public static ArrayList<TerminoAcademico> terminosAcademicos = cargarTerminosAcademicos();
+    //public static ArrayList<TerminoAcademico> terminosAcademicos = new ArrayList<>(Arrays.asList(new TerminoAcademico(1, 2023)));
     private static final String path="archivo\\terminos.ser";
     
     // Constructor
@@ -62,12 +62,9 @@ public class TerminoAcademico implements Serializable {
         }
     }
     public static void main(String[] args) {
-        eliminarTerminosAcademicos(new TerminoAcademico(1,2020));
-        for(TerminoAcademico t: terminosAcademicos){
-            System.out.println(t.toString());
-        }
+        subirArchivo();
     }
-    /*public static void subirArchivo(){
+    public static void subirArchivo(){
         terminosAcademicos.add(new TerminoAcademico(1, 2023));
         try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
             out.writeObject(terminosAcademicos);
@@ -75,7 +72,7 @@ public class TerminoAcademico implements Serializable {
             e.printStackTrace();
         }
 
-    }*/
+    }
     public static ArrayList<TerminoAcademico>cargarTerminosAcademicos(){
         ArrayList<TerminoAcademico> terminoscargados = new ArrayList<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {

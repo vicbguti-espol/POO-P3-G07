@@ -14,8 +14,8 @@ public class Paralelo implements Serializable {
     private TerminoAcademico termino;
     private ArrayList<Estudiante> estudiantes;
     private String rutaEstudiantes;
-    public static ArrayList<Paralelo> paralelos = new ArrayList<>(Arrays.asList(new Paralelo(3, Materia.materias.get(0), TerminoAcademico.terminosAcademicos.get(0), Estudiante.cargarEstudiantes("archivo\\CCPG1052-3-2023-1.txt"))));
-    //public static ArrayList<Paralelo> paralelos = cargarParalelos();
+    //public static ArrayList<Paralelo> paralelos = new ArrayList<>(Arrays.asList(new Paralelo(3, Materia.materias.get(0), TerminoAcademico.terminosAcademicos.get(0), Estudiante.cargarEstudiantes("archivo\\CCPG1052-3-2023-1.txt"))));
+    public static ArrayList<Paralelo> paralelos = cargarParalelos();
     private static final long serialVersionUID = 1;
     private static final String path="archivo\\paralelos.ser";
 
@@ -57,7 +57,7 @@ public class Paralelo implements Serializable {
     }
 
     public static void main(String[] args) {
-        subirArchivo();
+        //subirArchivo();
         for(Paralelo p: paralelos){
             System.out.println(p.toString());
             for(Estudiante e:p.getEstudiantes()){
@@ -66,9 +66,9 @@ public class Paralelo implements Serializable {
         }
     }
     public static void subirArchivo(){
-        paralelos.add(new Paralelo(3, Materia.materias.get(0), TerminoAcademico.terminosAcademicos.get(0), Estudiante.cargarEstudiantes("Proyecto\\POO-P3-G07\\POO-P3-G07\\proyecto1_grupo07\\archivo\\CCPG1052-3-2023-1.txt")));
+        ArrayList<Paralelo> paralelostest = new ArrayList<>(Arrays.asList(new Paralelo(3, Materia.materias.get(0), TerminoAcademico.terminosAcademicos.get(0), Estudiante.cargarEstudiantes("archivo\\CCPG1052-3-2023-1.txt"))));
         try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
-            out.writeObject(paralelos);
+            out.writeObject(paralelostest);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,7 +85,7 @@ public class Paralelo implements Serializable {
         }
         return paraleloscargados;
     }
-    public static void eliminarParalelos(Paralelo p){
+    public static void agregarParalelos(Paralelo p){
         if(!paralelos.contains(p)){
             paralelos.add(p);
         }
@@ -95,7 +95,7 @@ public class Paralelo implements Serializable {
             e.printStackTrace();
         }
     }
-    public static void agregarParalelos(Paralelo p){
+    public static void eliminarParalelos(Paralelo p){
         paralelos.remove(p);
         try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
             out.writeObject(paralelos);
