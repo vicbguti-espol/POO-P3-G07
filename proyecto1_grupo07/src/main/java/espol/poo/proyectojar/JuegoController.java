@@ -60,7 +60,6 @@ public class JuegoController {
     
     // Declarar input para recibir respuesta 
     int tTranscurrido;
-    String input;
     Integer correctas = 0; 
     
     Integer indNivel = 0;
@@ -82,8 +81,31 @@ public class JuegoController {
         public void handle(Event e){
             indPregunta++;
             System.out.println("Corriendo click");
-            buildJuego();
+            // buildJuego();
+            actualizar();
         }
+    }
+    
+    public void actualizar(){
+        // similar a buildJuego
+    }
+    
+    public void comodin50(){
+        // Una vez clickeado el comodín
+        // borrar botones
+    }
+    
+    public void comodinPublico(){
+        // alerta
+    }
+    
+    public void comodinCompañero(){
+        // alerta
+        // pregúntale al compañero: juego.getApoyo() [botón]
+    }
+    
+    public void crearPanel(){
+        // Panel
     }
     
     public void buildJuego(){
@@ -95,15 +117,17 @@ public class JuegoController {
         
         Pregunta pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
         buildPregunta(pregunta);
-       
+        
         Button btnContinuar = new Button("Continuar");
         btnContinuar.setOnMouseClicked(e ->  new Manejador());
         hbCont.getChildren().add(btnContinuar);
-                
+        
         // Instanciar temporizador
         Temporizador temp = new Temporizador();
         temp.setDaemon(true);
         temp.start();
+                
+        
     }
     
     public ArrayList<NivelPregunta> getArrayNivelPregunta(){
@@ -199,6 +223,8 @@ public class JuegoController {
             
             
             if(tTranscurrido == 0 ){
+                // terminar y quieres pasar a la siguiente preguntaa
+                // terminar una vez que continuar
                 progression = false;
                 
                 Platform.runLater(() -> {

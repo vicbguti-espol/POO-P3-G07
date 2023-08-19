@@ -59,8 +59,7 @@ public class NuevoJuegoController implements Initializable {
     private Estudiante apoyoSeleccionado=null;
     private Alert error=new Alert(AlertType.WARNING);
     
-    //TEMPORAL
-    static TerminoAcademico terminoSeleccionado=TerminoAcademico.terminosAcademicos.get(0);
+   
     /**
      * Initializes the controller class.
      */
@@ -86,7 +85,7 @@ public class NuevoJuegoController implements Initializable {
                 }
             }
            for(Paralelo p:Paralelo.paralelos){
-                if(p.getMateria().getNombre().equals(cmbMateria.getValue()) && p.getTerminoAcademico().equals(terminoSeleccionado)){
+                if(p.getMateria().getNombre().equals(cmbMateria.getValue()) && p.getTerminoAcademico().equals(App.terminoJuego)){
                     cmbParalelo.getItems().add(String.valueOf(p.getnumero()));
                 }
             } 
@@ -108,7 +107,7 @@ public class NuevoJuegoController implements Initializable {
         try{
             int numSeleccionado=Integer.parseInt(cmbParalelo.getValue());
             for(Paralelo p: Paralelo.paralelos){
-                if(p.getnumero()==numSeleccionado&&p.getMateria().equals(matSeleccionada)&&p.getTerminoAcademico().equals(terminoSeleccionado)){
+                if(p.getnumero()==numSeleccionado&&p.getMateria().equals(matSeleccionada)&&p.getTerminoAcademico().equals(App.terminoJuego)){
                     parSeleccionado=p;
                     cursoEstudiantes=p.getEstudiantes();
                 }
@@ -231,10 +230,6 @@ public class NuevoJuegoController implements Initializable {
     private void switchToPrimary(ActionEvent event) throws IOException{
         App.setRoot("primary");
         
-    }
-    @FXML
-    private void switchToPrimary(ActionEvent event)throws IOException{
-        App.setRoot("primary");
     }
 
 }
