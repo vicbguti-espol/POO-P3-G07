@@ -46,17 +46,17 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ImageView fitHeight="76.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                        <ImageView fx:id="comodinPublico" fitHeight="76.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                            <image>
                               <Image url="@files/Captura%20de%20pantalla%202023-08-18%20115700.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                        <ImageView fx:id="comodin50" fitHeight="80.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                            <image>
                               <Image url="@files/Captura%20de%20pantalla%202023-08-18%20115623.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="76.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <ImageView fx:id="comodinCompañero" fitHeight="76.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <image>
                               <Image url="@files/Captura%20de%20pantalla%202023-08-18%20115716.png" />
                            </image>

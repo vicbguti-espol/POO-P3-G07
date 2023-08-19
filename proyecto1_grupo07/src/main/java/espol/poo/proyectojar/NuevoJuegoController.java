@@ -56,7 +56,7 @@ public class NuevoJuegoController implements Initializable {
     private int cantPregNivSeleccionado=0;
     private ArrayList <Estudiante> cursoEstudiantes=null;
     private Estudiante partSeleccionado=null;
-    private Estudiante apoyoSeleccionado=null;
+    static Estudiante apoyoSeleccionado=null;
     private Alert error=new Alert(AlertType.WARNING);
     
    
@@ -84,6 +84,7 @@ public class NuevoJuegoController implements Initializable {
                     matSeleccionada=m;
                 }
             }
+           cmbParalelo.getItems().clear();
            for(Paralelo p:Paralelo.paralelos){
                 if(p.getMateria().getNombre().equals(cmbMateria.getValue()) && p.getTerminoAcademico().equals(App.terminoJuego)){
                     cmbParalelo.getItems().add(String.valueOf(p.getnumero()));
@@ -97,6 +98,7 @@ public class NuevoJuegoController implements Initializable {
             error.showAndWait();
         }
         catch(Exception e){
+            e.printStackTrace();
             error.setTitle("Ha ocurrido un error externo");
             error.setContentText("Ha ocurrido un error extraordinario. Intente nuevamente");
             error.showAndWait();
@@ -105,7 +107,12 @@ public class NuevoJuegoController implements Initializable {
     @FXML
     private void paraleloSeleccionado(ActionEvent event) {
         try{
-            int numSeleccionado=Integer.parseInt(cmbParalelo.getValue());
+            txtMatPart.clear();
+            txtMatApoyo.clear();
+            int numSeleccionado=0;
+            if(cmbParalelo.getValue()!= null){
+                numSeleccionado=Integer.parseInt(cmbParalelo.getValue());
+            }
             for(Paralelo p: Paralelo.paralelos){
                 if(p.getnumero()==numSeleccionado&&p.getMateria().equals(matSeleccionada)&&p.getTerminoAcademico().equals(App.terminoJuego)){
                     parSeleccionado=p;
@@ -117,6 +124,7 @@ public class NuevoJuegoController implements Initializable {
             }
             cmbPregNivel.setDisable(false);
         }catch(Exception e){
+            e.printStackTrace();
             error.setTitle("Ha ocurrido un error externo");
             error.setContentText("Ha ocurrido un error extraordinario. Intente nuevamente");
             error.showAndWait();
@@ -146,6 +154,7 @@ public class NuevoJuegoController implements Initializable {
                 btnnuevoJuego.setDisable(false);
             });
         }catch(Exception e){
+            e.printStackTrace();
             error.setAlertType(AlertType.ERROR);
             error.setContentText("Ha ocurrido un error externo. Intente nuevamente");
             error.setTitle("Error externo");

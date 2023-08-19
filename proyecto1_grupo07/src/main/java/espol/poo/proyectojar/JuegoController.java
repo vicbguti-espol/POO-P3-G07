@@ -20,10 +20,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import modelo.juego.Comodin;
@@ -52,6 +55,12 @@ public class JuegoController {
     @FXML
     private RadioButton  rbB;
     @FXML
+    private ImageView  comodin50;
+    @FXML
+    private ImageView  comodinCompañero;
+    @FXML
+    private ImageView  comodinPublico;
+    @FXML
     private RadioButton  rbC;
     @FXML
     private RadioButton  rbD;
@@ -66,13 +75,25 @@ public class JuegoController {
     Integer indPregunta = 0;
     
     Respuesta r = new Respuesta();
+    Pregunta pregunta=new Pregunta();
     Boolean respuestaCorrecta;
     
     ArrayList<NivelPregunta> preguntasPerLvl;
     
+    String comodinesUsados=null;
+    
     @FXML
     public void initialize() throws InterruptedException {
         buildJuego();
+        comodin50.setOnMouseClicked(e->{
+           comodin50(); 
+        });
+        comodinCompañero.setOnMouseClicked(e->{
+           comodinCompañero(); 
+        });
+        comodinPublico.setOnMouseClicked(e->{
+           comodinPublico(); 
+        });
     }
     
     
@@ -89,20 +110,82 @@ public class JuegoController {
     public void actualizar(){
         // similar a buildJuego
     }
-    
+    /**
+     * Actualiza la pregunta en los componentes FXML para eliminar dos respuesta incorrectas
+     * 
+     */
+    public void actualizar50(){
+        Pregunta pregunta50 = new Pregunta(pregunta.getTexto(),pregunta.getNivel(),pregunta.getMateria(),pregunta.getRespuestas());
+        Collections.shuffle(pregunta50.getRespuestas());
+        for(int i=0;i<2;i++){
+            Respuesta respuestaindice=pregunta50.getRespuestas().get(i);
+            if(respuestaindice.getTipo().equals(TipoRespuesta.CORRECTA)){
+                i--;
+            }
+            else{
+               respuestaindice.setTexto(""); 
+            }
+        }
+        buildPregunta(pregunta50);
+    }
+    /**
+     * Constructor de cuadros de dialogos para la selección de comodines
+     * @param tipo
+     **/
+    public void notificacionComodin(String tipo){
+        Alert comodinUsado=new Alert(AlertType.INFORMATION);
+        if(tipo.equals("50")) {
+            comodinUsado.setTitle("50 probabilidades de ganar!");
+            comodinUsado.setContentText("No lo arruines ahora...");
+        }else if(tipo.equals("publico")){
+            comodinUsado.setTitle("Hora de preguntarle al público!");
+            comodinUsado.setContentText("¿Cual cree el curso que será la respuesta?");
+        }else{
+            comodinUsado.setTitle("Hora de preguntarle al compañero de apoyo");
+            comodinUsado.setContentText("¿Cual cree "+ NuevoJuegoController.apoyoSeleccionado.getNombre()+" que será la respuesta?");
+        }
+        comodinUsado.showAndWait();
+    }
+    /**
+     * Comodin 50/50
+     * Envia al constructor de dialogo y deshabilita el comodin
+     * Tambien registra su uso en la variable comodinesUsados
+     **/
     public void comodin50(){
-        // Una vez clickeado el comodín
-        // borrar botones
+        notificacionComodin("50");
+        ColorAdjust grayscale= new ColorAdjust();
+        grayscale.setSaturation(-1);
+        comodin50.setEffect(grayscale);
+        comodin50.setMouseTransparent(true);
+        actualizar50();
+        comodinesUsados+=" Usó el comodin 50/50 en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+        
     }
-    
+    /**
+     * Comodin Publico
+     * Envia un cuadro de dialogo que incia la consulta al curso.
+     **/
     public void comodinPublico(){
-        // alerta
+        notificacionComodin("publico");
+        ColorAdjust grayscale= new ColorAdjust();
+        grayscale.setSaturation(-1);
+        comodinPublico.setEffect(grayscale);
+        comodinPublico.setMouseTransparent(true);
+        comodinesUsados+=" Usó el comodin de curso en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
     }
-    
+    /**
+     * Comodin Compañero
+     * Envia un cuadro de dialogo que incia la consulta con el nombre del participante de apoyo seleccionado.
+     **/
     public void comodinCompañero(){
-        // alerta
-        // pregúntale al compañero: juego.getApoyo() [botón]
+        notificacionComodin("compañero");
+        ColorAdjust grayscale= new ColorAdjust();
+        grayscale.setSaturation(-1);
+        comodinCompañero.setEffect(grayscale);
+        comodinCompañero.setMouseTransparent(true);
+        comodinesUsados+=" Usó el comodin de compañero "+NuevoJuegoController.apoyoSeleccionado.getNombre()+" en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
     }
+
     
     public void crearPanel(){
         // Panel
@@ -115,7 +198,7 @@ public class JuegoController {
         // Obtener preguntas por nivel
         preguntasPerLvl = getArrayNivelPregunta();
         
-        Pregunta pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
+        pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
         buildPregunta(pregunta);
         
         Button btnContinuar = new Button("Continuar");
