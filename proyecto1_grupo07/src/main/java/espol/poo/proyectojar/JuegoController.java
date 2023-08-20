@@ -155,29 +155,22 @@ public class JuegoController {
     
     
     public void actualizar(){
-        
         //PARA VER EN CONSOLA
-        int maximo = preguntasPerLvl.size();
+        int maximo = preguntasPerLvl.get(indNivel).getPreguntas().size();
         int num = indPregunta+1;
         System.out.println("PRESIONASTE EL BOTON");
         System.out.println("Pregunta"+num+" de "+maximo+" del nivel: "+indNivel);
         //Condicion de avanzar si es correcta la respuesta
-        
         respuestaCorrecta = r.getTipo().equals(TipoRespuesta.CORRECTA);
         if (respuestaCorrecta){
             //Condicion para avanzar a la siguiente pregunta
-            indPregunta++;
-            JuegoUtilitaria ju = new JuegoUtilitaria(preguntasPerLvl,
-                    indNivel, indPregunta, hbCont, 
-                    respuestaCorrecta);
-            
-            ju.agregarPremio();
-            if (maximo>indPregunta){
-                mostrarpreguntas();
-            }else if(maximo==indPregunta){
+            if(maximo==num){
                 System.out.println("SIGUIENTE NIVEL");
                 indPregunta=0;
                 indNivel++;
+                mostrarpreguntas();
+            }else if (maximo>num){
+                indPregunta++;
                 mostrarpreguntas();
             }
         } else {
@@ -192,8 +185,7 @@ public class JuegoController {
             } catch(IOException e){
                 System.out.println(e);
             }
-        }
-        
+        } 
     }
     
     public void mostrarpreguntas(){
