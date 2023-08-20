@@ -5,6 +5,7 @@
 package espol.poo.proyectojar;
 
 import espol.poo.proyectojar.App;
+import espol.poo.proyectojar.utilitaria.JuegoUtilitaria;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,8 +25,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -83,8 +91,9 @@ public class JuegoController {
     Boolean respuestaCorrecta;
     
     public ArrayList<NivelPregunta> preguntasPerLvl;
+    Button btnContinuar = new Button("Continuar");
     
-    String comodinesUsados=null;
+    String comodinesUsados="";
     
     @FXML
     public void initialize() throws InterruptedException {
@@ -99,6 +108,38 @@ public class JuegoController {
            comodinPublico(); 
         });
     }
+    
+    public void buildJuego(){
+       
+        // Obtener preguntas por nivel
+        preguntasPerLvl = getArrayNivelPregunta();
+        
+        mostrarpreguntas();
+        crearPanel();
+        
+        tTranscurrido = App.tiempoJuego;
+        
+        btnContinuar.setOnMouseClicked(e ->  {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación de elección");
+            alert.setHeaderText("Comfirmación de Operación");
+            alert.setContentText("¿Estás seguro de que deseas continuar?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                actualizar();
+            }
+        });
+        
+        hbCont.getChildren().add(btnContinuar);
+        
+        
+        // Instanciar temporizador
+        Temporizador temp = new Temporizador();
+        temp.setDaemon(true);
+        temp.start();
+                
+        
+    }
 
     private class Manejador implements EventHandler<Event>{
         @Override
@@ -111,9 +152,80 @@ public class JuegoController {
         }
     }
     
+    
     public void actualizar(){
-        // similar a buildJuego
+        
+        //PARA VER EN CONSOLA
+        int maximo = preguntasPerLvl.size();
+        int num = indPregunta+1;
+        System.out.println("PRESIONASTE EL BOTON");
+        System.out.println("Pregunta"+num+" de "+maximo+" del nivel: "+indNivel);
+        //Condicion de avanzar si es correcta la respuesta
+        
+        respuestaCorrecta = r.getTipo().equals(TipoRespuesta.CORRECTA);
+        if (respuestaCorrecta){
+            //Condicion para avanzar a la siguiente pregunta
+            indPregunta++;
+            if (maximo>indPregunta){
+                mostrarpreguntas();
+            }else if(maximo==indPregunta){
+                System.out.println("SIGUIENTE NIVEL");
+                indPregunta=0;
+                indNivel++;
+                mostrarpreguntas();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Resultado de la operación");
+            alert.setContentText("Te equivocaste, Juego terminado :(");
+            alert.showAndWait();
+            // Cambiar a la pantalla main de términos
+            try{
+                App.setRoot("primary");
+            } catch(IOException e){
+                System.out.println(e);
+            }
+        }
+        
     }
+    
+    public void mostrarpreguntas(){
+        // Obtener preguntas por nivel
+        Pregunta pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
+        //Mostrarlas en la aplicación
+        buildPregunta(pregunta);
+    }
+    
+    public void buildPregunta(Pregunta p){
+        // Construir la estructura de pregunta con sus posibles respuestas
+        lblPregunta.setText(p.getTexto());
+        
+        // Shuffle de respuestas de la pregunta
+        Collections.shuffle(p.getRespuestas());
+        
+        // Construir respuestas de la pregunta
+        buildRespuestas(p);
+    }
+    
+    public void buildRespuestas(Pregunta p){
+        // Borrar cualquier accion existente
+        rbA.setOnMouseClicked(null);
+        rbB.setOnMouseClicked(null);
+        rbC.setOnMouseClicked(null);
+        rbD.setOnMouseClicked(null);
+        // Construcción de RadioButton
+        rbA.setOnMouseClicked(e -> r = p.getRespuestas().get(0));
+        rbB.setOnMouseClicked(e -> r = p.getRespuestas().get(1));
+        rbC.setOnMouseClicked(e -> r = p.getRespuestas().get(2));
+        rbD.setOnMouseClicked(e -> r = p.getRespuestas().get(3));
+        
+        rbA.setText("A) " + p.getRespuestas().get(0));
+        rbB.setText("B) " + p.getRespuestas().get(1));
+        rbC.setText("C) " + p.getRespuestas().get(2));
+        rbD.setText("D) " + p.getRespuestas().get(3));
+    }
+    
     /**
      * Actualiza la pregunta en los componentes FXML para eliminar dos respuesta incorrectas
      * 
@@ -191,8 +303,9 @@ public class JuegoController {
     }
 
     /**
-     * crearPanel
-     * Usando el TableView de Preguntas, se cargan las preguntas en base a la cantidad de preguntas por nivel seleccionado por el usuario usando un ObservableArrayList
+     * Usando el TableView de Preguntas, se cargan las preguntas 
+     * en base a la cantidad de preguntas por nivel seleccionado por 
+     * el usuario usando un ObservableArrayList
      **/
     public void crearPanel(){
         ObservableList<String> listaPreguntas=FXCollections.observableArrayList();
@@ -207,28 +320,7 @@ public class JuegoController {
         lvPreguntas.setMouseTransparent(true);
     }
     
-    public void buildJuego(){
-        respuestaCorrecta = r.getTipo().equals(TipoRespuesta.CORRECTA);
-        tTranscurrido = App.tiempoJuego;
-        
-        // Obtener preguntas por nivel
-        preguntasPerLvl = getArrayNivelPregunta();
-        crearPanel();
-        
-        pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
-        buildPregunta(pregunta);
-        
-        Button btnContinuar = new Button("Continuar");
-        btnContinuar.setOnMouseClicked(e ->  new Manejador());
-        hbCont.getChildren().add(btnContinuar);
-        
-        // Instanciar temporizador
-        Temporizador temp = new Temporizador();
-        temp.setDaemon(true);
-        temp.start();
-                
-        
-    }
+    
     
     public ArrayList<NivelPregunta> getArrayNivelPregunta(){
         ArrayList<NivelPregunta> arrayNivelPregunta = new ArrayList<>();
@@ -244,62 +336,7 @@ public class JuegoController {
         return arrayNivelPregunta;
     }
     
-    /**
-     * Construir el hbox con el botón continuar o con el textfield del premio
-     * @param premio
-     * @param nextPregunta 
-     */
-    public void buildContinuar(boolean premio, Pregunta nextPregunta){
-        hbCont.getChildren().clear();
-        
-        TextField txtPremio = new TextField();
-        Button btnContinuar = new Button("Continuar");
-        
-        if (premio){
-            // Manejar el evento para guardar premio
-            btnContinuar.setOnMouseClicked((e) -> 
-            {  
-                App.juego.setPremio(txtPremio.getText());
-            });
-            // Agregar textfield y botón
-            hbCont.getChildren().addAll(txtPremio, btnContinuar);
-        } else{
-            btnContinuar.setOnMouseClicked(e -> buildPregunta(nextPregunta));
-        }
-        
-        hbCont.getChildren().add(btnContinuar);
-        
-    }
-    
-    public void buildPregunta(Pregunta p){
-        // Construir la estructura de pregunta con sus posibles respuestas
-        lblPregunta.setText(p.getTexto());
-        
-        // Shuffle de respuestas de la pregunta
-        Collections.shuffle(p.getRespuestas());
-        
-        // Construir respuestas de la pregunta
-        buildRespuestas(p);
-                        
-        
-    }
-    
-    public void buildRespuestas(Pregunta p){
-        // Construcción de RadioButton
-        rbA.setOnMouseClicked(e -> r = p.getRespuestas().get(0));
-        rbB.setOnMouseClicked(e -> r = p.getRespuestas().get(1));
-        rbC.setOnMouseClicked(e -> r = p.getRespuestas().get(2));
-        rbD.setOnMouseClicked(e -> r = p.getRespuestas().get(3));
-        
-        rbA.setText("A) " + p.getRespuestas().get(0));
-        rbB.setText("B) " + p.getRespuestas().get(1));
-        rbC.setText("C) " + p.getRespuestas().get(2));
-        rbD.setText("D) " + p.getRespuestas().get(3));
-    }
-    
-    
-    
-   
+
     class Temporizador extends Thread {
         boolean progression = true;
         
@@ -354,7 +391,3 @@ public class JuegoController {
             
     }
     }
-    
-    
-    
-
