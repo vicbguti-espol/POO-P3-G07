@@ -13,18 +13,18 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -49,6 +49,8 @@ public class JuegoController {
      * Initializes the controller class.
      */
     @FXML
+    private BorderPane bpPrincipal;
+    @FXML
     private Label lblPregunta;
     @FXML
     private RadioButton  rbA;
@@ -66,6 +68,8 @@ public class JuegoController {
     private RadioButton  rbD;
     @FXML
     private HBox hbCont;
+    @FXML
+    private ListView lvPreguntas;
     
     // Declarar input para recibir respuesta 
     int tTranscurrido;
@@ -95,12 +99,12 @@ public class JuegoController {
            comodinPublico(); 
         });
     }
-    
-    
+
     private class Manejador implements EventHandler<Event>{
         @Override
         public void handle(Event e){
             indPregunta++;
+            lvPreguntas.getSelectionModel().select(indPregunta+(indNivel*NuevoJuegoController.cantPregNivSeleccionado));
             System.out.println("Corriendo click");
             // buildJuego();
             actualizar();
@@ -186,9 +190,21 @@ public class JuegoController {
         comodinesUsados+=" Usó el comodin de compañero "+NuevoJuegoController.apoyoSeleccionado.getNombre()+" en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
     }
 
-    
+    /**
+     * crearPanel
+     * Usando el TableView de Preguntas, se cargan las preguntas en base a la cantidad de preguntas por nivel seleccionado por el usuario usando un ObservableArrayList
+     **/
     public void crearPanel(){
-        // Panel
+        ObservableList<String> listaPreguntas=FXCollections.observableArrayList();
+        for(NivelPregunta np:preguntasPerLvl){
+            for(Pregunta p: np.getPreguntas()){
+                System.out.println("a"+np.getPreguntas().indexOf(p));
+                listaPreguntas.add("Pregunta "+String.valueOf(np.getPreguntas().indexOf(p)+1));
+            }
+        }
+        lvPreguntas.setItems(listaPreguntas);
+        lvPreguntas.getSelectionModel().select(0);
+        lvPreguntas.setMouseTransparent(true);
     }
     
     public void buildJuego(){
@@ -197,6 +213,7 @@ public class JuegoController {
         
         // Obtener preguntas por nivel
         preguntasPerLvl = getArrayNivelPregunta();
+        crearPanel();
         
         pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
         buildPregunta(pregunta);
