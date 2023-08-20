@@ -4,6 +4,7 @@ espol\poo\excepciones\TerminoExistenteException.class
 espol\poo\proyectojar\NuevoJuegoController.class
 modelo\academico\TerminoAcademico.class
 modelo\juego\TipoRespuesta.class
+espol\poo\proyectojar\ReporteController.class
 modelo\juego\Pregunta.class
 modelo\juego\Respuesta.class
 espol\poo\proyectojar\JuegoController.class

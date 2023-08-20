@@ -37,6 +37,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import modelo.academico.Materia;
 import modelo.juego.Comodin;
 import modelo.juego.Juego;
 import modelo.juego.NivelPregunta;
@@ -101,7 +102,9 @@ public class JuegoController {
     public void initialize() throws InterruptedException {
         buildJuego();
         comodin50.setOnMouseClicked(e->{
-           comodin50(); 
+            
+           comodin50();
+           
         });
         comodinCompañero.setOnMouseClicked(e->{
            comodinCompañero(); 
@@ -218,9 +221,12 @@ public class JuegoController {
     
     public void mostrarpreguntas(){
         // Obtener preguntas por nivel
-        Pregunta pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
+        Pregunta pregunta = preguntasPerLvl.get(indNivel).getPreguntas().
+                get(indPregunta);
+        
         //Mostrarlas en la aplicación
         buildPregunta(pregunta);
+        
     }
     
     public void buildPregunta(Pregunta p){
@@ -257,8 +263,34 @@ public class JuegoController {
      * 
      */
     public void actualizar50(){
-        Pregunta pregunta50 = new Pregunta(pregunta.getTexto(),pregunta.getNivel(),pregunta.getMateria(),pregunta.getRespuestas());
-        Collections.shuffle(pregunta50.getRespuestas());
+        Pregunta pregunta50;
+        ArrayList<Respuesta> respuestas;
+        
+        pregunta = preguntasPerLvl.get(indNivel).getPreguntas().
+                get(indPregunta);
+        
+//        System.out.println(pregunta.getTexto() + "");
+//        System.out.println(pregunta.getNivel() + "");
+//        System.out.println(pregunta.getMateria());
+//        System.out.println(pregunta.getRespuestas());
+        // Crear una copia de la pregunta
+        pregunta50 = new Pregunta(pregunta.getTexto(),pregunta.getNivel(),pregunta.getMateria(),pregunta.getRespuestas());
+        
+        // System.out.println("Crear respuestas");
+        respuestas = pregunta50.getRespuestas();
+        Collections.shuffle(respuestas);
+        
+//        for (Respuesta r: respuestas){
+//            Boolean respCorrecta = r.getTipo().equals(TipoRespuesta.CORRECTA);
+//            if (!respCorrecta){
+//                // Cambiar el texto de una respuesta incorrecta
+//                r.setTexto("");
+//            }
+//        }
+        
+        // Cambiar las respuestas de la pregunta a mostrar
+        pregunta50.setRespuestas(respuestas);
+
         for(int i=0;i<2;i++){
             Respuesta respuestaindice=pregunta50.getRespuestas().get(i);
             if(respuestaindice.getTipo().equals(TipoRespuesta.CORRECTA)){
@@ -268,7 +300,20 @@ public class JuegoController {
                respuestaindice.setTexto(""); 
             }
         }
-        buildPregunta(pregunta50);
+        
+            
+//        for(int i=0;i<2;i++){
+//            Respuesta respuestaindice=pregunta50.getRespuestas().get(i);
+//            if(respuestaindice.getTipo().equals(TipoRespuesta.CORRECTA)){
+//                i--;
+//            }
+//            else{
+//               respuestaindice.setTexto(""); 
+//            }
+//        }
+        
+        // System.out.println(pregunta50.getRespuestas());
+        buildRespuestas(pregunta50);
     }
     /**
      * Constructor de cuadros de dialogos para la selección de comodines

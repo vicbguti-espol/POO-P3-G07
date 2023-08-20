@@ -10,40 +10,40 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.ReporteController">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="40.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="708.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="GENERAR REPORTE" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Label text="Término Académico" />
-                  <ComboBox prefHeight="26.0" prefWidth="60.0" />
+                  <ComboBox fx:id="cmbTermino" prefHeight="26.0" prefWidth="106.0" />
                   <Label text="Código de Materia" />
-                  <ComboBox prefHeight="26.0" prefWidth="60.0" />
+                  <ComboBox fx:id="cmbMateria" prefHeight="26.0" prefWidth="104.0" />
                   <Label text="Paralelo" />
-                  <ComboBox prefHeight="26.0" prefWidth="60.0" />
+                  <ComboBox fx:id="cmbParalelo" prefHeight="26.0" prefWidth="126.0" />
                </children>
                <padding>
                   <Insets left="30.0" right="30.0" />
                </padding>
             </HBox>
-            <TableView prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tvReporte" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Fecha" />
-                <TableColumn prefWidth="75.0" text="Participante" />
-                  <TableColumn prefWidth="75.0" text="Nivel Max" />
-                  <TableColumn prefWidth="75.0" text="Tiempo" />
-                  <TableColumn prefWidth="75.0" text="# Preguntas" />
-                  <TableColumn prefWidth="75.0" text="Comodines" />
-                  <TableColumn prefWidth="75.0" text="Premio" />
+                <TableColumn fx:id="colFecha" prefWidth="77.60003662109375" text="Fecha" />
+                <TableColumn fx:id="colParticipante" prefWidth="108.800048828125" text="Participante" />
+                  <TableColumn fx:id="colNivelMax" prefWidth="88.0" text="Nivel Max" />
+                  <TableColumn fx:id="colTiempo" prefWidth="72.79998779296875" text="Tiempo" />
+                  <TableColumn fx:id="colPreguntas" prefWidth="158.39996337890625" text="Preguntas Contestadas" />
+                  <TableColumn fx:id="colComodines" prefWidth="122.4000244140625" text="Comodines Usados" />
+                  <TableColumn fx:id="colPremio" prefWidth="64.7999267578125" text="Premio" />
+                  <TableColumn fx:id="colOpciones" prefWidth="94.4000244140625" text="Opciones" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button mnemonicParsing="false" text="Salir" />
+            <Button fx:id="btnRegresar" mnemonicParsing="false" text="Regresar" />
          </children>
          <padding>
             <Insets bottom="30.0" top="30.0" />
