@@ -100,7 +100,6 @@ public class visualizarMateriasController implements Initializable {
         tcNiveles.setCellValueFactory(new PropertyValueFactory<>("cantNiveles"));
         
         tvMaterias.getColumns().addAll(tcCodigo,tcNombre,tcNiveles);
-        tvMaterias.setColumnResizePolicy(tvMaterias.CONSTRAINED_RESIZE_POLICY);
         tvMaterias.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
         tvMaterias.setItems(listaMaterias);
         
