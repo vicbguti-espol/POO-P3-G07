@@ -79,9 +79,10 @@ public class JuegoController {
     private HBox hbCont;
     @FXML
     private ListView lvPreguntas;
-    
-    // Declarar input para recibir respuesta 
+
     int tTranscurrido;
+    Juego juego = App.juego;
+    int tiempoJuego = App.tiempoJuego;
     Integer correctas = 0; 
     
     public Integer indNivel = 0;
@@ -93,8 +94,8 @@ public class JuegoController {
     
     public ArrayList<NivelPregunta> preguntasPerLvl;
     Button btnContinuar = new Button("Continuar");
-    
-    ArrayList<PreguntaComodin> comodinesUsados = App.juego.getComodinesUtilizados();
+
+    // ArrayList<PreguntaComodin> comodinesUsados = App.juego.getComodinesUtilizados();
     
     @FXML
     public void initialize() throws InterruptedException {
@@ -118,7 +119,7 @@ public class JuegoController {
         mostrarpreguntas();
         crearPanel();
         
-        tTranscurrido = App.tiempoJuego;
+        tTranscurrido = tiempoJuego;
         
         btnContinuar.setOnMouseClicked(e ->  {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -156,6 +157,14 @@ public class JuegoController {
     
     public void actualizar(){
         //PARA VER EN CONSOLA
+        
+        backupDuracion();
+        
+        // Actualizar el tiempo para cada pregunta 
+        // (estos dos siempre tienen que ser tipos de datos primitivos)
+        tTranscurrido = tiempoJuego;
+        
+        
         int maximo = preguntasPerLvl.get(indNivel).getPreguntas().size();
         int num = indPregunta+1;
         System.out.println("PRESIONASTE EL BOTON");
@@ -186,6 +195,25 @@ public class JuegoController {
                 System.out.println(e);
             }
         } 
+    }
+    
+    /**
+     * Guardar el tiempo que le tomó al usuario responder la pregunta
+     */
+    public void backupDuracion(){
+        int segundosJuego;
+        int segundosPregunta;
+        
+        // Obtener los segundos totales actuales del juego
+        segundosJuego = juego.getSegundos();
+        // Obtener los segundos que tomó hacer la anterior pregunta
+        segundosPregunta = tiempoJuego - tTranscurrido;
+        
+        // Actualizar los segundos totales de todas las preguntas del juego
+        juego.setSegundos( segundosJuego + segundosPregunta );
+        
+        
+        // System.out.println("Segundos totales del juego: " + segundosJuego);
     }
     
     public void mostrarpreguntas(){
@@ -277,6 +305,8 @@ public class JuegoController {
 
         comodinUsado = Comodin.CINCUENTA;
         agregarComodin(comodinUsado);
+        
+        
         // comodinesUsados.add(new PreguntaComodin(preguntaActual, comodinUsado));
         // comodinesUsados+=" Usó el comodin 50/50 en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
         
@@ -327,7 +357,8 @@ public class JuegoController {
         preguntasNivel = preguntasPerLvl.get(indNivel).getPreguntas();
         preguntaActual = preguntasNivel.get(indPregunta);
         
-        comodinesUsados.add(new PreguntaComodin(preguntaActual, comodinUsado));
+        // comodinesUsados.add(new PreguntaComodin(preguntaActual, comodinUsado));
+        preguntaActual.setComodinUsado(comodinUsado);
     }
 
     /**

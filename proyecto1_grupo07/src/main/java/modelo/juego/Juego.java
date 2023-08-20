@@ -3,6 +3,7 @@ package modelo.juego;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.time.LocalDate;
 import modelo.juego.Pregunta;
 import modelo.juego.Respuesta;
 import modelo.juego.TipoEstudiante;
@@ -25,11 +26,12 @@ public class Juego {
     private Estudiante participante;
     private Estudiante apoyo;
     private int nPreguntasPerLvl;
-    private String fecha;
+    private LocalDate fecha;
     private int lvlMax;
     private int nPreguntasContestadas;
     private ArrayList<PreguntaComodin> comodinesUtilizados;
     private String premio;
+    private int segundos;
 
     public void setMateria(Materia materia) {
         this.materia = materia;
@@ -51,7 +53,7 @@ public class Juego {
         this.nPreguntasPerLvl = nPreguntasPerLvl;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -99,7 +101,15 @@ public class Juego {
         return comodinesUtilizados;
     }
 
+    public int getSegundos() {
+        return segundos;
+    }
 
+    public void setSegundos(int segundos) {
+        this.segundos = segundos;
+    }
+
+    
     
     
     // Instanciar scanner
@@ -118,14 +128,14 @@ public class Juego {
      */
     public Juego(Materia materia, ArrayList<Pregunta> preguntasMateria, 
             Paralelo paralelo, int matriculaParticipante,int matriculaApoyo,
-            int n, String f){
+            int n, LocalDate f){
         this.materia = materia;
         preguntas = preguntasMateria; // Asignar preguntas por materia
         setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.PARTICIPANTE); // Asignar participante
         setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.APOYO); // Asignar support
-        fecha = f; // Asignar fecha
+        fecha = f;
         nPreguntasPerLvl = n; // Set n preguntas por nivel
         comodinesUtilizados=new ArrayList<>();
     }
@@ -157,7 +167,7 @@ public class Juego {
     public Estudiante getParticipante(){
         return participante;
     }
-    public String getFecha(){
+    public LocalDate getFecha(){
         return fecha;
     }
     public int getMaxlvl(){
@@ -351,39 +361,39 @@ public class Juego {
     public void setPreguntasParaJuego(ArrayList<Pregunta> pr){
         this.preguntas=pr;
     }
-    // Ordenar reporte en funcion de la fecha
-    public static ArrayList<Juego> ordenarReporte(ArrayList<Juego> juegos){
-        int indicecomparar=0;
-        // Bubble sort entre listas y fechas
-        for (int i = 0; i < juegos.size() - 1; i++) {
-            for (int j = 0; j < juegos.size() - i - 1; j++) {
-                //Separación de listas
-                String[] fecha1 = juegos.get(j).getFecha().split("-");
-                String[] fecha2 = juegos.get(j + 1).getFecha().split("-");
-                int d1 = Integer.parseInt(fecha1[0]);
-                int m1 = Integer.parseInt(fecha1[1]);
-                int a1 = Integer.parseInt(fecha1[2]);
-                int d2 = Integer.parseInt(fecha2[0]);
-                int m2 = Integer.parseInt(fecha2[1]);
-                int a2 = Integer.parseInt(fecha2[2]);
-                //Comparacion 
-                    if (a1 != a2) {
-                        indicecomparar=Integer.compare(a1,a2);
-                    } else if (m1 != m2) {
-                        indicecomparar=Integer.compare(m1,m2);
-                    } else {
-                        indicecomparar=Integer.compare(d1,d2);
-                    }
-                if (indicecomparar > 0) {
-                    // Swap the positions of the elements
-                    Juego temp = juegos.get(j);
-                    juegos.set(j, juegos.get(j+1));
-                    juegos.set(j+1, temp);
-                }
-            }
-        }
-        return juegos;
-    }
+//    // Ordenar reporte en funcion de la fecha
+//    public static ArrayList<Juego> ordenarReporte(ArrayList<Juego> juegos){
+//        int indicecomparar=0;
+//        // Bubble sort entre listas y fechas
+//        for (int i = 0; i < juegos.size() - 1; i++) {
+//            for (int j = 0; j < juegos.size() - i - 1; j++) {
+//                //Separación de listas
+//                String[] fecha1 = juegos.get(j).getFecha().split("-");
+//                String[] fecha2 = juegos.get(j + 1).getFecha().split("-");
+//                int d1 = Integer.parseInt(fecha1[0]);
+//                int m1 = Integer.parseInt(fecha1[1]);
+//                int a1 = Integer.parseInt(fecha1[2]);
+//                int d2 = Integer.parseInt(fecha2[0]);
+//                int m2 = Integer.parseInt(fecha2[1]);
+//                int a2 = Integer.parseInt(fecha2[2]);
+//                //Comparacion 
+//                    if (a1 != a2) {
+//                        indicecomparar=Integer.compare(a1,a2);
+//                    } else if (m1 != m2) {
+//                        indicecomparar=Integer.compare(m1,m2);
+//                    } else {
+//                        indicecomparar=Integer.compare(d1,d2);
+//                    }
+//                if (indicecomparar > 0) {
+//                    // Swap the positions of the elements
+//                    Juego temp = juegos.get(j);
+//                    juegos.set(j, juegos.get(j+1));
+//                    juegos.set(j+1, temp);
+//                }
+//            }
+//        }
+//        return juegos;
+//    }
 //    public static void generarReporte(ArrayList<Juego> juegos){
 //        // Sort de todos los juegos registrados
 //        juegos=ordenarReporte(juegos);

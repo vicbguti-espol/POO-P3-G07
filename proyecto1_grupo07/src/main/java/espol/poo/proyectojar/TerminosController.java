@@ -92,7 +92,6 @@ public class TerminosController{
         cmbTerminos.setValue(App.terminoJuego);
     }
     
-    
     private void guardarTerminoJuego(){
         App.terminoJuego =(TerminoAcademico) cmbTerminos.getValue();
         // Mostrar alerta de agregación exitosa
