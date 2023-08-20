@@ -34,6 +34,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -88,7 +89,7 @@ public class JuegoController {
     
     public Integer indNivel = 0;
     public Integer indPregunta = 0;
-    
+    public int preguntasAvanzadas=0;
     Respuesta r = new Respuesta();
     Pregunta pregunta=new Pregunta();
     Boolean respuestaCorrecta;
@@ -158,6 +159,7 @@ public class JuegoController {
     }
     
     
+    
     public void actualizar(){
         //PARA VER EN CONSOLA
         
@@ -172,24 +174,75 @@ public class JuegoController {
         int num = indPregunta+1;
         System.out.println("PRESIONASTE EL BOTON");
         System.out.println("Pregunta"+num+" de "+maximo+" del nivel: "+indNivel);
+        
         //Condicion de avanzar si es correcta la respuesta
         respuestaCorrecta = r.getTipo().equals(TipoRespuesta.CORRECTA);
+        //Sintaxis del recorrido de un juego completo
+        int Preguntastotales=0;
+        for(NivelPregunta i : preguntasPerLvl){
+	Preguntastotales+=i.getPreguntas().size();
+        }
         if (respuestaCorrecta){
-            //Condicion para avanzar a la siguiente pregunta
-            if(maximo==num){
-                System.out.println("SIGUIENTE NIVEL");
-                indPregunta=0;
-                indNivel++;
-                mostrarpreguntas();
-            }else if (maximo>num){
-                indPregunta++;
-                mostrarpreguntas();
+            //Condicion para avanzar a la siguiente pregunta o nivel
+            preguntasAvanzadas++;
+            if (preguntasAvanzadas!=Preguntastotales){
+                if(maximo==num){
+                    System.out.println("SIGUIENTE NIVEL");
+                    // Dialogo para que ingrese el premio que quiere al pasar un nivel
+                    TextInputDialog dialog = new TextInputDialog();
+                    dialog.setTitle("Ingreso de Premio");
+                    dialog.setHeaderText("Ingrese su premio por pasar el nivel: "+indNivel);
+                    dialog.setContentText("Premio: ");
+                    Optional<String> result = dialog.showAndWait();
+                    result.ifPresent(premio -> {
+                    // Guardar la información ingresada por el usuario (premio)
+                    System.out.println("Premio ingresado: " + premio);
+                    });
+                    indPregunta=0;
+                    indNivel++;
+                    mostrarpreguntas();
+                }else if (maximo>num){
+                    indPregunta++;
+                    mostrarpreguntas();
+                }
+            } else {
+                //Dialogo premio final Juego.
+                    TextInputDialog dialog = new TextInputDialog();
+                    dialog.setTitle("Ingreso de Premio");
+                    dialog.setHeaderText("Ingrese su premio por pasar CasiPolitecnico");
+                    dialog.setContentText("Premio: ");
+                    Optional<String> result = dialog.showAndWait();
+                    result.ifPresent(premio -> {
+                    // Guardar la información ingresada por el usuario (premio)
+                    System.out.println("Premio ingresado: " + premio);
+                    });
+                //f
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Resultado de la operación");
+                alert.setContentText("Terminaste el Juego. GANASTE! :)");
+                ImageView imageView = new ImageView(new Image("/espol/poo/proyectojar/files/Asset 5xxhdpi.png"));
+                imageView.setFitHeight(144); // Ajusta la altura de la imagen
+                imageView.setFitWidth(144); // Ajusta el ancho de la imagen
+                alert.setGraphic(imageView);
+                alert.showAndWait();
+                // Cambiar a la pantalla main de términos
+                try{
+                    App.setRoot("primary");
+                } catch(IOException e){
+                    System.out.println(e);
+                }
             }
+            // Salida cuando se equivoca en una pregunta
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText("Resultado de la operación");
             alert.setContentText("Te equivocaste, Juego terminado :(");
+            ImageView imageView = new ImageView(new Image("/espol/poo/proyectojar/files/Asset 1xxhdpi.png"));
+            imageView.setFitHeight(144); // Ajusta la altura de la imagen
+            imageView.setFitWidth(65); // Ajusta el ancho de la imagen
+            alert.setGraphic(imageView);
             alert.showAndWait();
             // Cambiar a la pantalla main de términos
             try{
@@ -197,7 +250,8 @@ public class JuegoController {
             } catch(IOException e){
                 System.out.println(e);
             }
-        } 
+        }
+        System.out.println("Respondido "+preguntasAvanzadas+" preguntas de "+Preguntastotales);
     }
     
     /**
