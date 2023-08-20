@@ -218,7 +218,7 @@ public class NuevoJuegoController implements Initializable {
                 partSeleccionado.getMatricula(), 
                 apoyoSeleccionado.getMatricula(),
                 cantPregNivSeleccionado, 
-                String.valueOf(java.time.LocalDate.now()));
+                java.time.LocalDate.now());
         
         
         // Cargar FXML con el controlador

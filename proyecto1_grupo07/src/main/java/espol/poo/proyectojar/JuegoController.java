@@ -5,6 +5,7 @@
 package espol.poo.proyectojar;
 
 import espol.poo.proyectojar.App;
+import espol.poo.proyectojar.utilitaria.JuegoUtilitaria;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,8 +25,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -33,6 +41,7 @@ import modelo.juego.Comodin;
 import modelo.juego.Juego;
 import modelo.juego.NivelPregunta;
 import modelo.juego.Pregunta;
+import modelo.juego.PreguntaComodin;
 import modelo.juego.Respuesta;
 import modelo.juego.TipoRespuesta;
 
@@ -70,21 +79,23 @@ public class JuegoController {
     private HBox hbCont;
     @FXML
     private ListView lvPreguntas;
-    
-    // Declarar input para recibir respuesta 
+
     int tTranscurrido;
+    Juego juego = App.juego;
+    int tiempoJuego = App.tiempoJuego;
     Integer correctas = 0; 
     
-    Integer indNivel = 0;
-    Integer indPregunta = 0;
+    public Integer indNivel = 0;
+    public Integer indPregunta = 0;
     
     Respuesta r = new Respuesta();
     Pregunta pregunta=new Pregunta();
     Boolean respuestaCorrecta;
     
-    ArrayList<NivelPregunta> preguntasPerLvl;
-    
-    String comodinesUsados=null;
+    public ArrayList<NivelPregunta> preguntasPerLvl;
+    Button btnContinuar = new Button("Continuar");
+
+    // ArrayList<PreguntaComodin> comodinesUsados = App.juego.getComodinesUtilizados();
     
     @FXML
     public void initialize() throws InterruptedException {
@@ -99,6 +110,38 @@ public class JuegoController {
            comodinPublico(); 
         });
     }
+    
+    public void buildJuego(){
+       
+        // Obtener preguntas por nivel
+        preguntasPerLvl = getArrayNivelPregunta();
+        
+        mostrarpreguntas();
+        crearPanel();
+        
+        tTranscurrido = tiempoJuego;
+        
+        btnContinuar.setOnMouseClicked(e ->  {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación de elección");
+            alert.setHeaderText("Comfirmación de Operación");
+            alert.setContentText("¿Estás seguro de que deseas continuar?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                actualizar();
+            }
+        });
+        
+        hbCont.getChildren().add(btnContinuar);
+        
+        
+        // Instanciar temporizador
+        Temporizador temp = new Temporizador();
+        temp.setDaemon(true);
+        temp.start();
+                
+        
+    }
 
     private class Manejador implements EventHandler<Event>{
         @Override
@@ -111,9 +154,104 @@ public class JuegoController {
         }
     }
     
+    
     public void actualizar(){
-        // similar a buildJuego
+        //PARA VER EN CONSOLA
+        
+        backupDuracion();
+        
+        // Actualizar el tiempo para cada pregunta 
+        // (estos dos siempre tienen que ser tipos de datos primitivos)
+        tTranscurrido = tiempoJuego;
+        
+        
+        int maximo = preguntasPerLvl.get(indNivel).getPreguntas().size();
+        int num = indPregunta+1;
+        System.out.println("PRESIONASTE EL BOTON");
+        System.out.println("Pregunta"+num+" de "+maximo+" del nivel: "+indNivel);
+        //Condicion de avanzar si es correcta la respuesta
+        respuestaCorrecta = r.getTipo().equals(TipoRespuesta.CORRECTA);
+        if (respuestaCorrecta){
+            //Condicion para avanzar a la siguiente pregunta
+            if(maximo==num){
+                System.out.println("SIGUIENTE NIVEL");
+                indPregunta=0;
+                indNivel++;
+                mostrarpreguntas();
+            }else if (maximo>num){
+                indPregunta++;
+                mostrarpreguntas();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Resultado de la operación");
+            alert.setContentText("Te equivocaste, Juego terminado :(");
+            alert.showAndWait();
+            // Cambiar a la pantalla main de términos
+            try{
+                App.setRoot("primary");
+            } catch(IOException e){
+                System.out.println(e);
+            }
+        } 
     }
+    
+    /**
+     * Guardar el tiempo que le tomó al usuario responder la pregunta
+     */
+    public void backupDuracion(){
+        int segundosJuego;
+        int segundosPregunta;
+        
+        // Obtener los segundos totales actuales del juego
+        segundosJuego = juego.getSegundos();
+        // Obtener los segundos que tomó hacer la anterior pregunta
+        segundosPregunta = tiempoJuego - tTranscurrido;
+        
+        // Actualizar los segundos totales de todas las preguntas del juego
+        juego.setSegundos( segundosJuego + segundosPregunta );
+        
+        
+        // System.out.println("Segundos totales del juego: " + segundosJuego);
+    }
+    
+    public void mostrarpreguntas(){
+        // Obtener preguntas por nivel
+        Pregunta pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
+        //Mostrarlas en la aplicación
+        buildPregunta(pregunta);
+    }
+    
+    public void buildPregunta(Pregunta p){
+        // Construir la estructura de pregunta con sus posibles respuestas
+        lblPregunta.setText(p.getTexto());
+        
+        // Shuffle de respuestas de la pregunta
+        Collections.shuffle(p.getRespuestas());
+        
+        // Construir respuestas de la pregunta
+        buildRespuestas(p);
+    }
+    
+    public void buildRespuestas(Pregunta p){
+        // Borrar cualquier accion existente
+        rbA.setOnMouseClicked(null);
+        rbB.setOnMouseClicked(null);
+        rbC.setOnMouseClicked(null);
+        rbD.setOnMouseClicked(null);
+        // Construcción de RadioButton
+        rbA.setOnMouseClicked(e -> r = p.getRespuestas().get(0));
+        rbB.setOnMouseClicked(e -> r = p.getRespuestas().get(1));
+        rbC.setOnMouseClicked(e -> r = p.getRespuestas().get(2));
+        rbD.setOnMouseClicked(e -> r = p.getRespuestas().get(3));
+        
+        rbA.setText("A) " + p.getRespuestas().get(0));
+        rbB.setText("B) " + p.getRespuestas().get(1));
+        rbC.setText("C) " + p.getRespuestas().get(2));
+        rbD.setText("D) " + p.getRespuestas().get(3));
+    }
+    
     /**
      * Actualiza la pregunta en los componentes FXML para eliminar dos respuesta incorrectas
      * 
@@ -156,13 +294,21 @@ public class JuegoController {
      * Tambien registra su uso en la variable comodinesUsados
      **/
     public void comodin50(){
+        Comodin comodinUsado;
+        
         notificacionComodin("50");
         ColorAdjust grayscale= new ColorAdjust();
         grayscale.setSaturation(-1);
         comodin50.setEffect(grayscale);
         comodin50.setMouseTransparent(true);
         actualizar50();
-        comodinesUsados+=" Usó el comodin 50/50 en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+
+        comodinUsado = Comodin.CINCUENTA;
+        agregarComodin(comodinUsado);
+        
+        
+        // comodinesUsados.add(new PreguntaComodin(preguntaActual, comodinUsado));
+        // comodinesUsados+=" Usó el comodin 50/50 en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
         
     }
     /**
@@ -170,29 +316,55 @@ public class JuegoController {
      * Envia un cuadro de dialogo que incia la consulta al curso.
      **/
     public void comodinPublico(){
+        Comodin comodinUsado;
+        
         notificacionComodin("publico");
         ColorAdjust grayscale= new ColorAdjust();
         grayscale.setSaturation(-1);
         comodinPublico.setEffect(grayscale);
         comodinPublico.setMouseTransparent(true);
-        comodinesUsados+=" Usó el comodin de curso en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+        
+        comodinUsado = Comodin.SALON; 
+        agregarComodin(comodinUsado);
+        // comodinesUsados+=" Usó el comodin de curso en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
     }
     /**
      * Comodin Compañero
      * Envia un cuadro de dialogo que incia la consulta con el nombre del participante de apoyo seleccionado.
      **/
     public void comodinCompañero(){
+        Comodin comodinUsado;
+        
         notificacionComodin("compañero");
         ColorAdjust grayscale= new ColorAdjust();
         grayscale.setSaturation(-1);
         comodinCompañero.setEffect(grayscale);
         comodinCompañero.setMouseTransparent(true);
-        comodinesUsados+=" Usó el comodin de compañero "+NuevoJuegoController.apoyoSeleccionado.getNombre()+" en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+        
+        comodinUsado = Comodin.COMPANERO;
+        agregarComodin(comodinUsado);
+        // comodinesUsados+=" Usó el comodin de compañero "+NuevoJuegoController.apoyoSeleccionado.getNombre()+" en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+    }
+    
+    /**
+     * Agregar comodín a la lista de comodines del juego
+     * @param comodinUsado 
+     */
+    public void agregarComodin(Comodin comodinUsado){
+        ArrayList<Pregunta> preguntasNivel;
+        Pregunta preguntaActual;
+        
+        preguntasNivel = preguntasPerLvl.get(indNivel).getPreguntas();
+        preguntaActual = preguntasNivel.get(indPregunta);
+        
+        // comodinesUsados.add(new PreguntaComodin(preguntaActual, comodinUsado));
+        preguntaActual.setComodinUsado(comodinUsado);
     }
 
     /**
-     * crearPanel
-     * Usando el TableView de Preguntas, se cargan las preguntas en base a la cantidad de preguntas por nivel seleccionado por el usuario usando un ObservableArrayList
+     * Usando el TableView de Preguntas, se cargan las preguntas 
+     * en base a la cantidad de preguntas por nivel seleccionado por 
+     * el usuario usando un ObservableArrayList
      **/
     public void crearPanel(){
         ObservableList<String> listaPreguntas=FXCollections.observableArrayList();
@@ -205,29 +377,6 @@ public class JuegoController {
         lvPreguntas.setItems(listaPreguntas);
         lvPreguntas.getSelectionModel().select(0);
         lvPreguntas.setMouseTransparent(true);
-    }
-    
-    public void buildJuego(){
-        respuestaCorrecta = r.getTipo().equals(TipoRespuesta.CORRECTA);
-        tTranscurrido = App.tiempoJuego;
-        
-        // Obtener preguntas por nivel
-        preguntasPerLvl = getArrayNivelPregunta();
-        crearPanel();
-        
-        pregunta = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
-        buildPregunta(pregunta);
-        
-        Button btnContinuar = new Button("Continuar");
-        btnContinuar.setOnMouseClicked(e ->  new Manejador());
-        hbCont.getChildren().add(btnContinuar);
-        
-        // Instanciar temporizador
-        Temporizador temp = new Temporizador();
-        temp.setDaemon(true);
-        temp.start();
-                
-        
     }
     
     public ArrayList<NivelPregunta> getArrayNivelPregunta(){
@@ -244,59 +393,7 @@ public class JuegoController {
         return arrayNivelPregunta;
     }
     
-    /**
-     * Construir el hbox con el botón continuar o con el textfield del premio
-     * @param premio
-     * @param nextPregunta 
-     */
-    public void buildContinuar(boolean premio, Pregunta nextPregunta){
-        hbCont.getChildren().clear();
-        
-        TextField txtPremio = new TextField();
-        Button btnContinuar = new Button("Continuar");
-        
-        if (premio){
-            // Manejar el evento para guardar premio
-            btnContinuar.setOnMouseClicked((e) -> 
-            {  
-                App.juego.setPremio(txtPremio.getText());
-            });
-            // Agregar textfield y botón
-            hbCont.getChildren().addAll(txtPremio, btnContinuar);
-        } else{
-            btnContinuar.setOnMouseClicked(e -> buildPregunta(nextPregunta));
-        }
-        
-        hbCont.getChildren().add(btnContinuar);
-        
-    }
-    
-    public void buildPregunta(Pregunta p){
-        // Construir la estructura de pregunta con sus posibles respuestas
-        lblPregunta.setText(p.getTexto());
-        
-        // Shuffle de respuestas de la pregunta
-        Collections.shuffle(p.getRespuestas());
-        
-        // Construir respuestas de la pregunta
-        buildRespuestas(p);
-                        
-        
-    }
-    
-    public void buildRespuestas(Pregunta p){
-        // Construcción de RadioButton
-        rbA.setOnMouseClicked(e -> r = p.getRespuestas().get(0));
-        rbB.setOnMouseClicked(e -> r = p.getRespuestas().get(1));
-        rbC.setOnMouseClicked(e -> r = p.getRespuestas().get(2));
-        rbD.setOnMouseClicked(e -> r = p.getRespuestas().get(3));
-        
-        rbA.setText("A) " + p.getRespuestas().get(0));
-        rbB.setText("B) " + p.getRespuestas().get(1));
-        rbC.setText("C) " + p.getRespuestas().get(2));
-        rbD.setText("D) " + p.getRespuestas().get(3));
-    }
-    
+
     class Temporizador extends Thread {
         boolean progression = true;
         
@@ -351,7 +448,3 @@ public class JuegoController {
             
     }
     }
-    
-    
-    
-
