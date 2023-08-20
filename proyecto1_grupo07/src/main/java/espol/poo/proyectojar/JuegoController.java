@@ -41,6 +41,7 @@ import modelo.juego.Comodin;
 import modelo.juego.Juego;
 import modelo.juego.NivelPregunta;
 import modelo.juego.Pregunta;
+import modelo.juego.PreguntaComodin;
 import modelo.juego.Respuesta;
 import modelo.juego.TipoRespuesta;
 
@@ -93,7 +94,7 @@ public class JuegoController {
     public ArrayList<NivelPregunta> preguntasPerLvl;
     Button btnContinuar = new Button("Continuar");
     
-    String comodinesUsados="";
+    ArrayList<PreguntaComodin> comodinesUsados = App.juego.getComodinesUtilizados();
     
     @FXML
     public void initialize() throws InterruptedException {
@@ -166,6 +167,11 @@ public class JuegoController {
         if (respuestaCorrecta){
             //Condicion para avanzar a la siguiente pregunta
             indPregunta++;
+            JuegoUtilitaria ju = new JuegoUtilitaria(preguntasPerLvl,
+                    indNivel, indPregunta, hbCont, 
+                    respuestaCorrecta);
+            
+            ju.agregarPremio();
             if (maximo>indPregunta){
                 mostrarpreguntas();
             }else if(maximo==indPregunta){
@@ -268,13 +274,19 @@ public class JuegoController {
      * Tambien registra su uso en la variable comodinesUsados
      **/
     public void comodin50(){
+        Comodin comodinUsado;
+        
         notificacionComodin("50");
         ColorAdjust grayscale= new ColorAdjust();
         grayscale.setSaturation(-1);
         comodin50.setEffect(grayscale);
         comodin50.setMouseTransparent(true);
         actualizar50();
-        comodinesUsados+=" Usó el comodin 50/50 en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+
+        comodinUsado = Comodin.CINCUENTA;
+        agregarComodin(comodinUsado);
+        // comodinesUsados.add(new PreguntaComodin(preguntaActual, comodinUsado));
+        // comodinesUsados+=" Usó el comodin 50/50 en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
         
     }
     /**
@@ -282,24 +294,48 @@ public class JuegoController {
      * Envia un cuadro de dialogo que incia la consulta al curso.
      **/
     public void comodinPublico(){
+        Comodin comodinUsado;
+        
         notificacionComodin("publico");
         ColorAdjust grayscale= new ColorAdjust();
         grayscale.setSaturation(-1);
         comodinPublico.setEffect(grayscale);
         comodinPublico.setMouseTransparent(true);
-        comodinesUsados+=" Usó el comodin de curso en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+        
+        comodinUsado = Comodin.SALON; 
+        agregarComodin(comodinUsado);
+        // comodinesUsados+=" Usó el comodin de curso en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
     }
     /**
      * Comodin Compañero
      * Envia un cuadro de dialogo que incia la consulta con el nombre del participante de apoyo seleccionado.
      **/
     public void comodinCompañero(){
+        Comodin comodinUsado;
+        
         notificacionComodin("compañero");
         ColorAdjust grayscale= new ColorAdjust();
         grayscale.setSaturation(-1);
         comodinCompañero.setEffect(grayscale);
         comodinCompañero.setMouseTransparent(true);
-        comodinesUsados+=" Usó el comodin de compañero "+NuevoJuegoController.apoyoSeleccionado.getNombre()+" en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+        
+        comodinUsado = Comodin.COMPANERO;
+        agregarComodin(comodinUsado);
+        // comodinesUsados+=" Usó el comodin de compañero "+NuevoJuegoController.apoyoSeleccionado.getNombre()+" en el nivel: "+indNivel+" y la pregunta: "+indPregunta+". \n";
+    }
+    
+    /**
+     * Agregar comodín a la lista de comodines del juego
+     * @param comodinUsado 
+     */
+    public void agregarComodin(Comodin comodinUsado){
+        ArrayList<Pregunta> preguntasNivel;
+        Pregunta preguntaActual;
+        
+        preguntasNivel = preguntasPerLvl.get(indNivel).getPreguntas();
+        preguntaActual = preguntasNivel.get(indPregunta);
+        
+        comodinesUsados.add(new PreguntaComodin(preguntaActual, comodinUsado));
     }
 
     /**
@@ -319,8 +355,6 @@ public class JuegoController {
         lvPreguntas.getSelectionModel().select(0);
         lvPreguntas.setMouseTransparent(true);
     }
-    
-    
     
     public ArrayList<NivelPregunta> getArrayNivelPregunta(){
         ArrayList<NivelPregunta> arrayNivelPregunta = new ArrayList<>();

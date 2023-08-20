@@ -28,7 +28,7 @@ public class Juego {
     private String fecha;
     private int lvlMax;
     private int nPreguntasContestadas;
-    private ArrayList<Comodin> comodinesUtilizados;
+    private ArrayList<PreguntaComodin> comodinesUtilizados;
     private String premio;
 
     public void setMateria(Materia materia) {
@@ -63,7 +63,7 @@ public class Juego {
         this.nPreguntasContestadas = nPreguntasContestadas;
     }
 
-    public void setComodinesUtilizados(ArrayList<Comodin> comodinesUtilizados) {
+    public void setComodinesUtilizados(ArrayList<PreguntaComodin> comodinesUtilizados) {
         this.comodinesUtilizados = comodinesUtilizados;
     }
 
@@ -95,7 +95,7 @@ public class Juego {
         return nPreguntasContestadas;
     }
 
-    public ArrayList<Comodin> getComodinesUtilizados() {
+    public ArrayList<PreguntaComodin> getComodinesUtilizados() {
         return comodinesUtilizados;
     }
 
@@ -127,7 +127,7 @@ public class Juego {
                 TipoEstudiante.APOYO); // Asignar support
         fecha = f; // Asignar fecha
         nPreguntasPerLvl = n; // Set n preguntas por nivel
-        comodinesUtilizados=new ArrayList<Comodin>();
+        comodinesUtilizados=new ArrayList<>();
     }
     
 
@@ -169,7 +169,7 @@ public class Juego {
     public int getNPreguntasContestadas(){
         return nPreguntasContestadas;
     }
-    public ArrayList<Comodin> getComodines(){
+    public ArrayList<PreguntaComodin> getComodines(){
         return comodinesUtilizados;
     }
     
@@ -384,23 +384,23 @@ public class Juego {
         }
         return juegos;
     }
-    public static void generarReporte(ArrayList<Juego> juegos){
-        // Sort de todos los juegos registrados
-        juegos=ordenarReporte(juegos);
-        System.out.println("Reporte de Juegos:");
-        for(Juego juego:juegos){
-            //Obtencion de atributos
-            String nombreEstudiante=juego.getParticipante().getNombre();
-            //Format de la impresion de juegos
-            System.out.println(juegos.indexOf(juego)+1+". "+nombreEstudiante+", el dia "+ juego.getFecha() + " y contesto "+ juego.getNPreguntasContestadas()+" preguntas correctamente");
-            System.out.println("Nivel Máximo alcanzado: "+juego.getMaxlvl()+" \nPremio: "+juego.getPremio());
-            if(juego.getComodines()!=null){
-                System.out.println("Comodines utilizados:");
-                for (Comodin c: juego.getComodines())
-                System.out.println(c.name()); 
-            }
-            
-        }
-        
-    }
+//    public static void generarReporte(ArrayList<Juego> juegos){
+//        // Sort de todos los juegos registrados
+//        juegos=ordenarReporte(juegos);
+//        System.out.println("Reporte de Juegos:");
+//        for(Juego juego:juegos){
+//            //Obtencion de atributos
+//            String nombreEstudiante=juego.getParticipante().getNombre();
+//            //Format de la impresion de juegos
+//            System.out.println(juegos.indexOf(juego)+1+". "+nombreEstudiante+", el dia "+ juego.getFecha() + " y contesto "+ juego.getNPreguntasContestadas()+" preguntas correctamente");
+//            System.out.println("Nivel Máximo alcanzado: "+juego.getMaxlvl()+" \nPremio: "+juego.getPremio());
+//            if(juego.getComodines()!=null){
+//                System.out.println("Comodines utilizados:");
+//                for (Comodin c: juego.getComodines())
+//                System.out.println(c.name()); 
+//            }
+//            
+//        }
+//        
+//    }
 }
