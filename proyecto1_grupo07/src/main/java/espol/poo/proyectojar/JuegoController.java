@@ -71,14 +71,14 @@ public class JuegoController {
     int tTranscurrido;
     Integer correctas = 0; 
     
-    Integer indNivel = 0;
-    Integer indPregunta = 0;
+    public Integer indNivel = 0;
+    public Integer indPregunta = 0;
     
     Respuesta r = new Respuesta();
     Pregunta pregunta=new Pregunta();
     Boolean respuestaCorrecta;
     
-    ArrayList<NivelPregunta> preguntasPerLvl;
+    public ArrayList<NivelPregunta> preguntasPerLvl;
     
     String comodinesUsados=null;
     
@@ -280,6 +280,9 @@ public class JuegoController {
         rbD.setText("D) " + p.getRespuestas().get(3));
     }
     
+    
+    
+   
     class Temporizador extends Thread {
         boolean progression = true;
         
