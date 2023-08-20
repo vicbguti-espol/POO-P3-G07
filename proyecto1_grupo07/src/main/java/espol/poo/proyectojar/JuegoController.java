@@ -150,7 +150,6 @@ public class JuegoController {
         @Override
         public void handle(Event e){
             indPregunta++;
-            lvPreguntas.getSelectionModel().select(indPregunta+(indNivel*NuevoJuegoController.cantPregNivSeleccionado));
             System.out.println("Corriendo click");
             // buildJuego();
             actualizar();
@@ -167,6 +166,7 @@ public class JuegoController {
         // (estos dos siempre tienen que ser tipos de datos primitivos)
         tTranscurrido = tiempoJuego;
         
+        lvPreguntas.getSelectionModel().select(indPregunta+(indNivel*NuevoJuegoController.cantPregNivSeleccionado)+1);
         
         int maximo = preguntasPerLvl.get(indNivel).getPreguntas().size();
         int num = indPregunta+1;
@@ -415,7 +415,6 @@ public class JuegoController {
         ObservableList<String> listaPreguntas=FXCollections.observableArrayList();
         for(NivelPregunta np:preguntasPerLvl){
             for(Pregunta p: np.getPreguntas()){
-                System.out.println("a"+np.getPreguntas().indexOf(p));
                 listaPreguntas.add("Pregunta "+String.valueOf(np.getPreguntas().indexOf(p)+1));
             }
         }
