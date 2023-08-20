@@ -82,7 +82,7 @@ public class visualizarParalelosController implements Initializable {
         tcTermino.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTerminoAcademico().toString()));
         
         tvParalelos.getColumns().addAll(tcNumero,tcMateria,tcTermino);
-        tvParalelos.setColumnResizePolicy(tvParalelos.CONSTRAINED_RESIZE_POLICY);
+        tvParalelos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tvParalelos.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
         tvParalelos.setItems(listaParalelos);
         
