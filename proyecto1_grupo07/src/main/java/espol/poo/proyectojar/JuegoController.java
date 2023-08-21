@@ -187,6 +187,7 @@ public class JuegoController {
             preguntasAvanzadas++;
             if (preguntasAvanzadas!=Preguntastotales){
                 if(maximo==num){
+                    // Suspender thread
                     temp.suspendThread();
                     System.out.println("SIGUIENTE NIVEL");
                     // Dialogo para que ingrese el premio que quiere al pasar un nivel
@@ -201,6 +202,7 @@ public class JuegoController {
                     });
                     indPregunta=0;
                     indNivel++;
+                    // Continuar thread
                     temp.resumeThread();
                     mostrarpreguntas();
                     
@@ -371,6 +373,7 @@ public class JuegoController {
         Comodin comodinUsado;
         
         notificacionComodin("50");
+        System.out.println("Se ejecuta");
         ColorAdjust grayscale= new ColorAdjust();
         grayscale.setSaturation(-1);
         comodin50.setEffect(grayscale);
