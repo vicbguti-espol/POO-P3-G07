@@ -14,6 +14,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="bpPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -32,8 +35,30 @@
                   </ImageView>
                   <VBox alignment="CENTER" prefHeight="213.0" prefWidth="214.0">
                      <children>
-                        <Label text="TIEMPO RESTANTE" />
-                        <Label fx:id="lblTemp" text="..." />
+                        <Label text="TIEMPO RESTANTE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
+                        <Label fx:id="lblTemp" text="00">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.1297108232975006" green="0.027899999171495438" blue="0.9300000071525574" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill></Label>
                      </children>
                   </VBox>
                   <GridPane alignment="CENTER" prefHeight="158.0" prefWidth="147.0">
@@ -107,7 +132,10 @@
                   </RadioButton>
                   <RadioButton fx:id="rbB" mnemonicParsing="false" text="B) RESPUESTA" toggleGroup="$grupo1" GridPane.columnIndex="1" />
                   <RadioButton fx:id="rbC" mnemonicParsing="false" text="C) RESPUESTA" toggleGroup="$grupo1" GridPane.rowIndex="1" />
-                  <RadioButton fx:id="rbD" mnemonicParsing="false" text="D) RESPUESTA" toggleGroup="$grupo1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rbD" mnemonicParsing="false" text="D) RESPUESTA" toggleGroup="$grupo1" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin></RadioButton>
                </children>
                <VBox.margin>
                   <Insets top="5.0" />

@@ -216,22 +216,18 @@ public class JuegoController {
                     // Guardar la información ingresada por el usuario (premio)
                     System.out.println("Premio ingresado: " + premio);
                     });
-                //f
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText("Resultado de la operación");
-                alert.setContentText("Terminaste el Juego. GANASTE! :)");
-                ImageView imageView = new ImageView(new Image("/espol/poo/proyectojar/files/Asset 5xxhdpi.png"));
-                imageView.setFitHeight(144); // Ajusta la altura de la imagen
-                imageView.setFitWidth(144); // Ajusta el ancho de la imagen
-                alert.setGraphic(imageView);
-                alert.showAndWait();
-                // Cambiar a la pantalla main de términos
-                try{
-                    App.setRoot("primary");
-                } catch(IOException e){
-                    System.out.println(e);
-                }
+                    //f
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Resultado de la operación");
+                    alert.setContentText("Terminaste el Juego. GANASTE! :)");
+                    ImageView imageView = new ImageView(new Image("/espol/poo/proyectojar/files/Asset 5xxhdpi.png"));
+                    imageView.setFitHeight(144); // Ajusta la altura de la imagen
+                    imageView.setFitWidth(144); // Ajusta el ancho de la imagen
+                    alert.setGraphic(imageView);
+                    alert.showAndWait();
+                    // Cambiar a la pantalla main de términos
+                    tTranscurrido=1;
             }
             // Salida cuando se equivoca en una pregunta
         } else {

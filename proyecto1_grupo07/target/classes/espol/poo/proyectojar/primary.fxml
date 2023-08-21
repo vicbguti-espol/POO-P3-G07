@@ -8,22 +8,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane prefHeight="430.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.PrimaryController">
+<BorderPane prefHeight="430.0" prefWidth="366.0" style="-fx-background-image: &quot;C:\Users\joshz\Downloads\Audiencia-02.png&quot;;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.PrimaryController">
    <center>
       <VBox alignment="CENTER" spacing="20.0">
          <children>
-            <ImageView fitHeight="128.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="190.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" />
             <Label text="CASI POLITÉCNICO" />
             <VBox alignment="CENTER" prefHeight="145.0" prefWidth="273.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="21.0" prefWidth="326.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#switchtoNuevoJuego" prefHeight="26.0" prefWidth="162.0" text="JUGAR" />
-                        <Button mnemonicParsing="false" onAction="#switchToConfig" prefHeight="26.0" prefWidth="186.0" text="CONFIGURACIONES" />
+                        <Button mnemonicParsing="false" onAction="#switchToConfig" prefHeight="26.0" prefWidth="171.0" text="CONFIGURACIONES" />
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="354.0" text="REPORTE" />
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="319.0" text="REPORTE" />
                </children>
             </VBox>
          </children>
