@@ -120,6 +120,7 @@ public class NuevoJuegoController implements Initializable {
                     cursoEstudiantes=p.getEstudiantes();
                 }
             }
+            cmbPregNivel.getItems().clear();
             for(int i=1;i<matSeleccionada.getCantNiveles()+1;i++){
                 cmbPregNivel.getItems().add(String.valueOf(i));
             }
@@ -134,7 +135,9 @@ public class NuevoJuegoController implements Initializable {
     @FXML
     private void nivelSeleccionado(ActionEvent event) {
         try{
-            cantPregNivSeleccionado=Integer.parseInt(cmbPregNivel.getValue());
+            if(cmbPregNivel.getValue()!=null){
+                cantPregNivSeleccionado=Integer.parseInt(cmbPregNivel.getValue());
+            }
             txtMatPart.setDisable(false);
             btnRandom1.setDisable(false);
             btnRandom1.setOnMouseClicked(ev->{
@@ -164,11 +167,11 @@ public class NuevoJuegoController implements Initializable {
     @FXML
     private void partSeleccionado(ActionEvent event) {
         if(partSeleccionado==null){
-            for(Estudiante e: cursoEstudiantes){
-                if(Integer.parseInt(txtMatPart.getText())==e.getMatricula()){
-                    partSeleccionado=e;
+                for(Estudiante e: cursoEstudiantes){
+                    if(Integer.parseInt(txtMatPart.getText())==e.getMatricula()){
+                        partSeleccionado=e;
+                    }
                 }
-            }
         }
     }
     @FXML
@@ -178,32 +181,33 @@ public class NuevoJuegoController implements Initializable {
                 if(Integer.parseInt(txtMatApoyo.getText())==e.getMatricula()){
                     apoyoSeleccionado=e;
                 }
-            } 
-            btnnuevoJuego.setDisable(false);
+                btnnuevoJuego.setDisable(false);
+            }
         }
     }
     
     @FXML
     private void iniciarJuego(ActionEvent event) throws IOException{
-        if(apoyoSeleccionado==null){
-            if(Integer.parseInt(txtMatApoyo.getText())==partSeleccionado.getMatricula()){
-                Alert partRedudante=new Alert(AlertType.ERROR);
-                partRedudante.setTitle("Participante redudante");
-                partRedudante.setContentText("La matrícula ingresada ya está asignada a participante. Ingrese otra matrícula válida");
-                partRedudante.showAndWait();
-            }else{
-                Alert partNoEncontrado=new Alert(AlertType.ERROR);
-                partNoEncontrado.setTitle("Participante de apoyo no encontrado");
-                partNoEncontrado.setContentText("Ingrese una matrícula válida");
-                partNoEncontrado.showAndWait(); 
-            }
-        }
         if(partSeleccionado==null){
             Alert partNoEncontrado=new Alert(AlertType.ERROR);
             partNoEncontrado.setTitle("Participante no encontrado");
             partNoEncontrado.setContentText("Ingrese una matrícula válida");
             partNoEncontrado.showAndWait();
         }
+        if(apoyoSeleccionado!=null){
+            if(Integer.parseInt(txtMatApoyo.getText())==partSeleccionado.getMatricula()){
+                Alert partRedudante=new Alert(AlertType.ERROR);
+                partRedudante.setTitle("Participante redudante");
+                partRedudante.setContentText("La matrícula ingresada ya está asignada a participante. Ingrese otra matrícula válida");
+                partRedudante.showAndWait();
+            }
+        }else{
+            Alert partNoEncontrado=new Alert(AlertType.ERROR);
+            partNoEncontrado.setTitle("Participante de apoyo no encontrado");
+            partNoEncontrado.setContentText("Ingrese una matrícula válida");
+            partNoEncontrado.showAndWait(); 
+        }
+        
         System.out.println(matSeleccionada.toString());
         System.out.println(parSeleccionado.toString());
         System.out.println(cantPregNivSeleccionado);
