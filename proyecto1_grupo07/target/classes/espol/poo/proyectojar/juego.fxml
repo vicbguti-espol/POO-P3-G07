@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="bpPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="208.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@files/Asset%202xxhdpi.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="30.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox alignment="CENTER" prefHeight="213.0" prefWidth="214.0">
+                     <children>
+                        <Label text="TIEMPO RESTANTE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
+                        <Label fx:id="lblTemp" text="00">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.1297108232975006" green="0.027899999171495438" blue="0.9300000071525574" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill></Label>
+                     </children>
+                  </VBox>
+                  <GridPane alignment="CENTER" prefHeight="158.0" prefWidth="147.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="105.199951171875" minWidth="10.0" prefWidth="89.199951171875" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="90.800048828125" minWidth="10.0" prefWidth="90.800048828125" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fx:id="comodinPublico" fitHeight="76.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                           <image>
+                              <Image url="@files/Captura%20de%20pantalla%202023-08-18%20115700.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="comodin50" fitHeight="80.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@files/Captura%20de%20pantalla%202023-08-18%20115623.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="comodinCompañero" fitHeight="76.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@files/Captura%20de%20pantalla%202023-08-18%20115716.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <opaqueInsets>
+                  <Insets left="5.0" right="5.0" />
+               </opaqueInsets>
+            </Separator>
+            <Label fx:id="lblPregunta" alignment="CENTER" text="PREGUNTA 1">
+               <VBox.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0">
+               <opaqueInsets>
+                  <Insets left="5.0" right="5.0" />
+               </opaqueInsets>
+            </Separator>
+            <GridPane alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <RadioButton fx:id="rbA" mnemonicParsing="false" text="A) RESPUESTA">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="grupo1" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbB" mnemonicParsing="false" text="B) RESPUESTA" toggleGroup="$grupo1" GridPane.columnIndex="1" />
+                  <RadioButton fx:id="rbC" mnemonicParsing="false" text="C) RESPUESTA" toggleGroup="$grupo1" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rbD" mnemonicParsing="false" text="D) RESPUESTA" toggleGroup="$grupo1" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin></RadioButton>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </GridPane>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <right>
+      <VBox alignment="CENTER" prefHeight="384.0" prefWidth="324.0" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets bottom="10.0" left="10.0" right="10.0" />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+         <children>
+            <Label text="Preguntas">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <ListView fx:id="lvPreguntas" prefHeight="368.0" prefWidth="324.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </ListView>
+         </children></VBox>
+   </right>
+   <bottom>
+      <HBox fx:id="hbCont" alignment="TOP_CENTER" prefHeight="41.0" prefWidth="570.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

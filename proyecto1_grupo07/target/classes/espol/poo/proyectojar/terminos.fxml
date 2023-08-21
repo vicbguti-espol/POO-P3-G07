@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.TerminosController">
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="TÉRMINOS ACADÉMICOS" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Label text="Término para Juego" />
+                  <ComboBox fx:id="cmbTerminos" prefWidth="150.0" />
+                  <Button fx:id="guardarTermino" mnemonicParsing="false" text="Guardar" />
+               </children>
+            </HBox>
+            <TableView fx:id="tvTerminosAcademicos" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="colAño" prefWidth="300.0" text="Año" />
+                <TableColumn fx:id="colTermino" minWidth="0.0" prefWidth="303.20001220703125" text="Término" />
+              </columns>
+            </TableView>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Button fx:id="btnEditar" mnemonicParsing="false" text="Editar Término" />
+                  <Button fx:id="btnAgregar" mnemonicParsing="false" text="Agregar Término Académico" />
+                  <Button mnemonicParsing="false" onAction="#switchToPrimary" text="Regresar" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="5.0" right="5.0" top="30.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

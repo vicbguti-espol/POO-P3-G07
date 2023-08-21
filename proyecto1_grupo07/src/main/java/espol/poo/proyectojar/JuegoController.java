@@ -5,7 +5,6 @@
 package espol.poo.proyectojar;
 
 import espol.poo.proyectojar.App;
-import espol.poo.proyectojar.utilitaria.JuegoUtilitaria;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -96,7 +95,9 @@ public class JuegoController {
     
     public ArrayList<NivelPregunta> preguntasPerLvl;
     Button btnContinuar = new Button("Continuar");
-
+    
+    Temporizador temp;
+    
     // ArrayList<PreguntaComodin> comodinesUsados = App.juego.getComodinesUtilizados();
     
     @FXML
@@ -140,10 +141,9 @@ public class JuegoController {
         
         
         // Instanciar temporizador
-        Temporizador temp = new Temporizador();
+        temp = new Temporizador();
         temp.setDaemon(true);
         temp.start();
-                
         
     }
 
@@ -187,6 +187,7 @@ public class JuegoController {
             preguntasAvanzadas++;
             if (preguntasAvanzadas!=Preguntastotales){
                 if(maximo==num){
+                    temp.suspendThread();
                     System.out.println("SIGUIENTE NIVEL");
                     // Dialogo para que ingrese el premio que quiere al pasar un nivel
                     TextInputDialog dialog = new TextInputDialog();
@@ -200,7 +201,9 @@ public class JuegoController {
                     });
                     indPregunta=0;
                     indNivel++;
+                    temp.resumeThread();
                     mostrarpreguntas();
+                    
                 }else if (maximo>num){
                     indPregunta++;
                     mostrarpreguntas();
@@ -319,24 +322,11 @@ public class JuegoController {
         pregunta = preguntasPerLvl.get(indNivel).getPreguntas().
                 get(indPregunta);
         
-//        System.out.println(pregunta.getTexto() + "");
-//        System.out.println(pregunta.getNivel() + "");
-//        System.out.println(pregunta.getMateria());
-//        System.out.println(pregunta.getRespuestas());
-        // Crear una copia de la pregunta
         pregunta50 = new Pregunta(pregunta.getTexto(),pregunta.getNivel(),pregunta.getMateria(),pregunta.getRespuestas());
         
         // System.out.println("Crear respuestas");
         respuestas = pregunta50.getRespuestas();
         Collections.shuffle(respuestas);
-        
-//        for (Respuesta r: respuestas){
-//            Boolean respCorrecta = r.getTipo().equals(TipoRespuesta.CORRECTA);
-//            if (!respCorrecta){
-//                // Cambiar el texto de una respuesta incorrecta
-//                r.setTexto("");
-//            }
-//        }
         
         // Cambiar las respuestas de la pregunta a mostrar
         pregunta50.setRespuestas(respuestas);
@@ -350,17 +340,6 @@ public class JuegoController {
                respuestaindice.setTexto(""); 
             }
         }
-        
-            
-//        for(int i=0;i<2;i++){
-//            Respuesta respuestaindice=pregunta50.getRespuestas().get(i);
-//            if(respuestaindice.getTipo().equals(TipoRespuesta.CORRECTA)){
-//                i--;
-//            }
-//            else{
-//               respuestaindice.setTexto(""); 
-//            }
-//        }
         
         // System.out.println(pregunta50.getRespuestas());
         buildRespuestas(pregunta50);
@@ -473,6 +452,11 @@ public class JuegoController {
         lvPreguntas.setMouseTransparent(true);
     }
     
+    
+    /**
+     * Obtener un arreglo de tipo NivelPregunta a partir de un hashMap de App
+     * @return 
+     */
     public ArrayList<NivelPregunta> getArrayNivelPregunta(){
         ArrayList<NivelPregunta> arrayNivelPregunta = new ArrayList<>();
         Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = App.juego.
@@ -487,9 +471,11 @@ public class JuegoController {
         return arrayNivelPregunta;
     }
     
+    
 
     class Temporizador extends Thread {
         boolean progression = true;
+        boolean suspendThread = false;
         
         @Override
         public void run(){
@@ -505,9 +491,37 @@ public class JuegoController {
             }
         }
         
+        /**
+         * Suspender hilo
+         */
+        synchronized void suspendThread(){
+            suspendThread = true;
+        }
+        
+        /**
+         * Regresar al estado funcional del hilo
+         */
+        synchronized void resumeThread(){
+            suspendThread = false;
+            System.out.println("Resuming thread");
+            notify();
+        }
+        
         public void decrementador(){
             // Decrementar temporizador
             tTranscurrido--;
+           
+            // No ponerlo en run
+            synchronized(this){
+                        while(suspendThread){
+                            System.out.println("Pausing thread");
+                            try{
+                                wait();
+                            } catch(InterruptedException e){
+                                System.out.println(e);
+                            }
+                              
+                        }}
             // Cambiar el tiempo en el label
             Platform.runLater(() ->
                 lblTemp.setText(String.valueOf(tTranscurrido)));
