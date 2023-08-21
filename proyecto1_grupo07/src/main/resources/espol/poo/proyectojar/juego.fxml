@@ -19,7 +19,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bpPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="bpPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="900.0" prefHeight="400.0" prefWidth="900.0" stylesheets="@css/juego.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -35,7 +35,7 @@
                   </ImageView>
                   <VBox alignment="CENTER" prefHeight="213.0" prefWidth="214.0">
                      <children>
-                        <Label text="TIEMPO RESTANTE">
+                        <Label text="TIEMPO RESTANTE" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>
@@ -102,12 +102,12 @@
                   <Insets left="5.0" right="5.0" />
                </opaqueInsets>
             </Separator>
-            <Label fx:id="lblPregunta" alignment="CENTER" text="PREGUNTA 1">
+            <Label fx:id="lblPregunta" alignment="CENTER" text="PREGUNTA 1" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="15.0" top="15.0" />
                </VBox.margin>
                <font>
-                  <Font size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <Separator prefWidth="200.0">
@@ -125,14 +125,14 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <RadioButton fx:id="rbA" mnemonicParsing="false" text="A) RESPUESTA">
+                  <RadioButton fx:id="rbA" mnemonicParsing="false" text="A) RESPUESTA" textFill="WHITE">
                      <toggleGroup>
                         <ToggleGroup fx:id="grupo1" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbB" mnemonicParsing="false" text="B) RESPUESTA" toggleGroup="$grupo1" GridPane.columnIndex="1" />
-                  <RadioButton fx:id="rbC" mnemonicParsing="false" text="C) RESPUESTA" toggleGroup="$grupo1" GridPane.rowIndex="1" />
-                  <RadioButton fx:id="rbD" mnemonicParsing="false" text="D) RESPUESTA" toggleGroup="$grupo1" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <RadioButton fx:id="rbB" mnemonicParsing="false" text="B) RESPUESTA" textFill="WHITE" toggleGroup="$grupo1" GridPane.columnIndex="1" />
+                  <RadioButton fx:id="rbC" mnemonicParsing="false" text="C) RESPUESTA" textFill="WHITE" toggleGroup="$grupo1" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rbD" mnemonicParsing="false" text="D) RESPUESTA" textFill="WHITE" toggleGroup="$grupo1" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin></RadioButton>
@@ -156,7 +156,7 @@
             <Insets top="10.0" />
          </BorderPane.margin>
          <children>
-            <Label text="Preguntas">
+            <Label text="Preguntas" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>

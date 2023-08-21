@@ -199,7 +199,9 @@ public class JuegoController {
                     result.ifPresent(premio -> {
                     // Guardar la información ingresada por el usuario (premio)
                     System.out.println("Premio ingresado: " + premio);
+                    juego.setPremio(premio);
                     });
+                    
                     indPregunta=0;
                     indNivel++;
                     // Continuar thread
