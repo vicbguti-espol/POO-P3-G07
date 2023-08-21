@@ -238,6 +238,7 @@ public class JuegoController {
             }
             // Salida cuando se equivoca en una pregunta
         } else {
+            temp.suspendThread();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText("Resultado de la operación");
@@ -247,12 +248,9 @@ public class JuegoController {
             imageView.setFitWidth(65); // Ajusta el ancho de la imagen
             alert.setGraphic(imageView);
             alert.showAndWait();
+            temp.resumeThread();
             // Cambiar a la pantalla main de términos
-            try{
-                App.setRoot("primary");
-            } catch(IOException e){
-                System.out.println(e);
-            }
+            tTranscurrido=1;
         }
         System.out.println("Respondido "+preguntasAvanzadas+" preguntas de "+Preguntastotales);
     }
