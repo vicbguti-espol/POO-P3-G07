@@ -35,7 +35,7 @@
                   </ImageView>
                   <VBox alignment="CENTER" prefHeight="213.0" prefWidth="214.0">
                      <children>
-                        <Label text="TIEMPO RESTANTE" textFill="WHITE">
+                        <Label text="TIEMPO RESTANTE" textFill="#ecf2ff">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>
@@ -129,13 +129,25 @@
                      <toggleGroup>
                         <ToggleGroup fx:id="grupo1" />
                      </toggleGroup>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </RadioButton>
-                  <RadioButton fx:id="rbB" mnemonicParsing="false" text="B) RESPUESTA" textFill="WHITE" toggleGroup="$grupo1" GridPane.columnIndex="1" />
-                  <RadioButton fx:id="rbC" mnemonicParsing="false" text="C) RESPUESTA" textFill="WHITE" toggleGroup="$grupo1" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rbB" mnemonicParsing="false" text="B) RESPUESTA" textFill="WHITE" toggleGroup="$grupo1" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></RadioButton>
+                  <RadioButton fx:id="rbC" mnemonicParsing="false" text="C) RESPUESTA" textFill="WHITE" toggleGroup="$grupo1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></RadioButton>
                   <RadioButton fx:id="rbD" mnemonicParsing="false" text="D) RESPUESTA" textFill="WHITE" toggleGroup="$grupo1" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets />
-                     </GridPane.margin></RadioButton>
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></RadioButton>
                </children>
                <VBox.margin>
                   <Insets top="5.0" />
@@ -161,7 +173,7 @@
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <ListView fx:id="lvPreguntas" prefHeight="368.0" prefWidth="324.0">
+            <ListView fx:id="lvPreguntas" prefHeight="368.0" prefWidth="324.0" style="-fx-background-color: BEADFA; -fx-border-color: FFF3DA;">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>

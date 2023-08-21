@@ -37,6 +37,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 import modelo.academico.Materia;
 import modelo.juego.Comodin;
 import modelo.juego.Juego;
@@ -103,14 +104,23 @@ public class JuegoController {
     @FXML
     public void initialize() throws InterruptedException {
         buildJuego();
+        Circle mask = new Circle(comodin50.getFitWidth() / 2, comodin50.getFitHeight() / 2,Math.min(comodin50.getFitWidth(), comodin50.getFitHeight()) / 2);
+        comodin50.setClip(mask);
+        comodin50.setStyle("-fx-border-color: white; -fx-border-width: 2px;");
         comodin50.setOnMouseClicked(e->{
             
            comodin50();
            
         });
+        Circle mask2 = new Circle(comodinCompañero.getFitWidth() / 2, comodinCompañero.getFitHeight() / 2,Math.min(comodinCompañero.getFitWidth(), comodinCompañero.getFitHeight()) / 2);
+        comodinCompañero.setClip(mask2);
+        comodinCompañero.setStyle("-fx-border-color: white; -fx-border-width: 10px;");
         comodinCompañero.setOnMouseClicked(e->{
            comodinCompañero(); 
         });
+        Circle mask3 = new Circle(comodinPublico.getFitWidth() / 2, comodinPublico.getFitHeight() / 2,Math.min(comodinPublico.getFitWidth(), comodinPublico.getFitHeight()) / 2);
+        comodinPublico.setClip(mask3);
+        comodinPublico.setStyle("-fx-border-color: white; -fx-border-width: 2px;");
         comodinPublico.setOnMouseClicked(e->{
            comodinPublico(); 
         });
@@ -214,27 +224,29 @@ public class JuegoController {
                 }
             } else {
                 //Dialogo premio final Juego.
-                    TextInputDialog dialog = new TextInputDialog();
-                    dialog.setTitle("Ingreso de Premio");
-                    dialog.setHeaderText("Ingrese su premio por pasar CasiPolitecnico");
-                    dialog.setContentText("Premio: ");
-                    Optional<String> result = dialog.showAndWait();
-                    result.ifPresent(premio -> {
-                    // Guardar la información ingresada por el usuario (premio)
-                    System.out.println("Premio ingresado: " + premio);
-                    });
-                    //f
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
-                    alert.setHeaderText("Resultado de la operación");
-                    alert.setContentText("Terminaste el Juego. GANASTE! :)");
-                    ImageView imageView = new ImageView(new Image("/espol/poo/proyectojar/files/Asset 5xxhdpi.png"));
-                    imageView.setFitHeight(144); // Ajusta la altura de la imagen
-                    imageView.setFitWidth(144); // Ajusta el ancho de la imagen
-                    alert.setGraphic(imageView);
-                    alert.showAndWait();
-                    // Cambiar a la pantalla main de términos
-                    tTranscurrido=1;
+                temp.suspendThread();
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Ingreso de Premio");
+                dialog.setHeaderText("Ingrese su premio por pasar CasiPolitecnico");
+                dialog.setContentText("Premio: ");
+                Optional<String> result = dialog.showAndWait();
+                result.ifPresent(premio -> {
+                // Guardar la información ingresada por el usuario (premio)
+                System.out.println("Premio ingresado: " + premio);
+                });
+                //f
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Resultado de la operación");
+                alert.setContentText("Terminaste el Juego. GANASTE! :)");
+                ImageView imageView = new ImageView(new Image("/espol/poo/proyectojar/files/Asset 5xxhdpi.png"));
+                imageView.setFitHeight(144); // Ajusta la altura de la imagen
+                imageView.setFitWidth(144); // Ajusta el ancho de la imagen
+                alert.setGraphic(imageView);
+                alert.showAndWait();
+                temp.resumeThread();
+                // Cambiar a la pantalla main de términos
+                tTranscurrido=0;
             }
             // Salida cuando se equivoca en una pregunta
         } else {
@@ -250,7 +262,7 @@ public class JuegoController {
             alert.showAndWait();
             temp.resumeThread();
             // Cambiar a la pantalla main de términos
-            tTranscurrido=1;
+            tTranscurrido=0;
         }
         System.out.println("Respondido "+preguntasAvanzadas+" preguntas de "+Preguntastotales);
     }
@@ -558,4 +570,4 @@ public class JuegoController {
         }
             
     }
-    }
+}
