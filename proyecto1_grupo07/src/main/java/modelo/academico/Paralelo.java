@@ -13,6 +13,7 @@ public class Paralelo implements Serializable {
     private Materia materia;
     private TerminoAcademico termino;
     private ArrayList<Estudiante> estudiantes;
+    
     private String rutaEstudiantes;
     //public static ArrayList<Paralelo> paralelos = new ArrayList<>(Arrays.asList(new Paralelo(3, Materia.materias.get(0), TerminoAcademico.terminosAcademicos.get(0), Estudiante.cargarEstudiantes("archivo\\CCPG1052-3-2023-1.txt"))));
     public static ArrayList<Paralelo> paralelos = cargarParalelos();
@@ -57,7 +58,7 @@ public class Paralelo implements Serializable {
     }
 
     public static void main(String[] args) {
-        //subirArchivo();
+        subirArchivo();
         for(Paralelo p: paralelos){
             System.out.println(p.toString());
             for(Estudiante e:p.getEstudiantes()){

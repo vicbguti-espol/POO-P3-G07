@@ -158,10 +158,62 @@ public class Pregunta implements Serializable {
         
     }
     public static void subirArchivo() {
+        
+        preguntas = new ArrayList<>();
+        
         preguntas.add(new Pregunta("Cuanto es 2+2?",2, Materia.materias.get(0), new ArrayList<>(Arrays.asList(new Respuesta("4",TipoRespuesta.CORRECTA),new Respuesta("5",TipoRespuesta.INCORRECTA),new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("22",TipoRespuesta.INCORRECTA)))));
         preguntas.add(new Pregunta("Cuanto es 10-12?",2,Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("4",TipoRespuesta.INCORRECTA),new Respuesta("-2",TipoRespuesta.CORRECTA),new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("22",TipoRespuesta.INCORRECTA)))));
         preguntas.add(new Pregunta("Cuanto es 1+12",3, Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("13",TipoRespuesta.CORRECTA),new Respuesta("7",TipoRespuesta.INCORRECTA),new Respuesta("112",TipoRespuesta.INCORRECTA)))));
         preguntas.add(new Pregunta("Cuanto es 1+1",3, Materia.materias.get(0), new ArrayList<Respuesta>(Arrays.asList(new Respuesta("0",TipoRespuesta.INCORRECTA),new Respuesta("2",TipoRespuesta.CORRECTA),new Respuesta("7",TipoRespuesta.INCORRECTA),new Respuesta("112",TipoRespuesta.INCORRECTA)))));
+        
+//        preguntas.add(new Pregunta("ANALICE EL CÓDIGO QUE SE MUESTRA A CONTINUACIÓN\n" +
+//        "\n" +
+//        "class CalculoSalarioException extends Exception{}\n" +
+//        "class Person{\n" +
+//        "   public void calcularSalario(double salario) throws CalculoSalarioException{\n" +
+//        "		throw new CalculoSalarioException();\n" +
+//        "		System.out.println(salario*2);\n" +
+//        "   }\n" +
+//        "}\n" +
+//        "class Compania{\n" +
+//        "	public static void main(String[] args){\n" +
+//        "		new Person().calcularSalario(200);\n" +
+//        "	}\n" +
+//        "}\n" +
+//        "¿Cuál de los siguientes enunciados de forma independiente es verdadero?",
+//        3, Materia.materias.get(0), 
+//        new ArrayList<Respuesta>(Arrays.asList(
+//                new Respuesta("Este código compila sin problemas, la salida es 400",TipoRespuesta.INCORRECTA),
+//                new Respuesta("Este código compila si se agrega un bloque try-catch en el método main de la clase Companía.",TipoRespuesta.CORRECTA),
+//                new Respuesta("Este código compila  si el método calcularSalario devuelve un double en vez de ser un void",TipoRespuesta.INCORRECTA),
+//                new Respuesta("Este código compila si agregamos un throws CalculoSalarioException en la firma del método main de la clase Companía.",TipoRespuesta.INCORRECTA))
+//        )
+//        ));
+        
+        preguntas.add(new Pregunta(
+        "¿Cuál de las siguientes opciones describe mejor el concepto de \"encapsulación\" en la programación orientada a objetos?",
+        1, Materia.materias.get(0),
+        new ArrayList<Respuesta>(Arrays.asList(
+                new Respuesta("El proceso de definir múltiples clases que comparten características similares.",TipoRespuesta.INCORRECTA),
+                new Respuesta("La habilidad de una clase para ocultar ciertos detalles internos y exponer solo las operaciones necesarias.",TipoRespuesta.CORRECTA),
+                new Respuesta("La capacidad de una clase para heredar propiedades y métodos de una clase padre.",TipoRespuesta.INCORRECTA),
+                new Respuesta("La práctica de agrupar datos y los métodos que operan sobre esos datos en una única unidad.",TipoRespuesta.INCORRECTA))
+        )
+        ));
+        
+        preguntas.add(new Pregunta(
+        "¿Qué es el \"polimorfismo\" en programación orientada a objetos?",
+                1, Materia.materias.get(0), 
+                new ArrayList<Respuesta>(Arrays.asList(
+                new Respuesta("La encapsulación de datos y métodos en una única entidad.",TipoRespuesta.INCORRECTA),
+                new Respuesta("La habilidad de objetos de diferentes clases para responder al mismo método de manera única.",TipoRespuesta.CORRECTA),
+                new Respuesta(" La combinación de múltiples clases en una jerarquía.",TipoRespuesta.INCORRECTA),
+                new Respuesta("La capacidad de una clase para heredar de sí misma.",TipoRespuesta.INCORRECTA))
+        )
+        ));
+        
+        
+        
         try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
             out.writeObject(preguntas);
         } catch (Exception e) {

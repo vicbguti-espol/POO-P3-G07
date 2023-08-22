@@ -68,7 +68,11 @@ public class Materia implements Serializable{
     }
     public static void subirArchivo(){
       try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
-            out.writeObject(new ArrayList<Materia>(Arrays.asList(new Materia("CCPG1052", "PROGRAMACIÓN ORIENTADA A OBJETOS",2),new Materia("CCPG1000", "ALGEBRA LINEAL",2))));
+            out.writeObject(new ArrayList<Materia>(
+                    Arrays.asList(new Materia("CCPG1052",
+                            "PROGRAMACIÓN ORIENTADA A OBJETOS",3),
+                            new Materia("CCPG1000", "ALGEBRA LINEAL",
+                                    2))));
         } catch (Exception e) {
             e.printStackTrace();
         }  

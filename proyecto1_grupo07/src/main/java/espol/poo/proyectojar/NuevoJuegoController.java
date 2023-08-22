@@ -115,6 +115,10 @@ public class NuevoJuegoController implements Initializable {
                 numSeleccionado=Integer.parseInt(cmbParalelo.getValue());
             }
             for(Paralelo p: Paralelo.paralelos){
+                
+//                System.out.println(p.getnumero()==numSeleccionado);
+                System.out.println(String.valueOf(p.getMateria()) + String.valueOf(matSeleccionada) + "<- Comparación");
+//                System.out.println(p.getTerminoAcademico().equals(App.terminoJuego));
                 if(p.getnumero()==numSeleccionado&&p.getMateria().equals(matSeleccionada)&&p.getTerminoAcademico().equals(App.terminoJuego)){
                     parSeleccionado=p;
                     cursoEstudiantes=p.getEstudiantes();
