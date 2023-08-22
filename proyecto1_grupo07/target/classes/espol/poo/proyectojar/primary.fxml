@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="430.0" prefWidth="366.0" stylesheets="@css/juego.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.PrimaryController">
+<BorderPane prefHeight="430.0" prefWidth="366.0" stylesheets="@css/principal.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.PrimaryController">
    <center>
       <VBox alignment="CENTER" spacing="20.0">
          <children>
