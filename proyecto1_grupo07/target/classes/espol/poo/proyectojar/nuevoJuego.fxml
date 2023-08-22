@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="ConfJuego" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.NuevoJuegoController">
+<VBox fx:id="ConfJuego" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" spacing="20.0" stylesheets="@css/fondogeneral.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.NuevoJuegoController">
    <children>
-      <Label id="titulo" fx:id="lblTitulo" text="CONFIGURAR JUEGO">
+      <Label id="titulo" fx:id="lblTitulo" text="CONFIGURAR JUEGO" textFill="WHITE">
          <font>
-            <Font size="26.0" />
+            <Font name="System Bold" size="26.0" />
          </font>
       </Label>
       <GridPane>
@@ -33,12 +33,27 @@
             <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label text="Materia:" />
-            <Label text="Paralelo:" GridPane.rowIndex="1" />
-            <Label text="N° Preguntas/Nivel" GridPane.rowIndex="2" />
+            <Label text="Materia:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label text="Paralelo:" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label text="N° Preguntas/Nivel:" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <ComboBox fx:id="cmbPregNivel" onAction="#nivelSeleccionado" prefHeight="26.0" prefWidth="94.0" promptText="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Apoyo:" GridPane.rowIndex="4" />
-            <Label text="Participante:" GridPane.rowIndex="3" />
+            <Label text="Apoyo:" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label text="Participante:" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <TextField fx:id="txtMatPart" onAction="#partSeleccionado" promptText="Ingrese matrícula" />

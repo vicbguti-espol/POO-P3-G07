@@ -9,15 +9,22 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.TerminosController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/fondogeneral.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.TerminosController">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="TÉRMINOS ACADÉMICOS" />
+            <Label text="TÉRMINOS ACADÉMICOS" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font></Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Label text="Término para Juego" />
+                  <Label text="Término para Juego" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <ComboBox fx:id="cmbTerminos" prefWidth="150.0" />
                   <Button fx:id="guardarTermino" mnemonicParsing="false" text="Guardar" />
                </children>

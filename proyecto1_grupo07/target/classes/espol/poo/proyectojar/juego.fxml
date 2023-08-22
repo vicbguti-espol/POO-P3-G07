@@ -14,9 +14,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="bpPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="900.0" prefHeight="400.0" prefWidth="900.0" stylesheets="@css/juego.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -39,26 +36,10 @@
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>
-                        <Label fx:id="lblTemp" text="00">
+                        <Label fx:id="lblTemp" text="00" textFill="#fcfeff">
                            <font>
                               <Font name="System Bold" size="36.0" />
-                           </font>
-                           <textFill>
-                              <LinearGradient endX="1.0" endY="1.0">
-                                 <stops>
-                                    <Stop>
-                                       <color>
-                                          <Color red="0.1297108232975006" green="0.027899999171495438" blue="0.9300000071525574" />
-                                       </color>
-                                    </Stop>
-                                    <Stop offset="1.0">
-                                       <color>
-                                          <Color red="1.0" green="1.0" blue="1.0" />
-                                       </color>
-                                    </Stop>
-                                 </stops>
-                              </LinearGradient>
-                           </textFill></Label>
+                           </font></Label>
                      </children>
                   </VBox>
                   <GridPane alignment="CENTER" prefHeight="158.0" prefWidth="147.0">

@@ -14,7 +14,7 @@
    <center>
       <VBox alignment="CENTER" spacing="20.0">
          <children>
-            <ImageView fitHeight="190.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="209.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@files/Asset%205xxhdpi.png" />
                </image></ImageView>

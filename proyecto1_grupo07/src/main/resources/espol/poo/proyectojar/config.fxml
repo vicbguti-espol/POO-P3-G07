@@ -5,8 +5,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.ConfigController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/fondogeneral.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.ConfigController">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
@@ -18,7 +19,10 @@
       </VBox>
    </center>
    <top>
-      <Label text="CONFIGURACIONES" BorderPane.alignment="CENTER" />
+      <Label text="CONFIGURACIONES" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font></Label>
    </top>
    <padding>
       <Insets bottom="30.0" top="30.0" />

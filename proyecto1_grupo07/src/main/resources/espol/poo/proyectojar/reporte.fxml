@@ -9,19 +9,32 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.ReporteController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="760.0" stylesheets="@css/fondogeneral.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.ReporteController">
    <center>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="708.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="GENERAR REPORTE" />
+            <Label text="GENERAR REPORTE" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font></Label>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="Término Académico" />
+                  <Label alignment="BOTTOM_CENTER" prefHeight="18.0" prefWidth="120.0" text="Término Académico" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <ComboBox fx:id="cmbTermino" prefHeight="26.0" prefWidth="106.0" />
-                  <Label text="Código de Materia" />
+                  <Label alignment="BOTTOM_CENTER" prefHeight="18.0" prefWidth="115.0" text="Código de Materia" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <ComboBox fx:id="cmbMateria" prefHeight="26.0" prefWidth="104.0" />
-                  <Label text="Paralelo" />
+                  <Label alignment="BOTTOM_CENTER" prefHeight="18.0" prefWidth="50.0" text="Paralelo" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <ComboBox fx:id="cmbParalelo" prefHeight="26.0" prefWidth="126.0" />
                </children>
                <padding>
@@ -42,6 +55,9 @@
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
+               <VBox.margin>
+                  <Insets left="6.0" right="6.0" />
+               </VBox.margin>
             </TableView>
             <Button fx:id="btnRegresar" mnemonicParsing="false" text="Regresar" />
          </children>

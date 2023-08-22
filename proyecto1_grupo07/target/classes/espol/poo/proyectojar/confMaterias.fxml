@@ -11,17 +11,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="410.0" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.ConfMateriasController">
+<VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="410.0" spacing="20.0" stylesheets="@css/fondogeneral.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.ConfMateriasController">
    <children>
-      <Label id="titulo" fx:id="lblTitulo" text="...">
+      <Label id="titulo" fx:id="lblTitulo" text="..." textFill="WHITE">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
       <GridPane fx:id="gpOpciones">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.20003662109374" minWidth="10.0" prefWidth="129.60003662109375" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.79996337890623" minWidth="10.0" prefWidth="248.79996337890623" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.20003662109374" minWidth="10.0" prefWidth="138.4" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.79996337890623" minWidth="10.0" prefWidth="232.80000000000004" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -29,11 +29,20 @@
             <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label text="Nombre de la materia:" GridPane.rowIndex="1" />
-            <Label text="Número de Niveles:" GridPane.rowIndex="2" />
+            <Label text="Nombre de la materia:" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label text="Número de Niveles:" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <TextField fx:id="txtCodigo" GridPane.columnIndex="1" />
             <TextField fx:id="txtNombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Código:" />
+            <Label text="Código:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <TextField fx:id="txtNiveles" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
