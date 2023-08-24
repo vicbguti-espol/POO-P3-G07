@@ -16,6 +16,15 @@ public class Respuesta implements Serializable{
         this.texto = texto;
         this.tipo = tipo;
     }
+    
+    /**
+     * Constructor para generar una copia de respuesta
+     * @param r 
+     */
+    public Respuesta(Respuesta r){
+        texto = r.texto;
+        tipo = r.tipo;
+    }
 
     public String getTexto() {
         return texto;
@@ -32,6 +41,8 @@ public class Respuesta implements Serializable{
     public void setTipo(TipoRespuesta tipo) {
         this.tipo = tipo;
     }
+    
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -56,4 +67,6 @@ public class Respuesta implements Serializable{
     public String toString(){
         return texto;
     }
+    
+    
 }

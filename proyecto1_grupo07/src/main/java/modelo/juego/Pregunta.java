@@ -32,6 +32,14 @@ public class Pregunta implements Serializable {
         this.materia = materia;
         this.respuestas = respuestas;
     }
+    
+    /**
+     * Constructor para caso comodin 50/50
+     * @param respuestas 
+     */
+    public Pregunta(ArrayList<Respuesta> respuestas){
+        this.respuestas = respuestas;
+    }
 
     /**
     * Getters y setters

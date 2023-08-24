@@ -99,10 +99,21 @@ public class JuegoController {
     
     Temporizador temp;
     
+    ArrayList<RadioButton> radioButtons;
+    
+    
     // ArrayList<PreguntaComodin> comodinesUsados = App.juego.getComodinesUtilizados();
     
     @FXML
     public void initialize() throws InterruptedException {
+        
+        // Obtener lista de radioButtons de respuestas
+        radioButtons = new ArrayList<>();
+        radioButtons.add(rbA);
+        radioButtons.add(rbB);
+        radioButtons.add(rbC);
+        radioButtons.add(rbD);
+        
         buildJuego();
         Circle mask = new Circle(comodin50.getFitWidth() / 2, comodin50.getFitHeight() / 2,Math.min(comodin50.getFitWidth(), comodin50.getFitHeight()) / 2);
         comodin50.setClip(mask);
@@ -170,6 +181,10 @@ public class JuegoController {
     
     
     public void actualizar(){
+        
+        Alert alert;
+        Image img;
+        
         //PARA VER EN CONSOLA
         
         backupDuracion();
@@ -209,7 +224,7 @@ public class JuegoController {
                     result.ifPresent(premio -> {
                     // Guardar la información ingresada por el usuario (premio)
                     System.out.println("Premio ingresado: " + premio);
-                    juego.setPremio(premio);
+                    
                     });
                     
                     indPregunta=0;
@@ -223,26 +238,12 @@ public class JuegoController {
                     mostrarpreguntas();
                 }
             } else {
-                //Dialogo premio final Juego.
+                 
+                img = new Image("/espol/poo/proyectojar/files/Asset 5xxhdpi.png");
+                alert = endAlert("Terminaste el Juego. GANASTE! :)", img, 144, 144);
+                
                 temp.suspendThread();
-                TextInputDialog dialog = new TextInputDialog();
-                dialog.setTitle("Ingreso de Premio");
-                dialog.setHeaderText("Ingrese su premio por pasar CasiPolitecnico");
-                dialog.setContentText("Premio: ");
-                Optional<String> result = dialog.showAndWait();
-                result.ifPresent(premio -> {
-                // Guardar la información ingresada por el usuario (premio)
-                System.out.println("Premio ingresado: " + premio);
-                });
-                //f
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText("Resultado de la operación");
-                alert.setContentText("Terminaste el Juego. GANASTE! :)");
-                ImageView imageView = new ImageView(new Image("/espol/poo/proyectojar/files/Asset 5xxhdpi.png"));
-                imageView.setFitHeight(144); // Ajusta la altura de la imagen
-                imageView.setFitWidth(144); // Ajusta el ancho de la imagen
-                alert.setGraphic(imageView);
+                ingresarPremio();
                 alert.showAndWait();
                 temp.resumeThread();
                 // Cambiar a la pantalla main de términos
@@ -250,21 +251,78 @@ public class JuegoController {
             }
             // Salida cuando se equivoca en una pregunta
         } else {
+            img = new Image("/espol/poo/proyectojar/files/Asset 1xxhdpi.png");
+            alert = endAlert("Te equivocaste, Juego terminado :(", img, 144, 65);
+            
             temp.suspendThread();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText("Resultado de la operación");
-            alert.setContentText("Te equivocaste, Juego terminado :(");
-            ImageView imageView = new ImageView(new Image("/espol/poo/proyectojar/files/Asset 1xxhdpi.png"));
-            imageView.setFitHeight(144); // Ajusta la altura de la imagen
-            imageView.setFitWidth(65); // Ajusta el ancho de la imagen
-            alert.setGraphic(imageView);
             alert.showAndWait();
             temp.resumeThread();
             // Cambiar a la pantalla main de términos
             tTranscurrido=0;
         }
         System.out.println("Respondido "+preguntasAvanzadas+" preguntas de "+Preguntastotales);
+    }
+    
+    /**
+     * Dialog y obtener premio para juego
+     */
+    public void ingresarPremio(){
+        //Dialogo premio final Juego.
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Ingreso de Premio");
+        dialog.setHeaderText("Ingrese su premio por pasar CasiPolitecnico");
+        dialog.setContentText("Premio: ");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(premio -> {
+        // Guardar la información ingresada por el usuario (premio)
+        System.out.println("Premio ingresado: " + premio);
+        juego.setPremio(premio);
+        });
+    }
+    
+    /**
+     * Obtener alerta a partir de un mensaje
+     * @param message
+     * @return 
+     */
+    public Alert endAlert(String message){
+        Alert alert; 
+        
+        alert = new Alert(Alert.AlertType.INFORMATION);
+        
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText("Resultado de la operación");
+        alert.setContentText(message);
+        
+        
+        alert.showAndWait();
+        temp.resumeThread();
+        // Cambiar a la pantalla main de términos
+        tTranscurrido=0;
+        
+        return alert; 
+    }
+    
+    
+    /**
+     * Obtener alerta con mensaje e imagen
+     * @param message
+     * @param img
+     * @return 
+     */
+    public Alert endAlert(String message, Image img, int height, int width){
+        Alert alert; 
+        ImageView imageView; 
+        
+        alert = endAlert(message);
+        
+        imageView = new ImageView(img);
+        imageView.setFitHeight(height); // Ajusta la altura de la imagen
+        imageView.setFitWidth(width); // Ajusta el ancho de la imagen
+        
+        alert.setGraphic(imageView);
+        
+        return alert; 
     }
     
     /**
@@ -288,8 +346,9 @@ public class JuegoController {
     
     public void mostrarpreguntas(){
         // Obtener preguntas por nivel
-        Pregunta pregunta = preguntasPerLvl.get(indNivel).getPreguntas().
+        pregunta = preguntasPerLvl.get(indNivel).getPreguntas().
                 get(indPregunta);
+        
         
         //Mostrarlas en la aplicación
         buildPregunta(pregunta);
@@ -304,26 +363,63 @@ public class JuegoController {
         Collections.shuffle(p.getRespuestas());
         
         // Construir respuestas de la pregunta
-        buildRespuestas(p);
+        buildRespuestas(p.getRespuestas());
     }
     
-    public void buildRespuestas(Pregunta p){
-        // Borrar cualquier accion existente
-        rbA.setOnMouseClicked(null);
-        rbB.setOnMouseClicked(null);
-        rbC.setOnMouseClicked(null);
-        rbD.setOnMouseClicked(null);
-        // Construcción de RadioButton
-        rbA.setOnMouseClicked(e -> r = p.getRespuestas().get(0));
-        rbB.setOnMouseClicked(e -> r = p.getRespuestas().get(1));
-        rbC.setOnMouseClicked(e -> r = p.getRespuestas().get(2));
-        rbD.setOnMouseClicked(e -> r = p.getRespuestas().get(3));
+    public void buildRespuestas(ArrayList<Respuesta> respuestas){
+        ArrayList<String> literales;
         
-        rbA.setText("A) " + p.getRespuestas().get(0));
-        rbB.setText("B) " + p.getRespuestas().get(1));
-        rbC.setText("C) " + p.getRespuestas().get(2));
-        rbD.setText("D) " + p.getRespuestas().get(3));
+        literales = obtenerLiterales();
+        
+        int i = 0;
+        for (RadioButton rb: radioButtons){
+            // Borrar cualquier accion existente
+            rb.setOnMouseClicked(null);
+            // Manejar evento al hacer click en el radio button
+            rb.setOnMouseClicked(new manejadorRespuesta(i, respuestas));
+            // Establecer texto radioButton
+            rb.setText(literales.get(i) + respuestas.get(i) + "");
+            i++;
+        }
     }
+    
+    public ArrayList<String> obtenerLiterales(){
+        ArrayList<String> literales;
+        
+        literales = new ArrayList<>();
+        literales.add("A)");
+        literales.add("B)");
+        literales.add("C)");
+        literales.add("D)");
+        
+        return literales;
+    }
+
+    
+    private class manejadorRespuesta implements EventHandler<Event>{
+        int indice;
+        ArrayList<Respuesta> respuestas; 
+        
+        /**
+         * Constructor de clase
+         * @param i
+         * @param r 
+         */
+        public manejadorRespuesta(int i, ArrayList<Respuesta> r){
+            indice = i;
+            respuestas = r; 
+        }
+        
+        /**
+         * Manejador del evento de clase
+         * @param e 
+         */
+        @Override
+        public void handle(Event e){
+            r = respuestas.get(indice);
+        }
+    }
+    
     
     /**
      * Actualiza la pregunta en los componentes FXML para eliminar dos respuesta incorrectas
@@ -335,18 +431,20 @@ public class JuegoController {
         
         pregunta = preguntasPerLvl.get(indNivel).getPreguntas().
                 get(indPregunta);
+
+        // Crear copias de respuestas
+        respuestas = new ArrayList<>();
+        for (Respuesta r: pregunta.getRespuestas()){
+            respuestas.add(new Respuesta(r));
+        }
+
         
-        pregunta50 = new Pregunta(pregunta.getTexto(),pregunta.getNivel(),pregunta.getMateria(),pregunta.getRespuestas());
-        
-        // System.out.println("Crear respuestas");
-        respuestas = pregunta50.getRespuestas();
         Collections.shuffle(respuestas);
         
-        // Cambiar las respuestas de la pregunta a mostrar
-        pregunta50.setRespuestas(respuestas);
+        System.out.println(pregunta);
 
         for(int i=0;i<2;i++){
-            Respuesta respuestaindice=pregunta50.getRespuestas().get(i);
+            Respuesta respuestaindice=respuestas.get(i);
             if(respuestaindice.getTipo().equals(TipoRespuesta.CORRECTA)){
                 i--;
             }
@@ -355,8 +453,10 @@ public class JuegoController {
             }
         }
         
+        System.out.println(pregunta);
+        
         // System.out.println(pregunta50.getRespuestas());
-        buildRespuestas(pregunta50);
+        buildRespuestas(respuestas);
     }
     /**
      * Constructor de cuadros de dialogos para la selección de comodines
