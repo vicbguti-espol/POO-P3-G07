@@ -27,6 +27,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        stage.setTitle("Casi Politecnico");
+        try{
+            Image logo = new Image(getClass().getResourceAsStream("/espol/poo/proyectojar/files/Logo.png"));
+            stage.getIcons().add(logo);
+        }catch(Exception e){
+        }
         scene = new Scene(loadFXML("primary"), 900, 400);
         stage.setScene(scene);
         stage.show();
