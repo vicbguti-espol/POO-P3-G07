@@ -503,8 +503,14 @@ public class Juego implements Serializable {
             ex.printStackTrace();
         }
     }
-    
+//    
 //    public static void main(String[] args){
-//        crearJuegos();
+//        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(pathJuegos))){
+//            out.writeObject(new ArrayList<Juego>());
+//        } catch (FileNotFoundException ex) {
+//            ex.printStackTrace();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
 //    }
 }

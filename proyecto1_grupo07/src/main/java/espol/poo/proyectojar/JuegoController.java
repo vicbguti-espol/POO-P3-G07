@@ -250,8 +250,7 @@ public class JuegoController {
             img = new Image("/espol/poo/proyectojar/files/Asset 1xxhdpi.png");
             alert = endAlert("Te equivocaste, Juego terminado :(", img, 144, 65);
             
-            terminarJuego(alert, false);
-            
+            terminarJuego(alert, indNivel > 0);
             
         }
         System.out.println("Respondido "+preguntasAvanzadas+" preguntas de "+Preguntastotales);
