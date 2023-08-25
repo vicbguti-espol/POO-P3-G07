@@ -25,6 +25,7 @@ public class App extends Application {
     public static TerminoAcademico terminoJuego = new TerminoAcademico(); 
     
     public static int tiempoJuego = 60;
+    
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -55,6 +56,8 @@ public class App extends Application {
     
     public static void main(String[] args) {
         launch();
+        
+        
     }
 
 }

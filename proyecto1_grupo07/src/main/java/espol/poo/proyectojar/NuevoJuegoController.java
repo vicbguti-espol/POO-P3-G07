@@ -221,13 +221,14 @@ public class NuevoJuegoController implements Initializable {
                 Juego.getPreguntasMateria(matSeleccionada, 
                         Pregunta.preguntas);
         
-        App.juego = new Juego(matSeleccionada, preguntasMateria, 
+        Juego.juegos.add(new Juego(matSeleccionada, preguntasMateria, 
                 parSeleccionado,
                 partSeleccionado.getMatricula(), 
                 apoyoSeleccionado.getMatricula(),
                 cantPregNivSeleccionado, 
-                java.time.LocalDate.now());
+                java.time.LocalDate.now(),App.terminoJuego));
         
+        App.juego = Juego.juegos.get(Juego.juegos.size()-1);
         
         // Cargar FXML con el controlador
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("juego.fxml"));

@@ -1,6 +1,8 @@
 package modelo.juego;
 
-public enum TipoRespuesta {
+import java.io.Serializable;
+
+public enum TipoRespuesta implements Serializable{
     CORRECTA,
     INCORRECTA
 }

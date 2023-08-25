@@ -30,7 +30,7 @@
                         <Button mnemonicParsing="false" onAction="#switchToConfig" prefHeight="26.0" prefWidth="171.0" text="CONFIGURACIONES" />
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="319.0" text="REPORTE" />
+                  <Button mnemonicParsing="false" onAction="#switchToReporte" prefHeight="26.0" prefWidth="319.0" text="REPORTE" />
                </children>
             </VBox>
          </children>

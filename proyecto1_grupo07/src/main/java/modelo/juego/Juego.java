@@ -1,8 +1,14 @@
 package modelo.juego;
 
+import espol.poo.proyectojar.App;
 import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import modelo.juego.Pregunta;
 import modelo.juego.Respuesta;
@@ -19,8 +25,10 @@ import java.util.TreeMap;
 import modelo.academico.Estudiante;
 import modelo.academico.Materia;
 import modelo.academico.Paralelo;
+import modelo.academico.TerminoAcademico;
 
-public class Juego {
+public class Juego implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Materia materia;
     private ArrayList<Pregunta> preguntas;
     private Estudiante participante;
@@ -28,92 +36,14 @@ public class Juego {
     private int nPreguntasPerLvl;
     private LocalDate fecha;
     private int lvlMax;
-    private int nPreguntasContestadas;
-    private ArrayList<PreguntaComodin> comodinesUtilizados;
+    private int preguntasContestadas;
     private String premio;
     private int segundos;
-
-    public void setMateria(Materia materia) {
-        this.materia = materia;
-    }
-
-    public void setPreguntas(ArrayList<Pregunta> preguntas) {
-        this.preguntas = preguntas;
-    }
-
-    public void setParticipante(Estudiante participante) {
-        this.participante = participante;
-    }
-
-    public void setApoyo(Estudiante apoyo) {
-        this.apoyo = apoyo;
-    }
-
-    public void setnPreguntasPerLvl(int nPreguntasPerLvl) {
-        this.nPreguntasPerLvl = nPreguntasPerLvl;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public void setLvlMax(int lvlMax) {
-        this.lvlMax = lvlMax;
-    }
-
-    public void setnPreguntasContestadas(int nPreguntasContestadas) {
-        this.nPreguntasContestadas = nPreguntasContestadas;
-    }
-
-    public void setComodinesUtilizados(ArrayList<PreguntaComodin> comodinesUtilizados) {
-        this.comodinesUtilizados = comodinesUtilizados;
-    }
-
-    public void setPremio(String premio) {
-        this.premio = premio;
-    }
-
-    public Materia getMateria() {
-        return materia;
-    }
-
-    public ArrayList<Pregunta> getPreguntas() {
-        return preguntas;
-    }
-
-    public Estudiante getApoyo() {
-        return apoyo;
-    }
-
-    public int getnPreguntasPerLvl() {
-        return nPreguntasPerLvl;
-    }
-
-    public int getLvlMax() {
-        return lvlMax;
-    }
-
-    public int getnPreguntasContestadas() {
-        return nPreguntasContestadas;
-    }
-
-    public ArrayList<PreguntaComodin> getComodinesUtilizados() {
-        return comodinesUtilizados;
-    }
-
-    public int getSegundos() {
-        return segundos;
-    }
-
-    public void setSegundos(int segundos) {
-        this.segundos = segundos;
-    }
-
+    private TerminoAcademico termino;
+    private Paralelo paralelo;
     
-    
-    
-    // Instanciar scanner
-    static Scanner sc = new Scanner(System.in);
+    public static String pathJuegos = "archivo\\juegos.ser";
+    public static ArrayList<Juego> juegos = cargarJuegos();
     
     /**
      * Constructor de clase
@@ -124,12 +54,14 @@ public class Juego {
      * @param matriculaApoyo
      * @param n
      * @param f 
+     * @param terminoAcademico 
      * @param ComodinesUtilizados 
      */
     public Juego(Materia materia, ArrayList<Pregunta> preguntasMateria, 
             Paralelo paralelo, int matriculaParticipante,int matriculaApoyo,
-            int n, LocalDate f){
+            int n, LocalDate f, TerminoAcademico terminoAcademico){
         this.materia = materia;
+        this.paralelo = paralelo;
         preguntas = preguntasMateria; // Asignar preguntas por materia
         setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.PARTICIPANTE); // Asignar participante
@@ -137,51 +69,135 @@ public class Juego {
                 TipoEstudiante.APOYO); // Asignar support
         fecha = f;
         nPreguntasPerLvl = n; // Set n preguntas por nivel
-        comodinesUtilizados=new ArrayList<>();
+        termino = terminoAcademico;
     }
-    
 
-    /**
-     * Obtener un arreglo de tipo Juego a partir de una ruta de archivo
-     * @param pathJuegos
-     * @return 
-     */
-    public static ArrayList<Juego> cargarJuegos(String pathJuegos){
-        ArrayList<Juego> juegoscargados = new ArrayList<>();
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(pathJuegos))) {
-            juegoscargados= (ArrayList<Juego>) in.readObject();
-        } catch (EOFException e) {
+    public Materia getMateria() {
+        return materia;
+    }
 
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return juegoscargados;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
-    
-    public ArrayList<Pregunta> getPreguntasdeJuego(){
-    return preguntas;
+
+    public ArrayList<Pregunta> getPreguntas() {
+        return preguntas;
     }
-    public Materia getMateriaJuego(){
-    return materia;
+
+    public void setPreguntas(ArrayList<Pregunta> preguntas) {
+        this.preguntas = preguntas;
     }
-    public Estudiante getParticipante(){
+
+    public Estudiante getParticipante() {
         return participante;
     }
-    public LocalDate getFecha(){
+    
+    public String getParticipantes() {
+        return participante.getNombre();
+    }
+
+    public void setParticipante(Estudiante participante) {
+        this.participante = participante;
+    }
+
+    public Estudiante getApoyo() {
+        return apoyo;
+    }
+
+    public void setApoyo(Estudiante apoyo) {
+        this.apoyo = apoyo;
+    }
+
+    public int getnPreguntasPerLvl() {
+        return nPreguntasPerLvl;
+    }
+
+    public void setnPreguntasPerLvl(int nPreguntasPerLvl) {
+        this.nPreguntasPerLvl = nPreguntasPerLvl;
+    }
+
+    public LocalDate getFecha() {
         return fecha;
     }
-    public int getMaxlvl(){
+    
+    public String getFechas() {
+        return String.valueOf(fecha);
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getLvlMax() {
         return lvlMax;
     }
-    public String getPremio(){
+
+    public void setLvlMax(int lvlMax) {
+        this.lvlMax = lvlMax;
+    }
+
+
+    public String getPremio() {
         return premio;
     }
-    public int getNPreguntasContestadas(){
-        return nPreguntasContestadas;
+
+    public void setPremio(String premio) {
+        this.premio = premio;
     }
-    public ArrayList<PreguntaComodin> getComodines(){
-        return comodinesUtilizados;
+
+    public int getSegundos() {
+        return segundos;
     }
+
+    public void setSegundos(int segundos) {
+        this.segundos = segundos;
+    }
+
+    public TerminoAcademico getTermino() {
+        return termino;
+    }
+
+    public void setTermino(TerminoAcademico termino) {
+        this.termino = termino;
+    }
+
+    public Paralelo getParalelo() {
+        return paralelo;
+    }
+
+    public void setParalelo(Paralelo paralelo) {
+        this.paralelo = paralelo;
+    }
+
+    public int getPreguntasContestadas() {
+        return preguntasContestadas;
+    }
+
+    public void setPreguntasContestadas(int preguntasContestadas) {
+        this.preguntasContestadas = preguntasContestadas;
+    }
+    
+    
+    
+    /**
+     * Obtener el timeStamp del juego al momento de terminarlo
+     * @return 
+     */
+    public String getTime(){
+        int sec;
+        int hours;
+        int min;
+        
+        sec = segundos % 60;
+        hours = segundos / 60;
+        min = hours % 60;
+        
+        return min + ":" + sec;
+    }
+    
+
+    
+    
     
     /**
      * Setting de preguntas a partir de una materia
@@ -346,6 +362,48 @@ public class Juego {
         return sizesByLvl;
     }
     
+    /**
+     * Obtener un arreglo de tipo NivelPregunta a partir de un hashMap de App
+     * @return 
+     */
+    public ArrayList<NivelPregunta> getArrayNivelPregunta(){
+        ArrayList<NivelPregunta> arrayNivelPregunta = new ArrayList<>();
+        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = getPreguntasByLevel(nPreguntasPerLvl);
+        
+        for (Map.Entry<Integer, ArrayList<Pregunta>> entry : preguntasPerLvl.
+                entrySet()) {
+            arrayNivelPregunta.add(new NivelPregunta(entry.getKey(), 
+                    entry.getValue()));
+        }
+        
+        return arrayNivelPregunta;
+    }
+    
+    /**
+     * Obtener la cantidad de comodines usados en un juego
+     * @return 
+     */
+    public int getComodinesUsados(){
+        int comodinesUsados;
+        ArrayList<NivelPregunta> nivelPreguntas;
+        
+        comodinesUsados = 0; 
+        nivelPreguntas = getArrayNivelPregunta();
+        
+        for (int i = 0; i < lvlMax; i++){
+            for (int j = 0; j < preguntasContestadas; j++){
+                Pregunta pregunta;
+                // Obtener la pregunta
+                pregunta = nivelPreguntas.get(i).getPreguntas().get(j);
+                if (pregunta.getComodinUsado() != null){
+                    // Agregar comodines usados si una pregunta las obtuvo
+                    comodinesUsados++;
+                }
+            }
+        }
+        return comodinesUsados;
+    }
+    
 
     public static int getMaxSize(ArrayList<Pregunta> preguntas){
         // Obtener únicamente los tamaños de arreglos 
@@ -412,5 +470,41 @@ public class Juego {
 //            
 //        }
 //        
+//    }
+    
+    /**
+     * Obtener un arreglo de tipo Juego a partir de una ruta de archivo
+     * @param pathJuegos
+     * @return 
+     */
+    public static ArrayList<Juego> cargarJuegos(){
+        ArrayList<Juego> juegoscargados;
+        
+        juegoscargados= new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(pathJuegos))) {
+            juegoscargados = (ArrayList<Juego>) in.readObject();
+        } catch (FileNotFoundException f) {
+            System.out.println(f);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return juegoscargados;
+    }
+    
+    /**
+     * Crear una nueva lista de juegos
+     */
+    public static void actualizarJuegos(){
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(pathJuegos))){
+            out.writeObject(juegos);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+//    public static void main(String[] args){
+//        crearJuegos();
 //    }
 }

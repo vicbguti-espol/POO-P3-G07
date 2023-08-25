@@ -1,6 +1,8 @@
 package modelo.juego;
 
-public enum TipoEstudiante {
+import java.io.Serializable;
+
+public enum TipoEstudiante implements Serializable{
     PARTICIPANTE,
     APOYO
 }

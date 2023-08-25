@@ -43,7 +43,6 @@ import modelo.juego.Comodin;
 import modelo.juego.Juego;
 import modelo.juego.NivelPregunta;
 import modelo.juego.Pregunta;
-import modelo.juego.PreguntaComodin;
 import modelo.juego.Respuesta;
 import modelo.juego.TipoRespuesta;
 
@@ -140,7 +139,7 @@ public class JuegoController {
     public void buildJuego(){
        
         // Obtener preguntas por nivel
-        preguntasPerLvl = getArrayNivelPregunta();
+        preguntasPerLvl = App.juego.getArrayNivelPregunta();
         
         mostrarpreguntas();
         crearPanel();
@@ -185,6 +184,8 @@ public class JuegoController {
         Alert alert;
         Image img;
         
+        
+        
         //PARA VER EN CONSOLA
         
         backupDuracion();
@@ -212,25 +213,25 @@ public class JuegoController {
             preguntasAvanzadas++;
             if (preguntasAvanzadas!=Preguntastotales){
                 if(maximo==num){
-                    // Suspender thread
-                    temp.suspendThread();
-                    System.out.println("SIGUIENTE NIVEL");
-                    // Dialogo para que ingrese el premio que quiere al pasar un nivel
-                    TextInputDialog dialog = new TextInputDialog();
-                    dialog.setTitle("Ingreso de Premio");
-                    dialog.setHeaderText("Ingrese su premio por pasar el nivel: "+indNivel);
-                    dialog.setContentText("Premio: ");
-                    Optional<String> result = dialog.showAndWait();
-                    result.ifPresent(premio -> {
-                    // Guardar la información ingresada por el usuario (premio)
-                    System.out.println("Premio ingresado: " + premio);
-                    
-                    });
-                    
+//                    // Suspender thread
+//                    temp.suspendThread();
+//                    System.out.println("SIGUIENTE NIVEL");
+//                    // Dialogo para que ingrese el premio que quiere al pasar un nivel
+//                    TextInputDialog dialog = new TextInputDialog();
+//                    dialog.setTitle("Ingreso de Premio");
+//                    dialog.setHeaderText("Ingrese su premio por pasar el nivel: "+indNivel);
+//                    dialog.setContentText("Premio: ");
+//                    Optional<String> result = dialog.showAndWait();
+//                    result.ifPresent(premio -> {
+//                    // Guardar la información ingresada por el usuario (premio)
+//                    System.out.println("Premio ingresado: " + premio);
+//                    
+//                    });
+//                    
                     indPregunta=0;
                     indNivel++;
-                    // Continuar thread
-                    temp.resumeThread();
+//                    // Continuar thread
+//                    temp.resumeThread();
                     mostrarpreguntas();
                     
                 }else if (maximo>num){
@@ -242,26 +243,54 @@ public class JuegoController {
                 img = new Image("/espol/poo/proyectojar/files/Asset 5xxhdpi.png");
                 alert = endAlert("Terminaste el Juego. GANASTE! :)", img, 144, 144);
                 
-                temp.suspendThread();
-                ingresarPremio();
-                alert.showAndWait();
-                temp.resumeThread();
-                // Cambiar a la pantalla main de términos
-                tTranscurrido=0;
+                terminarJuego(alert, true);
             }
             // Salida cuando se equivoca en una pregunta
         } else {
             img = new Image("/espol/poo/proyectojar/files/Asset 1xxhdpi.png");
             alert = endAlert("Te equivocaste, Juego terminado :(", img, 144, 65);
             
-            temp.suspendThread();
-            alert.showAndWait();
-            temp.resumeThread();
-            // Cambiar a la pantalla main de términos
-            tTranscurrido=0;
+            terminarJuego(alert, false);
+            
+            
         }
         System.out.println("Respondido "+preguntasAvanzadas+" preguntas de "+Preguntastotales);
     }
+    
+    /**
+     * Terminar juego con alerta en función de si necesita premio o no de ingresar
+     * @param alert
+     * @param premio 
+     */
+    public void terminarJuego(Alert alert, boolean premio){
+        // Cambiar a la pantalla main de términos
+        tTranscurrido=120;
+        // Cuadro de alerta mientras se detine el tiempo            
+        alert.showAndWait();
+        // Ingresar premio en caso de requerirlo
+        premio:ingresarPremio();
+        
+        
+        
+        // Actualizar archivo de juegos
+        Juego.actualizarJuegos();
+        // Establecer el nivel máximo alcanzado
+        juego.setLvlMax(obtenerNivelAlcanzado());
+        // Establecer la cantidad de preguntas contestadas
+        juego.setPreguntasContestadas(preguntasAvanzadas);
+        
+//        tTranscurrido=0;
+        temp.terminarJuego();
+    }
+    
+    /**
+     * Obtener el nivel máximo alcanzado
+     * @return 
+     */
+    public int obtenerNivelAlcanzado(){
+        return preguntasPerLvl.get(indNivel).getNivel();
+    }
+    
     
     /**
      * Dialog y obtener premio para juego
@@ -293,12 +322,6 @@ public class JuegoController {
         alert.setTitle("Information Dialog");
         alert.setHeaderText("Resultado de la operación");
         alert.setContentText(message);
-        
-        
-        alert.showAndWait();
-        temp.resumeThread();
-        // Cambiar a la pantalla main de términos
-        tTranscurrido=0;
         
         return alert; 
     }
@@ -568,25 +591,6 @@ public class JuegoController {
     }
     
     
-    /**
-     * Obtener un arreglo de tipo NivelPregunta a partir de un hashMap de App
-     * @return 
-     */
-    public ArrayList<NivelPregunta> getArrayNivelPregunta(){
-        ArrayList<NivelPregunta> arrayNivelPregunta = new ArrayList<>();
-        Map<Integer, ArrayList<Pregunta>> preguntasPerLvl = App.juego.
-                getPreguntasByLevel(App.juego.getnPreguntasPerLvl());
-        
-        for (Map.Entry<Integer, ArrayList<Pregunta>> entry : preguntasPerLvl.
-                entrySet()) {
-            arrayNivelPregunta.add(new NivelPregunta(entry.getKey(), 
-                    entry.getValue()));
-        }
-        
-        return arrayNivelPregunta;
-    }
-    
-    
 
     class Temporizador extends Thread {
         boolean progression = true;
@@ -606,37 +610,11 @@ public class JuegoController {
             }
         }
         
-        /**
-         * Suspender hilo
-         */
-        synchronized void suspendThread(){
-            suspendThread = true;
-        }
-        
-        /**
-         * Regresar al estado funcional del hilo
-         */
-        synchronized void resumeThread(){
-            suspendThread = false;
-            System.out.println("Resuming thread");
-            notify();
-        }
-        
         public void decrementador(){
             // Decrementar temporizador
             tTranscurrido--;
            
-            // No ponerlo en run
-            synchronized(this){
-                        while(suspendThread){
-                            System.out.println("Pausing thread");
-                            try{
-                                wait();
-                            } catch(InterruptedException e){
-                                System.out.println(e);
-                            }
-                              
-                        }}
+
             // Cambiar el tiempo en el label
             Platform.runLater(() ->
                 lblTemp.setText(String.valueOf(tTranscurrido)));

@@ -1,6 +1,8 @@
 package modelo.juego;
 
-public enum Comodin {
+import java.io.Serializable;
+
+public enum Comodin implements Serializable {
     CINCUENTA,
     COMPANERO,
     SALON

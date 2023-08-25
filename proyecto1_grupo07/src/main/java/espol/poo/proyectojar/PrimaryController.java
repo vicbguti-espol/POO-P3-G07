@@ -14,4 +14,9 @@ public class PrimaryController {
     private void switchToConfig(ActionEvent event) throws IOException {
         App.setRoot("config");
     }
+    
+    @FXML
+    private void switchToReporte(ActionEvent event) throws IOException {
+        App.setRoot("reporte");
+    }
 }
