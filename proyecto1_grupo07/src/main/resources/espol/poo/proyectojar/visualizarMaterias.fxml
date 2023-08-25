@@ -23,13 +23,25 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btneditarMateria" mnemonicParsing="false" text="Editar Materia" />
-            <Button fx:id="btnagregarMateria" mnemonicParsing="false" text="Agregar Materia" />
-            <Button mnemonicParsing="false" onAction="#eliminarMateria" text="Eliminar Materia" />
-            <Button fx:id="btnSalir" mnemonicParsing="false" text="Salir">
+            <Button fx:id="btneditarMateria" mnemonicParsing="false" stylesheets="@css/botones.css" text="Editar Materia" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="btnagregarMateria" mnemonicParsing="false" stylesheets="@css/botones.css" text="Agregar Materia" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#eliminarMateria" stylesheets="@css/botones.css" text="Eliminar Materia" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="btnSalir" mnemonicParsing="false" stylesheets="@css/botones.css" text="Salir" textFill="WHITE">
                <HBox.margin>
                   <Insets left="165.0" />
                </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
             </Button>
          </children>
       </HBox>

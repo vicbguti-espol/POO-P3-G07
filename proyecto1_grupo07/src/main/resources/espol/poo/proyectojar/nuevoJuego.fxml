@@ -45,7 +45,7 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
-            <ComboBox fx:id="cmbPregNivel" onAction="#nivelSeleccionado" prefHeight="26.0" prefWidth="94.0" promptText="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cmbPregNivel" onAction="#nivelSeleccionado" prefHeight="26.0" prefWidth="94.0" promptText="0" stylesheets="@css/comboboxes.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Apoyo:" textFill="WHITE" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -57,23 +57,23 @@
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <TextField fx:id="txtMatPart" onAction="#partSeleccionado" promptText="Ingrese matrícula" />
-                  <Button fx:id="btnRandom1" mnemonicParsing="false" text="Aleatorio" />
+                  <Button fx:id="btnRandom1" mnemonicParsing="false" stylesheets="@css/botones.css" text="Aleatorio" />
                </children>
             </HBox>
-            <ComboBox fx:id="cmbMateria" onAction="#materiaSeleccionada" prefWidth="150.0" promptText="Seleccione materia" GridPane.columnIndex="1" />
-            <ComboBox fx:id="cmbParalelo" onAction="#paraleloSeleccionado" prefWidth="150.0" promptText="Seleccione paralelo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cmbMateria" onAction="#materiaSeleccionada" prefWidth="150.0" promptText="Seleccione materia" stylesheets="@css/comboboxes.css" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cmbParalelo" onAction="#paraleloSeleccionado" prefWidth="150.0" promptText="Seleccione paralelo" stylesheets="@css/comboboxes.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <TextField fx:id="txtMatApoyo" onAction="#apoyoSeleccionado" promptText="Ingrese matrícula" />
-                  <Button fx:id="btnRandom2" mnemonicParsing="false" text="Aleatorio" />
+                  <Button fx:id="btnRandom2" mnemonicParsing="false" stylesheets="@css/botones.css" text="Aleatorio" />
                </children>
             </HBox>
          </children>
       </GridPane>
       <HBox alignment="CENTER" prefHeight="8.0" prefWidth="200.0" spacing="30.0">
          <children>
-            <Button fx:id="btnnuevoJuego" onAction="#iniciarJuego" text="Empezar Juego" />
-            <Button onAction="#switchToPrimary" prefHeight="26.0" prefWidth="91.0" text="Regresar" />
+            <Button fx:id="btnnuevoJuego" onAction="#iniciarJuego" stylesheets="@css/botones.css" text="Empezar Juego" />
+            <Button onAction="#switchToPrimary" prefHeight="26.0" prefWidth="91.0" stylesheets="@css/botones.css" text="Regresar" />
          </children>
       </HBox>
    </children>

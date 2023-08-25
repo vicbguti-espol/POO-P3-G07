@@ -11,10 +11,10 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#switchToTer" prefHeight="26.0" prefWidth="162.0" text="Términos Académicos" />
-            <Button mnemonicParsing="false" onAction="#switchtoMaterias" prefHeight="26.0" prefWidth="162.0" text="Materias" />
-            <Button mnemonicParsing="false" onAction="#switchtoParalelos" prefHeight="26.0" prefWidth="162.0" text="Paralelos" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Preguntas" />
+            <Button mnemonicParsing="false" onAction="#switchToTer" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Términos Académicos" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#switchtoMaterias" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Materias" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#switchtoParalelos" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Paralelos" textFill="WHITE" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Preguntas" textFill="WHITE" />
          </children>
       </VBox>
    </center>
@@ -28,6 +28,6 @@
       <Insets bottom="30.0" top="30.0" />
    </padding>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#switchToPrimary" prefHeight="26.0" prefWidth="162.0" text="Regresar" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#switchToPrimary" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Regresar" textFill="WHITE" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

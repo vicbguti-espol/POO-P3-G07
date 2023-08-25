@@ -48,8 +48,8 @@
       </GridPane>
       <HBox alignment="CENTER" prefHeight="8.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button onAction="#agregarMateria" text="Guardar" />
-            <Button mnemonicParsing="false" onAction="#switchToVisualizarMaterias" text="Regresar" />
+            <Button onAction="#agregarMateria" stylesheets="@css/botones.css" text="Guardar" />
+            <Button mnemonicParsing="false" onAction="#switchToVisualizarMaterias" stylesheets="@css/botones.css" text="Regresar" />
          </children>
       </HBox>
    </children>

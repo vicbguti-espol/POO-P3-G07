@@ -43,13 +43,13 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
-            <ComboBox fx:id="cmbMateria" prefWidth="150.0" promptText="Seleccione materia" GridPane.columnIndex="1" />
-            <ComboBox fx:id="cmbTermino" prefWidth="150.0" promptText="Seleccione termino" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cmbMateria" prefWidth="150.0" promptText="Seleccione materia" stylesheets="@css/comboboxes.css" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cmbTermino" prefWidth="150.0" promptText="Seleccione termino" stylesheets="@css/comboboxes.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Carga de Estudiantes:" textFill="WHITE" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
-            <ComboBox fx:id="cmbNParalelo" prefWidth="100.0" promptText="N°" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <ComboBox fx:id="cmbNParalelo" prefWidth="100.0" promptText="N°" stylesheets="@css/comboboxes.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -61,7 +61,7 @@
                         <Insets top="2.5" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="btnPath" mnemonicParsing="false" text="Suba archivo">
+                  <Button fx:id="btnPath" mnemonicParsing="false" stylesheets="@css/botones.css" text="Suba archivo">
                      <HBox.margin>
                         <Insets top="3.0" />
                      </HBox.margin>
@@ -72,8 +72,8 @@
       </GridPane>
       <HBox alignment="CENTER" prefHeight="8.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button onAction="#agregarParalelo" text="Guardar" />
-            <Button fx:id="btnSalir" mnemonicParsing="false" onAction="#switchtoVisualizarParalelos" text="Regresar" />
+            <Button onAction="#agregarParalelo" stylesheets="@css/botones.css" text="Guardar" />
+            <Button fx:id="btnSalir" mnemonicParsing="false" onAction="#switchtoVisualizarParalelos" stylesheets="@css/botones.css" text="Regresar" />
          </children>
       </HBox>
    </children>

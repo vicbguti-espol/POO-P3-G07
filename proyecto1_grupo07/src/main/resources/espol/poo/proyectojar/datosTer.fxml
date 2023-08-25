@@ -33,12 +33,12 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <ComboBox fx:id="cmbAño" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="cmbAño" prefWidth="150.0" stylesheets="@css/comboboxes.css" GridPane.columnIndex="1" />
                   <Label text="Término" textFill="WHITE" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <ComboBox fx:id="cmbTermino" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="cmbTermino" prefWidth="150.0" stylesheets="@css/comboboxes.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <VBox.margin>
                   <Insets left="150.0" right="50.0" />
@@ -46,8 +46,8 @@
             </GridPane>
             <VBox alignment="CENTER" prefHeight="56.0" prefWidth="600.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#guardarTermino" prefHeight="26.0" prefWidth="81.0" text="Guardar" />
-                  <Button mnemonicParsing="false" onAction="#switchToTerminos" prefHeight="26.0" prefWidth="81.0" text="Regresar" />
+                  <Button mnemonicParsing="false" onAction="#guardarTermino" prefHeight="26.0" prefWidth="81.0" stylesheets="@css/botones.css" text="Guardar" />
+                  <Button mnemonicParsing="false" onAction="#switchToTerminos" prefHeight="26.0" prefWidth="81.0" stylesheets="@css/botones.css" text="Regresar" />
                </children>
             </VBox>
          </children>
