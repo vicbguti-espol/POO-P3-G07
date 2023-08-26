@@ -75,6 +75,10 @@ public class Pregunta implements Serializable {
     public Comodin getComodinUsado() {
         return comodinUsado;
     }
+    
+    public String getComodinUsados() {
+        return String.valueOf(comodinUsado);
+    }
 
     public void setComodinUsado(Comodin comodinUsado) {
         this.comodinUsado = comodinUsado;

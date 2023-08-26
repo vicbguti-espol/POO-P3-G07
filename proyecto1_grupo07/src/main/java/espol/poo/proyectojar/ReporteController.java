@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import javafx.scene.control.Button;
@@ -21,7 +22,9 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import modelo.academico.Estudiante;
 import modelo.academico.Materia;
@@ -143,17 +146,6 @@ public class ReporteController implements Initializable {
                             //boton detalles
                             Button btnEd = new Button("Ver detalle");
                             btnEd.setOnAction(r -> verDetalles(juego));
-                       
-//                            //boton eliminar
-//                            Button btnEl = new Button("Eliminar");
-//                            //este boton si inhabilita para genero femenino
-//                            if (juego.getGenero().equals(Genero.FEMENINO))
-//                                btnEl.setDisable(true);
-//                            btnEl.setOnAction(e -> eliminarEmpleado2(juego));
-//                            //se agregan botones al hbox
-//                            hbOpciones.getChildren().addAll(btnEd,btnEl);
-//                            //se ubica hbox en la celda
-//                            setGraphic(hbOpciones);
                             setGraphic(btnEd);
                         }
                     }
@@ -167,7 +159,19 @@ public class ReporteController implements Initializable {
     }
     
     public void verDetalles(Juego j){
-        
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("detalles.fxml"));
+            DetallesController ct = new DetallesController();
+
+            fxmlLoader.setController(ct);//se asigna el controlador
+
+            BorderPane root = (BorderPane) fxmlLoader.load();
+
+            ct.llenarCampos(j);
+            App.changeRoot(root);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     @FXML

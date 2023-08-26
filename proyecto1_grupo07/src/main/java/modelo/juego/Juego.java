@@ -380,6 +380,42 @@ public class Juego implements Serializable {
     }
     
     /**
+     * Obtener una plain list de las preguntas usadas en el juego
+     * @return 
+     */
+    public ArrayList<Pregunta> getPreguntasJuego(){
+        ArrayList<NivelPregunta> nivelPreguntas;
+        ArrayList<Pregunta> preguntasJuego;
+        
+        nivelPreguntas = getArrayNivelPregunta();
+        preguntasJuego = new ArrayList<>();
+        for (NivelPregunta np: nivelPreguntas){
+            for (Pregunta p: np.getPreguntas()){
+                preguntasJuego.add(p);
+            }
+        }
+        
+        return preguntasJuego;
+    }
+    
+    /**
+     * Obtener un arreglo de tipo Pregunta con las preguntas contestadas
+     * @return 
+     */
+    public ArrayList<Pregunta> getArrayPreguntasContestadas(){
+        ArrayList<Pregunta> preguntas;
+        ArrayList<Pregunta> preguntasJuego;
+        
+        preguntasJuego = getPreguntasJuego();
+        preguntas = new ArrayList<>();
+        for (int i = 0; i < preguntasContestadas - 1; i++){
+            preguntas.add(preguntasJuego.get(i));
+        }
+        
+        return preguntas;
+    }
+    
+    /**
      * Obtener la cantidad de comodines usados en un juego
      * @return 
      */
