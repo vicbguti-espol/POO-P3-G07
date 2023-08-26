@@ -54,6 +54,7 @@ public class DetallesController {
         List<Pregunta> preguntas;
         
         preguntas = juego.getArrayPreguntasContestadas();
+        System.out.println(preguntas);
         tvPreguntas.getItems().setAll(preguntas);
     }
     

@@ -84,7 +84,6 @@ public class JuegoController {
     int tTranscurrido;
     Juego juego = App.juego;
     int tiempoJuego = App.tiempoJuego;
-    Integer correctas = 0; 
     
     public Integer indNivel = 0;
     public Integer indPregunta = 0;
@@ -250,7 +249,8 @@ public class JuegoController {
             img = new Image("/espol/poo/proyectojar/files/Asset 1xxhdpi.png");
             alert = endAlert("Te equivocaste, Juego terminado :(", img, 144, 65);
             
-            terminarJuego(alert, indNivel > 1);
+            System.out.println(indNivel>0);
+            terminarJuego(alert, indNivel > 0);
             
         }
         System.out.println("Respondido "+preguntasAvanzadas+" preguntas de "+Preguntastotales);
@@ -262,23 +262,24 @@ public class JuegoController {
      * @param premio 
      */
     public void terminarJuego(Alert alert, boolean premio){
-        // Cambiar a la pantalla main de términos
-        tTranscurrido=120;
         // Cuadro de alerta mientras se detine el tiempo            
         alert.showAndWait();
         // Ingresar premio en caso de requerirlo
-        premio:ingresarPremio();
+        if (premio){
+            ingresarPremio();
+        }
         
         
         
-        // Actualizar archivo de juegos
-        Juego.actualizarJuegos();
+        
         // Establecer el nivel máximo alcanzado
         juego.setLvlMax(obtenerNivelAlcanzado());
         // Establecer la cantidad de preguntas contestadas
         juego.setPreguntasContestadas(preguntasAvanzadas);
         
-//        tTranscurrido=0;
+        // Actualizar archivo de juegos
+        Juego.actualizarJuegos();
+        tTranscurrido = 0;
         temp.terminarJuego();
     }
     
@@ -450,10 +451,11 @@ public class JuegoController {
     public void actualizar50(){
         Pregunta pregunta50;
         ArrayList<Respuesta> respuestas;
+        int i;
         
         pregunta = preguntasPerLvl.get(indNivel).getPreguntas().
                 get(indPregunta);
-
+        
         // Crear copias de respuestas
         respuestas = new ArrayList<>();
         for (Respuesta r: pregunta.getRespuestas()){
@@ -463,21 +465,36 @@ public class JuegoController {
         
         Collections.shuffle(respuestas);
         
-        System.out.println(pregunta);
-
-        for(int i=0;i<2;i++){
-            Respuesta respuestaindice=respuestas.get(i);
-            if(respuestaindice.getTipo().equals(TipoRespuesta.CORRECTA)){
-                i--;
-            }
-            else{
-               respuestaindice.setTexto(""); 
+        i = 0; 
+        
+        Iterator<Respuesta> it = respuestas.iterator();
+        
+        while ((i < 2) && (it.hasNext())){
+            Respuesta respuesta = it.next();
+            
+            if (respuesta.getTipo().equals(TipoRespuesta.INCORRECTA)){
+                respuesta.setTexto("");
+                i++;
             }
         }
         
-        System.out.println(pregunta);
+//        for(int i=0;i<2;i++){
+//            System.out.println("Third1");
+//            Respuesta respuestaindice=respuestas.get(i);
+//            System.out.println("Third2");
+//            if(respuestaindice.getTipo().equals(TipoRespuesta.CORRECTA)){
+//                System.out.println("Third3");
+//                i--;
+//                System.out.println("Third4");
+//            }
+//            else{
+//                System.out.println("Third5");
+//               respuestaindice.setTexto(""); 
+//               System.out.println("Third6");
+//            }
+//        }
         
-        // System.out.println(pregunta50.getRespuestas());
+       
         buildRespuestas(respuestas);
     }
     /**
@@ -504,6 +521,7 @@ public class JuegoController {
      * Tambien registra su uso en la variable comodinesUsados
      **/
     public void comodin50(){
+        
         Comodin comodinUsado;
         
         notificacionComodin("50");
@@ -512,10 +530,12 @@ public class JuegoController {
         grayscale.setSaturation(-1);
         comodin50.setEffect(grayscale);
         comodin50.setMouseTransparent(true);
-        actualizar50();
+        
 
         comodinUsado = Comodin.CINCUENTA;
         agregarComodin(comodinUsado);
+        
+        actualizar50(); 
         
         
         // comodinesUsados.add(new PreguntaComodin(preguntaActual, comodinUsado));

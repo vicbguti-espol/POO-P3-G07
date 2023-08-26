@@ -65,7 +65,7 @@ public class Juego implements Serializable {
         preguntas = preguntasMateria; // Asignar preguntas por materia
         setEstudiante(paralelo, matriculaParticipante,
                 TipoEstudiante.PARTICIPANTE); // Asignar participante
-        setEstudiante(paralelo, matriculaParticipante,
+        setEstudiante(paralelo, matriculaApoyo,
                 TipoEstudiante.APOYO); // Asignar support
         fecha = f;
         nPreguntasPerLvl = n; // Set n preguntas por nivel
@@ -408,7 +408,7 @@ public class Juego implements Serializable {
         
         preguntasJuego = getPreguntasJuego();
         preguntas = new ArrayList<>();
-        for (int i = 0; i < preguntasContestadas - 1; i++){
+        for (int i = 0; i < preguntasContestadas; i++){
             preguntas.add(preguntasJuego.get(i));
         }
         
@@ -540,14 +540,14 @@ public class Juego implements Serializable {
             ex.printStackTrace();
         }
     }
-//    
-//    public static void main(String[] args){
-//        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(pathJuegos))){
-//            out.writeObject(new ArrayList<Juego>());
-//        } catch (FileNotFoundException ex) {
-//            ex.printStackTrace();
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    
+    public static void main(String[] args){
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(pathJuegos))){
+            out.writeObject(new ArrayList<Juego>());
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

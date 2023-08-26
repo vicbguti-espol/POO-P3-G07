@@ -226,10 +226,10 @@ public class NuevoJuegoController implements Initializable {
         System.out.println(matSeleccionada.toString());
         System.out.println(parSeleccionado.toString());
         System.out.println(cantPregNivSeleccionado);
-        System.out.println(partSeleccionado.toString()+", con apoyo:"+ apoyoSeleccionado.toString());
+        System.out.println(partSeleccionado.getNombre()+", con apoyo:"+ apoyoSeleccionado.getNombre());
         //INICIAR JUEGO CON LAS VARIABLES DEFINIDAS
         
-        
+       
         Juego.juegos.add(new Juego(matSeleccionada, preguntasMateria, 
                 parSeleccionado,
                 partSeleccionado.getMatricula(), 
