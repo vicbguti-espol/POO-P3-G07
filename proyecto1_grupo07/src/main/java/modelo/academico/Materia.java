@@ -38,8 +38,9 @@ public class Materia implements Serializable{
     
     @ Override
     public String toString(){
-        return "Materia {codigo: " + codigo +", nombre: " + nombre +
-                ", niveles: " + cantNiveles + "}";
+//        return "Materia {codigo: " + codigo +", nombre: " + nombre +
+//                ", niveles: " + cantNiveles + "}";
+        return String.valueOf(codigo);
 
     }
 
@@ -63,9 +64,11 @@ public class Materia implements Serializable{
         }
         return Objects.equals(this.nombre, other.nombre);
     }
-    public static void main(String[]args){
-        subirArchivo();
-    }
+
+    
+//    public static void main(String[]args){
+//        subirArchivo();
+//    }
     public static void subirArchivo(){
       try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
             out.writeObject(new ArrayList<Materia>(

@@ -250,7 +250,7 @@ public class JuegoController {
             img = new Image("/espol/poo/proyectojar/files/Asset 1xxhdpi.png");
             alert = endAlert("Te equivocaste, Juego terminado :(", img, 144, 65);
             
-            terminarJuego(alert, indNivel > 0);
+            terminarJuego(alert, indNivel > 1);
             
         }
         System.out.println("Respondido "+preguntasAvanzadas+" preguntas de "+Preguntastotales);
@@ -287,7 +287,7 @@ public class JuegoController {
      * @return 
      */
     public int obtenerNivelAlcanzado(){
-        return preguntasPerLvl.get(indNivel).getNivel();
+        return preguntasPerLvl.get(indNivel).getNivel().intValue();
     }
     
     
@@ -593,7 +593,6 @@ public class JuegoController {
 
     class Temporizador extends Thread {
         boolean progression = true;
-        boolean suspendThread = false;
         
         @Override
         public void run(){

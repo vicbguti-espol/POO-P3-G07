@@ -157,14 +157,14 @@ public class Pregunta implements Serializable {
         
         return pregunta;
     }
-    public static void main(String[] args) {
-        subirArchivo();
-        //eliminarPregunta(preguntas.get(0));
-        for(Pregunta p: preguntas){
-            System.out.println(p.toString());
-        }
-        
-    }
+//    public static void main(String[] args) {
+//        subirArchivo();
+//        //eliminarPregunta(preguntas.get(0));
+//        for(Pregunta p: preguntas){
+//            System.out.println(p.toString());
+//        }
+//        
+//    }
     public static void subirArchivo() {
         
         preguntas = new ArrayList<>();

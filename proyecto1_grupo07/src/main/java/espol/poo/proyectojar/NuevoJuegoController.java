@@ -60,6 +60,8 @@ public class NuevoJuegoController implements Initializable {
     static Estudiante apoyoSeleccionado=null;
     private Alert error=new Alert(AlertType.WARNING);
     
+    ArrayList<Pregunta> preguntasMateria;
+    
    
     /**
      * Initializes the controller class.
@@ -124,10 +126,19 @@ public class NuevoJuegoController implements Initializable {
                     cursoEstudiantes=p.getEstudiantes();
                 }
             }
+            
+            preguntasMateria = Juego.getPreguntasMateria(matSeleccionada, 
+                        Pregunta.preguntas);
+            
             cmbPregNivel.getItems().clear();
-            for(int i=1;i<matSeleccionada.getCantNiveles()+1;i++){
+            
+            for(int i = 1; i < Juego.getMaxSize(preguntasMateria) + 1;i++){
                 cmbPregNivel.getItems().add(String.valueOf(i));
             }
+            
+//            for(int i=1;i<matSeleccionada.getCantNiveles()+1;i++){
+//                cmbPregNivel.getItems().add(String.valueOf(i));
+//            }
             cmbPregNivel.setDisable(false);
         }catch(Exception e){
             e.printStackTrace();
@@ -217,9 +228,7 @@ public class NuevoJuegoController implements Initializable {
         System.out.println(cantPregNivSeleccionado);
         System.out.println(partSeleccionado.toString()+", con apoyo:"+ apoyoSeleccionado.toString());
         //INICIAR JUEGO CON LAS VARIABLES DEFINIDAS
-        ArrayList<Pregunta> preguntasMateria = 
-                Juego.getPreguntasMateria(matSeleccionada, 
-                        Pregunta.preguntas);
+        
         
         Juego.juegos.add(new Juego(matSeleccionada, preguntasMateria, 
                 parSeleccionado,

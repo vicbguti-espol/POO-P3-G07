@@ -36,7 +36,7 @@
                            </font></Button>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="319.0" stylesheets="@css/botones.css" text="REPORTE" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#switchToReporte" prefHeight="26.0" prefWidth="319.0" stylesheets="@css/botones.css" text="REPORTE" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font></Button>

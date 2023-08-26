@@ -65,4 +65,21 @@ public class Estudiante implements Serializable{
         return lfinal;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Estudiante other = (Estudiante) obj;
+        return this.matricula == other.matricula;
+    }
+    
+    
+
 }

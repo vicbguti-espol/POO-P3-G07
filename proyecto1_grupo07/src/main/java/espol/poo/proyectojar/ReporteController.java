@@ -71,6 +71,7 @@ public class ReporteController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         cargarComboBox();
         asignarColumnas();
+        System.out.println(Juego.juegos.size());
     }    
     
     
@@ -80,9 +81,19 @@ public class ReporteController implements Initializable {
     public void cargarComboBox(){
         cmbTermino.getItems().setAll(TerminoAcademico.terminosAcademicos);
         cmbMateria.getItems().setAll(Materia.materias);
-        cmbParalelo.getItems().setAll(Paralelo.paralelos);
     }
     
+    @FXML
+    public void cargarCmbParalelos(){
+        TerminoAcademico termino = (TerminoAcademico)cmbTermino.getValue();
+        cmbParalelo.getItems().setAll(Paralelo.filtrarParalelos(termino));
+        filtrarJuegos();
+    }
+
+    
+    /**
+     * Asignar atributos de columnas
+     */
     public void asignarColumnas(){
         //asignar a cada columna el atributo del objeto correspondiente
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fechas"));
@@ -99,19 +110,17 @@ public class ReporteController implements Initializable {
      */
     @FXML
     private void filtrarJuegos(){
-
         // Filtrar por comboBox y los atributos de cada juego
         List<Juego> juegoCriterios =  Juego.juegos
                 .stream()
                 .filter(p -> 
-                        (p.getTermino().equals(cmbTermino.getValue())) && 
-                        (p.getMateria().equals(cmbMateria.getValue())) &&
-                        (p.getParalelo().equals(cmbParalelo.getValue()))
+                        (p.getTermino().equals((TerminoAcademico)cmbTermino.getValue())) && 
+                        (p.getMateria().equals((Materia)cmbMateria.getValue())) &&
+                        (p.getParalelo().equals((Paralelo)cmbParalelo.getValue()))
                 )
                 .collect(Collectors.toList());
-        
-        // Actualizar TableView
-        tvReporte.getItems().setAll(juegoCriterios);
+         // Actualizar TableView
+         tvReporte.getItems().setAll(juegoCriterios);
     }
     
     private void agregarOpciones() {

@@ -53,9 +53,9 @@ public class TerminoAcademico implements Serializable {
     
     
     
-    public static void main(String[] args) {
-        subirArchivo();
-    }
+//    public static void main(String[] args) {
+//        subirArchivo();
+//    }
     public static void subirArchivo(){
         terminosAcademicos.add(new TerminoAcademico(1, 2023));
         try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){

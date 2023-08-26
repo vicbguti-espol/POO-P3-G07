@@ -409,6 +409,7 @@ public class Juego implements Serializable {
         // Obtener únicamente los tamaños de arreglos 
         ArrayList<Integer> sizesByLvl = new ArrayList<>(
                 getSizesByLvl(preguntas).values());
+        
         // Ordenar los valores de tamaños
         Collections.sort(sizesByLvl);
         // Retornar el máximo de preguntas por nivel para el juego

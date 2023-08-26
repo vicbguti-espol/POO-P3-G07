@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
+import modelo.juego.Juego;
 
 public class Paralelo implements Serializable {
     private int numero;
@@ -52,20 +54,24 @@ public class Paralelo implements Serializable {
         return rutaEstudiantes;
     }
 
-    @ Override
-    public String toString(){
-        return "Paralelo {materia: " + materia.getNombre() + ", paralelo: " + numero + ", termino: " + termino + "}";
-    }
+//    @ Override
+//    public String toString(){
+//        return "Paralelo {materia: " + materia.getNombre() + ", paralelo: " + numero + ", termino: " + termino + "}";
+//    }
+    
+      public String toString(){
+          return String.valueOf(numero);
+      }
 
-    public static void main(String[] args) {
-        subirArchivo();
-        for(Paralelo p: paralelos){
-            System.out.println(p.toString());
-            for(Estudiante e:p.getEstudiantes()){
-                System.out.println(e.toString());
-            }
-        }
-    }
+//    public static void main(String[] args) {
+//        subirArchivo();
+//        for(Paralelo p: paralelos){
+//            System.out.println(p.toString());
+//            for(Estudiante e:p.getEstudiantes()){
+//                System.out.println(e.toString());
+//            }
+//        }
+//    }
     public static void subirArchivo(){
         ArrayList<Paralelo> paralelostest = new ArrayList<>(Arrays.asList(new Paralelo(3, Materia.materias.get(0), TerminoAcademico.terminosAcademicos.get(0), Estudiante.cargarEstudiantes("archivo\\CCPG1052-3-2023-1.txt"))));
         try(ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(path))){
@@ -104,6 +110,50 @@ public class Paralelo implements Serializable {
             e.printStackTrace();
         }
     }
+    
+    public static List<Paralelo> filtrarParalelos(TerminoAcademico termino){
+        List<Paralelo> paralelosCriterios =  paralelos
+                .stream()
+                .filter(p -> 
+                        (p.getTerminoAcademico().equals((TerminoAcademico) termino))
+                )
+                .collect(Collectors.toList());
+        
+        return paralelosCriterios;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Paralelo other = (Paralelo) obj;
+        if (this.numero != other.numero) {
+            return false;
+        }
+        if (!Objects.equals(this.materia, other.materia)) {
+            return false;
+        }
+        return Objects.equals(this.termino, other.termino);
+    }
+
+    
+
+    
+    
+    
 
 
 }
