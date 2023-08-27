@@ -5,8 +5,8 @@
 package espol.poo.proyectojar;
 
 import static espol.poo.proyectojar.visualizarMateriasController.materiaEditable;
-import modelo.academico.*;
-import modelo.juego.*;
+import espol.poo.modelo.academico.*;
+import espol.poo.modelo.juego.*;
 
 import java.io.IOException;
 import java.net.URL;

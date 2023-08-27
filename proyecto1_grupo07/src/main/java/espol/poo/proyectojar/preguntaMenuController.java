@@ -14,13 +14,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import modelo.academico.Materia;
-import modelo.juego.Pregunta;
-import modelo.juego.Respuesta;
-import modelo.juego.TipoRespuesta;
+import espol.poo.modelo.academico.Materia;
+import espol.poo.modelo.juego.Pregunta;
+import espol.poo.modelo.juego.Respuesta;
+import espol.poo.modelo.juego.TipoRespuesta;
 import java.util.*;
 import javafx.scene.control.Button;
-import modelo.juego.NivelPregunta;
+import espol.poo.modelo.juego.NivelPregunta;
 
 /**
  *

@@ -13,8 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import modelo.juego.Respuesta;
-import modelo.juego.TipoRespuesta;
+import espol.poo.modelo.juego.Respuesta;
+import espol.poo.modelo.juego.TipoRespuesta;
 
 /**
  *
