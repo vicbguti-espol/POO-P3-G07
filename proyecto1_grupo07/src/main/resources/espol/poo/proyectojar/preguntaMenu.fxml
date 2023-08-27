@@ -48,12 +48,15 @@
             <ComboBox fx:id="cmbMateria" prefWidth="150.0" promptText="Materia" stylesheets="@css/comboboxes.css" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Label text="Label:       " textFill="WHITE">
+                  <Label text="Nivel:" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtnivel" promptText="Ingrese un número" />
+                  <TextField fx:id="txtnivel" promptText="Ingrese un número">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin></TextField>
                </children>
             </HBox>
          </children>

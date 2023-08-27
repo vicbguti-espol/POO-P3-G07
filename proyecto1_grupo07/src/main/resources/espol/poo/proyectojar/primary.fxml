@@ -29,18 +29,30 @@
                         <Button fx:id="btnJugar" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="JUGAR" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
-                           </font></Button>
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                           </HBox.margin></Button>
                         <Button mnemonicParsing="false" onAction="#switchToConfig" prefHeight="26.0" prefWidth="171.0" stylesheets="@css/botones.css" text="CONFIGURACIONES" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font></Button>
                      </children>
+                     <VBox.margin>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                     </VBox.margin>
                   </HBox>
                   <Button mnemonicParsing="false" onAction="#switchToReporte" prefHeight="26.0" prefWidth="319.0" stylesheets="@css/botones.css" text="REPORTE" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
-                     </font></Button>
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                     </VBox.margin></Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </VBox.margin>
             </VBox>
          </children>
          <padding>

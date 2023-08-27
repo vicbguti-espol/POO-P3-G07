@@ -103,6 +103,7 @@ public class visualizarMateriasController implements Initializable {
         
         tvMaterias.getColumns().addAll(tcCodigo,tcNombre,tcNiveles);
         tvMaterias.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
+        tvMaterias.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tvMaterias.setItems(listaMaterias);
         
         return tvMaterias;
