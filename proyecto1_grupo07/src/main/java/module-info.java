@@ -4,7 +4,7 @@ module espol.poo.proyectojar {
     requires java.base;
 
     opens espol.poo.proyectojar to javafx.fxml;
-    opens modelo.academico to javafx.base;
-    opens modelo.juego to javafx.base;
+    opens espol.poo.modelo.academico to javafx.base;
+    opens espol.poo.modelo.juego to javafx.base;
     exports espol.poo.proyectojar;
 }

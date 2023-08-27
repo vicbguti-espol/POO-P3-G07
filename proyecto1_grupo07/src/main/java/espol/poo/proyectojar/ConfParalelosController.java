@@ -76,11 +76,11 @@ public class ConfParalelosController implements Initializable {
             faltaatributos.setTitle("Error de Usuario");
             faltaatributos.setContentText("Ha dejado campos vacios");
             faltaatributos.showAndWait();
-        }else if(archivoCarga==null&&"".equals(txtPath.getText())){
-            Alert faltaest=new Alert(AlertType.ERROR);
-            faltaest.setTitle("Error en la carga de estudiantes");
-            faltaest.setContentText("No selecciono ningún método de carga. Intente nuevamente");
-            faltaest.showAndWait();
+            }else if(archivoCarga==null&&"".equals(txtPath.getText())){
+                Alert faltaest=new Alert(AlertType.ERROR);
+                faltaest.setTitle("Error en la carga de estudiantes");
+                faltaest.setContentText("No selecciono ningún método de carga. Intente nuevamente");
+                faltaest.showAndWait();
         }
         else{
             numeroParalelo=Integer.parseInt(cmbNParalelo.getValue());
@@ -118,7 +118,9 @@ public class ConfParalelosController implements Initializable {
                         rutanovalida.showAndWait();
                     }
                 }else if(archivoCarga!=null){
+                    System.out.println("Procesando archivo");
                     Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(archivoCarga.getPath())));
+                    System.out.println("Procesando 2");
                     Alert faltaest=new Alert(AlertType.INFORMATION);
                     faltaest.setTitle("Guardado");
                     faltaest.setContentText("Paralelo guardado exitosamente");
