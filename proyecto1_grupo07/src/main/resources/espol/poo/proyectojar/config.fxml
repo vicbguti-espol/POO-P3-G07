@@ -14,7 +14,7 @@
             <Button mnemonicParsing="false" onAction="#switchToTer" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Términos Académicos" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#switchtoMaterias" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Materias" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#switchtoParalelos" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Paralelos" textFill="WHITE" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Preguntas" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#switchToPreguntas" prefHeight="26.0" prefWidth="162.0" stylesheets="@css/botones.css" text="Preguntas" textFill="WHITE" />
          </children>
       </VBox>
    </center>

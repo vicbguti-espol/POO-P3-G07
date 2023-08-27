@@ -24,5 +24,9 @@ public class ConfigController {
     private void switchToTer(ActionEvent event) throws IOException{
         App.setRoot("terminos");
     }
+    @FXML
+    private void switchToPreguntas(ActionEvent event) throws IOException{
+        App.setRoot("confpreguntas");
+    }
 }
 
