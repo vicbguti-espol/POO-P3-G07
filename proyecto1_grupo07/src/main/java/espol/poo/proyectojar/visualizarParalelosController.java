@@ -4,7 +4,7 @@
  */
 package espol.poo.proyectojar;
 
-import modelo.academico.*;
+import espol.poo.modelo.academico.Paralelo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -42,6 +42,8 @@ public class visualizarParalelosController implements Initializable {
     ObservableList<Paralelo> listaParalelos=FXCollections.observableArrayList(Paralelo.paralelos);;
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

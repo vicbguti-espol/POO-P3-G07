@@ -8,10 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import modelo.juego.Juego;
-import modelo.juego.Pregunta;
+import espol.poo.modelo.juego.Juego;
+import espol.poo.modelo.juego.Pregunta;
 
-
+/**
+ *
+ * @author Omen
+ */
 public class DetallesController {
     
     @FXML

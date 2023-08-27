@@ -16,8 +16,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import modelo.academico.TerminoAcademico;
+import espol.poo.modelo.academico.TerminoAcademico;
 
+/**
+ *
+ * @author Omen
+ */
 public class DatosTerController{
     @FXML
     ComboBox cmbAño;
@@ -72,6 +76,7 @@ public class DatosTerController{
     
     /**
      * Llenar los combos con los datos de un término
+     * @param t
      */
     public void setDefault(TerminoAcademico t){
         terminoDefault = t;
@@ -80,6 +85,9 @@ public class DatosTerController{
         cmbTermino.setValue(t.getNumTermino());
     }
     
+    /**
+     *
+     */
     public void setDefault(){
         cmbAño.setValue(App.añoActual);
         cmbAño.setDisable(true);

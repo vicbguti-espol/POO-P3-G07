@@ -4,6 +4,7 @@
  */
 package espol.poo.proyectojar;
 
+import espol.poo.excepciones.NoOptionException;
 import espol.poo.proyectojar.App;
 import java.io.IOException;
 import java.net.URL;
@@ -38,13 +39,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
-import modelo.academico.Materia;
-import modelo.juego.Comodin;
-import modelo.juego.Juego;
-import modelo.juego.NivelPregunta;
-import modelo.juego.Pregunta;
-import modelo.juego.Respuesta;
-import modelo.juego.TipoRespuesta;
+import espol.poo.modelo.academico.Materia;
+import espol.poo.modelo.juego.Comodin;
+import espol.poo.modelo.juego.Juego;
+import espol.poo.modelo.juego.NivelPregunta;
+import espol.poo.modelo.juego.Pregunta;
+import espol.poo.modelo.juego.Respuesta;
+import espol.poo.modelo.juego.TipoRespuesta;
 
 /**
  * FXML Controller class
@@ -85,13 +86,27 @@ public class JuegoController {
     Juego juego = App.juego;
     int tiempoJuego = App.tiempoJuego;
     
+    /**
+     *
+     */
     public Integer indNivel = 0;
+
+    /**
+     *
+     */
     public Integer indPregunta = 0;
+
+    /**
+     *
+     */
     public int preguntasAvanzadas=0;
     Respuesta r = new Respuesta();
     Pregunta pregunta=new Pregunta();
     Boolean respuestaCorrecta;
     
+    /**
+     *
+     */
     public ArrayList<NivelPregunta> preguntasPerLvl;
     Button btnContinuar = new Button("Continuar");
     
@@ -101,6 +116,11 @@ public class JuegoController {
     
     
     // ArrayList<PreguntaComodin> comodinesUsados = App.juego.getComodinesUtilizados();
+
+    /**
+     *
+     * @throws InterruptedException
+     */
     
     @FXML
     public void initialize() throws InterruptedException {
@@ -135,6 +155,9 @@ public class JuegoController {
         });
     }
     
+    /**
+     *
+     */
     public void buildJuego(){
        
         // Obtener preguntas por nivel
@@ -146,14 +169,7 @@ public class JuegoController {
         tTranscurrido = tiempoJuego;
         
         btnContinuar.setOnMouseClicked(e ->  {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmación de elección");
-            alert.setHeaderText("Comfirmación de Operación");
-            alert.setContentText("¿Estás seguro de que deseas continuar?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK){
-                actualizar();
-            }
+            continuar();
         });
         
         hbCont.getChildren().add(btnContinuar);
@@ -165,19 +181,64 @@ public class JuegoController {
         temp.start();
         
     }
-
-    private class Manejador implements EventHandler<Event>{
-        @Override
-        public void handle(Event e){
-            indPregunta++;
-            System.out.println("Corriendo click");
-            // buildJuego();
-            actualizar();
+    
+    /**
+     * Continuar a la siguiente pregunta
+     */
+    public void continuar(){
+        try {
+            // Actualizar siempre que el usuario lo desee
+            actualizar(confirmarEleccion());
+        } catch (NoOptionException ex) {
+            alertRespuesta();
         }
     }
     
+    /**
+     * Mostrar alerta siempre que usuario no haya seleccionado una respuesta
+     */
+    public void alertRespuesta(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Opción no encontrada");
+        alert.setHeaderText("Sin una opción seleccionada");
+        alert.setContentText("Seleccionar una opción de respuesta");
+        alert.showAndWait();
+    }
+    
+    /**
+     * Obtener alert de deseo de continuar
+     * @return 
+     */
+    public Alert confirmarEleccion(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación de elección");
+        alert.setHeaderText("Confirmación de Operación");
+        alert.setContentText("¿Estás seguro de que deseas continuar?");
+        return alert;
+    }
+    
+    /**
+     * Actualizar siempre que el usuario lo desee
+     * @param alert 
+     * @throws espol.poo.excepciones.NoOptionException 
+     */
+    public void actualizar(Alert alert) throws NoOptionException{
+        Optional<ButtonType> result;
+        if (r.getTexto() != null){
+            result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                actualizar();
+            }
+        } else{
+            throw new NoOptionException();
+        }
+        
+    }
     
     
+    /**
+     * Actualizar pantalla de pregunta nueva
+     */
     public void actualizar(){
         
         Alert alert;
@@ -331,6 +392,8 @@ public class JuegoController {
      * Obtener alerta con mensaje e imagen
      * @param message
      * @param img
+     * @param height
+     * @param width
      * @return 
      */
     public Alert endAlert(String message, Image img, int height, int width){
@@ -367,6 +430,9 @@ public class JuegoController {
         // System.out.println("Segundos totales del juego: " + segundosJuego);
     }
     
+    /**
+     *
+     */
     public void mostrarpreguntas(){
         // Obtener preguntas por nivel
         pregunta = preguntasPerLvl.get(indNivel).getPreguntas().
@@ -378,9 +444,14 @@ public class JuegoController {
         
     }
     
+    /**
+     *
+     * @param p
+     */
     public void buildPregunta(Pregunta p){
         // Construir la estructura de pregunta con sus posibles respuestas
         lblPregunta.setText(p.getTexto());
+        lblPregunta.setWrapText(true);
         
         // Shuffle de respuestas de la pregunta
         Collections.shuffle(p.getRespuestas());
@@ -389,6 +460,10 @@ public class JuegoController {
         buildRespuestas(p.getRespuestas());
     }
     
+    /**
+     *
+     * @param respuestas
+     */
     public void buildRespuestas(ArrayList<Respuesta> respuestas){
         ArrayList<String> literales;
         
@@ -402,10 +477,15 @@ public class JuegoController {
             rb.setOnMouseClicked(new manejadorRespuesta(i, respuestas));
             // Establecer texto radioButton
             rb.setText(literales.get(i) + respuestas.get(i) + "");
+            rb.setWrapText(true);
             i++;
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> obtenerLiterales(){
         ArrayList<String> literales;
         
@@ -657,7 +737,7 @@ public class JuegoController {
             alert.setContentText("Juego Terminado");
             
             alert.showAndWait();
-            // Cambiar a la pantalla main de términos
+            // Cambiar a la pantalla Smain de términos
             try{
                 App.setRoot("primary");
             } catch(IOException e){

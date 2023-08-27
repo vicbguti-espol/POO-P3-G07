@@ -1,21 +1,20 @@
-
 package espol.poo.excepciones;
 
-
+/**
+ *
+ * @author Omen
+ */
 public class TerminoExistenteException extends Exception {
 
     /**
-     * Creates a new instance of <code>TerminoExistenteException</code> without
-     * detail message.
+     * Excepción de término en existencia
      */
     public TerminoExistenteException() {
     }
 
     /**
-     * Constructs an instance of <code>TerminoExistenteException</code> with the
-     * specified detail message.
-     *
-     * @param msg the detail message.
+     * Excepción de término en existencia
+     * @param msg 
      */
     public TerminoExistenteException(String msg) {
         super(msg);

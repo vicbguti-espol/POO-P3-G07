@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -26,11 +27,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import modelo.academico.Estudiante;
-import modelo.academico.Materia;
-import modelo.academico.Paralelo;
-import modelo.academico.TerminoAcademico;
-import modelo.juego.Juego;
+import espol.poo.modelo.academico.Estudiante;
+import espol.poo.modelo.academico.Materia;
+import espol.poo.modelo.academico.Paralelo;
+import espol.poo.modelo.academico.TerminoAcademico;
+import espol.poo.modelo.juego.Juego;
 /**
  * FXML Controller class
  *
@@ -50,7 +51,7 @@ public class ReporteController implements Initializable {
     @FXML
     private Button btnRegresar;
     @FXML
-    private TableColumn<Juego, String> colFecha;
+    private TableColumn<Juego, LocalDate> colFecha;
     @FXML
     private TableColumn<Juego, String> colParticipante;
     @FXML
@@ -69,6 +70,8 @@ public class ReporteController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -86,6 +89,9 @@ public class ReporteController implements Initializable {
         cmbMateria.getItems().setAll(Materia.materias);
     }
     
+    /**
+     *
+     */
     @FXML
     public void cargarCmbParalelos(){
         TerminoAcademico termino = (TerminoAcademico)cmbTermino.getValue();
@@ -99,7 +105,7 @@ public class ReporteController implements Initializable {
      */
     public void asignarColumnas(){
         //asignar a cada columna el atributo del objeto correspondiente
-        colFecha.setCellValueFactory(new PropertyValueFactory<>("fechas"));
+        colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         colParticipante.setCellValueFactory(new PropertyValueFactory<>("participantes"));
         colNivelMax.setCellValueFactory(new PropertyValueFactory<>("lvlMax"));
         colTiempo.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -113,6 +119,7 @@ public class ReporteController implements Initializable {
      */
     @FXML
     private void filtrarJuegos(){
+        Collections.sort(Juego.juegos);
         // Filtrar por comboBox y los atributos de cada juego
         List<Juego> juegoCriterios =  Juego.juegos
                 .stream()
@@ -158,6 +165,10 @@ public class ReporteController implements Initializable {
 
     }
     
+    /**
+     *
+     * @param j
+     */
     public void verDetalles(Juego j){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("detalles.fxml"));

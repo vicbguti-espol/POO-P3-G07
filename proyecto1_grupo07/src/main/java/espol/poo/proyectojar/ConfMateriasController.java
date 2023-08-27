@@ -4,7 +4,7 @@
  */
 package espol.poo.proyectojar;
 
-import modelo.academico.*;
+import espol.poo.modelo.academico.Materia;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,6 +39,8 @@ public class ConfMateriasController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

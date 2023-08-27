@@ -4,8 +4,10 @@
  */
 package espol.poo.proyectojar;
 
+import espol.poo.modelo.academico.Estudiante;
+import espol.poo.modelo.academico.Materia;
+import espol.poo.modelo.academico.Paralelo;
 import java.io.IOException;
-import modelo.academico.*;
 
 import java.util.Random;
 import java.net.URL;
@@ -25,8 +27,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import modelo.juego.Juego;
-import modelo.juego.Pregunta;
+import espol.poo.modelo.juego.Juego;
+import espol.poo.modelo.juego.Pregunta;
 /**
  * FXML Controller class
  *
@@ -65,19 +67,24 @@ public class NuevoJuegoController implements Initializable {
    
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        for(Materia m:Materia.materias){
+            for(Materia m:Materia.materias){
             cmbMateria.getItems().add(m.getNombre());
-        }
-        cmbParalelo.setDisable(true);
-        cmbPregNivel.setDisable(true);
-        txtMatPart.setDisable(true);
-        txtMatApoyo.setDisable(true);
-        btnRandom1.setDisable(true);
-        btnRandom2.setDisable(true);
+            }
+            cmbParalelo.setDisable(true);
+            cmbPregNivel.setDisable(true);
+            txtMatPart.setDisable(true);
+            txtMatApoyo.setDisable(true);
+            btnRandom1.setDisable(true);
+            btnRandom2.setDisable(true);
+        
     } 
+    
+    
     @FXML
     private void materiaSeleccionada(ActionEvent event){
         Alert error=new Alert(AlertType.ERROR);

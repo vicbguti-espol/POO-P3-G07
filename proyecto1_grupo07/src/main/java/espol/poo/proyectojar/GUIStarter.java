@@ -9,6 +9,11 @@ package espol.poo.proyectojar;
  * @author Omen
  */
 public class GUIStarter {
+
+    /**
+     *
+     * @param args
+     */
     public static void main(final String[] args) {
         App.main(args);
     }

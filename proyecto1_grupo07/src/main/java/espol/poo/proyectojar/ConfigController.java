@@ -4,6 +4,10 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+/**
+ *
+ * @author Omen
+ */
 public class ConfigController {
     @FXML
     private void switchtoParalelos(ActionEvent event)throws IOException  {

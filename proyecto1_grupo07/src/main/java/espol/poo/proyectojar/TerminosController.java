@@ -4,6 +4,7 @@
  */
 package espol.poo.proyectojar;
 
+import espol.poo.modelo.academico.TerminoAcademico;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-import modelo.academico.*;
 /**
  * FXML Controller class
  *

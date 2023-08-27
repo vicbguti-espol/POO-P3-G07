@@ -1,0 +1,54 @@
+@options
+@packages
+@argfile
+--class-path
+'C:/Users/Omen/.m2/repository/org/openjfx/javafx-controls/13/javafx-controls-13.jar;C:/Users/Omen/.m2/repository/org/openjfx/javafx-graphics/13/javafx-graphics-13.jar;C:/Users/Omen/.m2/repository/org/openjfx/javafx-base/13/javafx-base-13.jar;C:/Users/Omen/.m2/repository/org/openjfx/javafx-fxml/13/javafx-fxml-13.jar'
+--module-path
+'C:/Users/Omen/.m2/repository/org/openjfx/javafx-controls/13/javafx-controls-13-win.jar;C:/Users/Omen/OneDrive - Escuela Superior Politécnica del Litoral/ESPOL 2023-2024/OBJECT ORIENTED PROGRAMMING/PROYECTO/REPOSITORIO/POO-P3-G07/proyecto1_grupo07/target/classes;C:/Users/Omen/.m2/repository/org/openjfx/javafx-base/13/javafx-base-13-win.jar;C:/Users/Omen/.m2/repository/org/openjfx/javafx-graphics/13/javafx-graphics-13-win.jar;C:/Users/Omen/.m2/repository/org/openjfx/javafx-fxml/13/javafx-fxml-13-win.jar'
+--patch-module
+espol.poo.proyectojar='C:/Users/Omen/OneDrive - Escuela Superior Politécnica del Litoral/ESPOL 2023-2024/OBJECT ORIENTED PROGRAMMING/PROYECTO/REPOSITORIO/POO-P3-G07/proyecto1_grupo07/src/main/java'
+-encoding
+'UTF-8'
+-protected
+-source
+'11'
+--module-source-path
+'C:/Users/Omen/OneDrive - Escuela Superior Politécnica del Litoral/ESPOL 2023-2024/OBJECT ORIENTED PROGRAMMING/PROYECTO/REPOSITORIO/POO-P3-G07/proyecto1_grupo07/target/site/apidocs/src'
+-author
+-bottom
+'Copyright &#169; 2023. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/Omen/OneDrive - Escuela Superior Politécnica del Litoral/ESPOL 2023-2024/OBJECT ORIENTED PROGRAMMING/PROYECTO/REPOSITORIO/POO-P3-G07/proyecto1_grupo07/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'CasiPolitecnico 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/en/java/javase/11/docs/api' 'C:/Users/Omen/OneDrive - Escuela Superior Politécnica del Litoral/ESPOL 2023-2024/OBJECT ORIENTED PROGRAMMING/PROYECTO/REPOSITORIO/POO-P3-G07/proyecto1_grupo07/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'CasiPolitecnico 1.0-SNAPSHOT API'
+espol.poo.proyectojar
+'C:/Users/Omen/OneDrive - Escuela Superior Politécnica del Litoral/ESPOL 2023-2024/OBJECT ORIENTED PROGRAMMING/PROYECTO/REPOSITORIO/POO-P3-G07/proyecto1_grupo07/src/main/java/module-info.java'
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\allclasses-index.html = 1693155605729
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\allpackages-index.html = 1693155605733
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\copy.svg = 1693155605804
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\element-list = 1693155605573
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\help-doc.html = 1693155605798
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\index-all.html = 1693155605781
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\index.html = 1693155605788
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\jquery-ui.overrides.css = 1693155605818
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\member-search-index.js = 1693155605740
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\module-search-index.js = 1693155605735
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\overview-tree.html = 1693155605699
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\package-search-index.js = 1693155605736
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\script.js = 1693155605803
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\search-page.js = 1693155605809
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\search.html = 1693155605785
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\search.js = 1693155605807
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\stylesheet.css = 1693155605801
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\tag-search-index.js = 1693155605741
+C:\Users\Omen\OneDrive - Escuela Superior Politécnica del Litoral\ESPOL 2023-2024\OBJECT ORIENTED PROGRAMMING\PROYECTO\REPOSITORIO\POO-P3-G07\proyecto1_grupo07\target\site\apidocs\type-search-index.js = 1693155605738

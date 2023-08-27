@@ -4,7 +4,10 @@
  */
 package espol.poo.proyectojar;
 
-import modelo.academico.*;
+import espol.poo.modelo.academico.Estudiante;
+import espol.poo.modelo.academico.Materia;
+import espol.poo.modelo.academico.Paralelo;
+import espol.poo.modelo.academico.TerminoAcademico;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,6 +46,8 @@ public class ConfParalelosController implements Initializable {
     File archivoCarga;
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
