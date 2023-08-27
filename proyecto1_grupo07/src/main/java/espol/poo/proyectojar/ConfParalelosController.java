@@ -102,27 +102,6 @@ public class ConfParalelosController implements Initializable {
                     error.setTitle("Paralelo Existente");
                     error.setContentText("El paralelo ya existe. Por favor ingrese valores válidos");
                     error.showAndWait();
-<<<<<<< Updated upstream
-                }else if(archivoCarga==null){
-                    try{
-                        Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(txtPath.getText())));             
-                        Alert faltaest=new Alert(AlertType.INFORMATION);
-                        faltaest.setTitle("Guardado");
-                        faltaest.setContentText("Paralelo guardado exitosamente");
-                        faltaest.showAndWait();
-                        App.setRoot("visualizarParalelos");
-                    }
-                    catch(FileNotFoundException e){
-                        Alert rutanovalida=new Alert(AlertType.ERROR);    
-                        rutanovalida.setTitle("Error de archivo");
-                        rutanovalida.setContentText("La ruta no contiene un archivo o no estan en el formato válido");
-                        rutanovalida.showAndWait();
-                    }
-                }else if(archivoCarga!=null){
-                    System.out.println("Procesando archivo");
-                    Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(archivoCarga.getPath())));
-                    System.out.println("Procesando 2");
-=======
                 }
             }
             try{
@@ -136,7 +115,6 @@ public class ConfParalelosController implements Initializable {
             catch(FileNotFoundException e){
                 try{
                     Paralelo.agregarParalelos(new Paralelo(numeroParalelo,matParalelo,tParalelo,Estudiante.cargarEstudiantes(txtPath.getText())));             
->>>>>>> Stashed changes
                     Alert faltaest=new Alert(AlertType.INFORMATION);
                     faltaest.setTitle("Guardado");
                     faltaest.setContentText("Paralelo guardado exitosamente");
