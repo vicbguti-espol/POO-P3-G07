@@ -25,17 +25,17 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <ComboBox fx:id="cmbTermino" onAction="#cargarCmbParalelos" prefHeight="26.0" prefWidth="106.0" />
+                  <ComboBox fx:id="cmbTermino" onAction="#cargarCmbParalelos" prefHeight="26.0" prefWidth="106.0" stylesheets="@css/comboboxes.css" />
                   <Label alignment="BOTTOM_CENTER" prefHeight="18.0" prefWidth="115.0" text="Código de Materia" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <ComboBox fx:id="cmbMateria" onAction="#filtrarJuegos" prefHeight="26.0" prefWidth="104.0" />
+                  <ComboBox fx:id="cmbMateria" onAction="#filtrarJuegos" prefHeight="26.0" prefWidth="104.0" stylesheets="@css/comboboxes.css" />
                   <Label alignment="BOTTOM_CENTER" prefHeight="18.0" prefWidth="50.0" text="Paralelo" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <ComboBox fx:id="cmbParalelo" onAction="#filtrarJuegos" prefHeight="26.0" prefWidth="126.0" />
+                  <ComboBox fx:id="cmbParalelo" onAction="#filtrarJuegos" prefHeight="26.0" prefWidth="126.0" stylesheets="@css/comboboxes.css" />
                </children>
                <padding>
                   <Insets left="30.0" right="30.0" />
@@ -59,7 +59,7 @@
                   <Insets left="6.0" right="6.0" />
                </VBox.margin>
             </TableView>
-            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#switchToPrimary" text="Regresar" />
+            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#switchToPrimary" stylesheets="@css/botones.css" text="Regresar" textFill="WHITE" />
          </children>
          <padding>
             <Insets bottom="30.0" top="30.0" />

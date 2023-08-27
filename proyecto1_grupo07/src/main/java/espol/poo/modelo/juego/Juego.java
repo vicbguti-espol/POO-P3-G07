@@ -46,6 +46,7 @@ public class Juego implements Serializable, Comparable<Juego> {
     private TerminoAcademico termino;
     private Paralelo paralelo;
     private int comodinesUsados;
+    private ArrayList<Pregunta> arrayPreguntasContestadas;
     
     /**
      *
@@ -81,6 +82,7 @@ public class Juego implements Serializable, Comparable<Juego> {
         fecha = f;
         nPreguntasPerLvl = n; // Set n preguntas por nivel
         termino = terminoAcademico;
+        arrayPreguntasContestadas = new ArrayList<>();
     }
 
     /**
@@ -291,8 +293,21 @@ public class Juego implements Serializable, Comparable<Juego> {
         this.preguntasContestadas = preguntasContestadas;
     }
     
+    /**
+     * Obtener el arreglo de preguntas contestadas
+     * @return 
+     */
+    public ArrayList<Pregunta> getArrayPreguntasContestadas(){
+        return arrayPreguntasContestadas;
+    }
     
-    
+    /**
+     * 
+     * @param preguntasContestadas 
+     */
+    public void setArrayPreguntasContestadas(ArrayList<Pregunta> preguntasContestadas){
+        arrayPreguntasContestadas = preguntasContestadas;
+    }
     /**
      * Obtener el timeStamp del juego al momento de terminarlo
      * @return 
@@ -498,61 +513,72 @@ public class Juego implements Serializable, Comparable<Juego> {
         return arrayNivelPregunta;
     }
     
-    /**
-     * Obtener una plain list de las preguntas usadas en el juego
-     * @return 
-     */
-    public ArrayList<Pregunta> getPreguntasJuego(){
-        ArrayList<NivelPregunta> nivelPreguntas;
-        ArrayList<Pregunta> preguntasJuego;
-        
-        nivelPreguntas = getArrayNivelPregunta();
-        preguntasJuego = new ArrayList<>();
-        for (NivelPregunta np: nivelPreguntas){
-            for (Pregunta p: np.getPreguntas()){
-                preguntasJuego.add(p);
-            }
-        }
-        
-        return preguntasJuego;
-    }
+//    /**
+//     * Obtener una plain list de las preguntas usadas en el juego
+//     * @return 
+//     */
+//    public ArrayList<Pregunta> getPreguntasJuego(){
+//        ArrayList<NivelPregunta> nivelPreguntas;
+//        ArrayList<Pregunta> preguntasJuego;
+//        
+//        nivelPreguntas = getArrayNivelPregunta();
+//        preguntasJuego = new ArrayList<>();
+//        for (NivelPregunta np: nivelPreguntas){
+//            for (Pregunta p: np.getPreguntas()){
+//                preguntasJuego.add(p);
+//            }
+//        }
+//        
+//        return preguntasJuego;
+//    }
     
-    /**
-     * Obtener un arreglo de tipo Pregunta con las preguntas contestadas
-     * @return 
-     */
-    public ArrayList<Pregunta> getArrayPreguntasContestadas(){
-        ArrayList<Pregunta> preguntas;
-        ArrayList<Pregunta> preguntasJuego;
-        
-        preguntasJuego = getPreguntasJuego();
-        preguntas = new ArrayList<>();
-        for (int i = 0; i < preguntasContestadas; i++){
-            preguntas.add(preguntasJuego.get(i));
-        }
-        
-        return preguntas;
-    }
+//    /**
+//     * Obtener un arreglo de tipo Pregunta con las preguntas contestadas
+//     * @return 
+//     */
+//    public ArrayList<Pregunta> getArrayPreguntasContestadas(){
+//        ArrayList<Pregunta> preguntas;
+//        ArrayList<Pregunta> preguntasJuego;
+//        
+//        preguntasJuego = getPreguntasJuego();
+//        preguntas = new ArrayList<>();
+//        for (int i = 0; i < preguntasContestadas; i++){
+//            preguntas.add(preguntasJuego.get(i));
+//        }
+//        
+//        return preguntas;
+//    }
     
     /**
      * Obtener la cantidad de comodines usados en un juego
      * @return 
      */
     public Integer getComodinesUsados(){
-        ArrayList<NivelPregunta> nivelPreguntas;
-        nivelPreguntas = getArrayNivelPregunta();
+//        ArrayList<NivelPregunta> nivelPreguntas;
+//        nivelPreguntas = getArrayNivelPregunta();
+//        
+//        comodinesUsados = 0;
+//        for (int i = 0; i < lvlMax; i++){
+//            for (int j = 0; j < preguntasContestadas; j++){
+//                Pregunta pregunta;
+//                // Obtener la pregunta
+//                pregunta = nivelPreguntas.get(i).getPreguntas().get(j);
+//                if (pregunta.getComodinUsado() != null){
+//                    // Agregar comodines usados si una pregunta las obtuvo
+//                    comodinesUsados++;
+//                }
+//            }
+//        }
+
+        comodinesUsados = 0;
         
-        for (int i = 0; i < lvlMax; i++){
-            for (int j = 0; j < preguntasContestadas; j++){
-                Pregunta pregunta;
-                // Obtener la pregunta
-                pregunta = nivelPreguntas.get(i).getPreguntas().get(j);
-                if (pregunta.getComodinUsado() != null){
-                    // Agregar comodines usados si una pregunta las obtuvo
-                    comodinesUsados++;
-                }
+        for (Pregunta p: arrayPreguntasContestadas){
+            if (p.getComodinUsado() != null){
+                comodinesUsados++;
             }
         }
+           
+           
         return comodinesUsados;
     }
     

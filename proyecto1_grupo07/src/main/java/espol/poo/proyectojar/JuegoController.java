@@ -269,6 +269,10 @@ public class JuegoController {
 	Preguntastotales+=i.getPreguntas().size();
         }
         if (respuestaCorrecta){
+            Pregunta preguntaContestada;
+            
+            preguntaContestada = preguntasPerLvl.get(indNivel).getPreguntas().get(indPregunta);
+            App.juego.getArrayPreguntasContestadas().add(preguntaContestada);
             //Condicion para avanzar a la siguiente pregunta o nivel
             preguntasAvanzadas++;
             if (preguntasAvanzadas!=Preguntastotales){

@@ -14,6 +14,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="bpPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="900.0" prefHeight="400.0" prefWidth="900.0" stylesheets="@css/juego.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -36,10 +39,26 @@
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>
-                        <Label fx:id="lblTemp" text="00" textFill="#fcfeff">
+                        <Label fx:id="lblTemp" text="00">
                            <font>
                               <Font name="System Bold" size="36.0" />
-                           </font></Label>
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0" startX="0.8570076046567974">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.39052632451057434" green="0.15789473056793213" blue="0.5684210658073425" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill></Label>
                      </children>
                   </VBox>
                   <GridPane alignment="CENTER" prefHeight="158.0" prefWidth="147.0">
