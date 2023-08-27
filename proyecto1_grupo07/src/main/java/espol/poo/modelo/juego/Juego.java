@@ -45,6 +45,7 @@ public class Juego implements Serializable, Comparable<Juego> {
     private int segundos;
     private TerminoAcademico termino;
     private Paralelo paralelo;
+    private int comodinesUsados;
     
     /**
      *
@@ -537,11 +538,8 @@ public class Juego implements Serializable, Comparable<Juego> {
      * Obtener la cantidad de comodines usados en un juego
      * @return 
      */
-    public int getComodinesUsados(){
-        int comodinesUsados;
+    public Integer getComodinesUsados(){
         ArrayList<NivelPregunta> nivelPreguntas;
-        
-        comodinesUsados = 0; 
         nivelPreguntas = getArrayNivelPregunta();
         
         for (int i = 0; i < lvlMax; i++){
