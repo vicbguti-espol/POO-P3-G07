@@ -14,14 +14,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/fondogeneral.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectojar.respuestasMenuController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="302.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pregunta:">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Pregunta:">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -29,10 +28,13 @@
                         <Font name="Cambria" size="24.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;&lt; Texto pregunta &gt;&gt;" textAlignment="CENTER">
+                  <Text fx:id="txtpregunta" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;&lt; Texto pregunta &gt;&gt;" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets top="120.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Text>
                </children>
                <HBox.margin>
@@ -56,43 +58,55 @@
                      <children>
                         <ImageView fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../fxml/image-removebg-preview%20(10).png" />
+                              <Image url="@files/image-removebg-preview%20(10).png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="63.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                            <image>
-                              <Image url="@../fxml/image-removebg-preview%20(12).png" />
+                              <Image url="@files/image-removebg-preview%20(12).png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="80.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                            <image>
-                              <Image url="@../fxml/image-removebg-preview%20(12).png" />
+                              <Image url="@files/image-removebg-preview%20(12).png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
                            <image>
-                              <Image url="@../fxml/image-removebg-preview%20(12).png" />
+                              <Image url="@files/image-removebg-preview%20(12).png" />
                            </image>
                         </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;&lt; Respuesta Correcta &gt;&gt;" wrappingWidth="144.6219482421875" GridPane.columnIndex="1">
+                        <Text fx:id="txtrc" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="144.6219482421875" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;&lt; Respuesta Incorrecta &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Text fx:id="txtri1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;&lt; Respuesta Incorrecta &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Text fx:id="txtri2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;&lt; Respuesta Incorrecta &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Text fx:id="txtri3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
                         </Text>
                      </children>
                      <opaqueInsets>
@@ -108,10 +122,13 @@
       </HBox>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" text="Salir" BorderPane.alignment="CENTER">
+      <Button fx:id="btnSalir" mnemonicParsing="false" onAction="#switchToPrimary" stylesheets="@css/botones.css" text="Salir" textFill="WHITE" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="8.0" />
          </BorderPane.margin>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
       </Button>
    </bottom>
 </BorderPane>
