@@ -25,6 +25,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import espol.poo.modelo.academico.TerminoAcademico;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -38,11 +42,11 @@ public class ConfPreguntasController implements Initializable{
     @FXML
     private ComboBox cmbMateria;
     @FXML
-    private Button btnEditar;
-    @FXML
     private Button btnAgregar;
     @FXML
     private Button btnEliminar;
+    @FXML
+    private Button btnAplicar;
     @FXML
     private Button btnRegresar;
     @FXML
@@ -68,11 +72,20 @@ public class ConfPreguntasController implements Initializable{
         }
     }
 
+    @FXML
+    public void filtrarPreguntas(){
+        // Filtrar por comboBox y los atributos de cada juego
+        List<Pregunta> pCriterios =  Pregunta.preguntas.stream().filter(p ->(p.getMateria().equals((Materia)cmbMateria.getValue()))).collect(Collectors.toList());
+         // Actualizar TableView
+         tvPreguntas.getItems().setAll(pCriterios);
+    }
+
     /**
      *
      * @param url
      * @param rb
      */
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
         cargarComboBox();
@@ -82,23 +95,6 @@ public class ConfPreguntasController implements Initializable{
                 preguntaEditable = selectedPregunta;
             }
             System.out.println(preguntaEditable.getTexto());
-        });
-        btnEditar.setOnMouseClicked(e->{
-            Pregunta m = preguntaEditable;
-            if (m != null) {
-                preguntaEditable=m;
-                try{
-                App.setRoot("preguntaMenu");
-                }catch(Exception ex){
-                    ex.printStackTrace();
-                }
-            }
-            else{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Error");
-                alert.setContentText("Seleccione una pregunta");
-                alert.showAndWait();
-            }
         });
         
         btnAgregar.setOnMouseClicked(e->{
@@ -128,6 +124,7 @@ public class ConfPreguntasController implements Initializable{
         
         tvPreguntas.getColumns().addAll(tcCodigo,tcTexto,tcMateria);
         tvPreguntas.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
+        tvPreguntas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tvPreguntas.setItems(listaPreguntas);
         
         return tvPreguntas;
@@ -153,6 +150,7 @@ public class ConfPreguntasController implements Initializable{
      */
     public void cargarComboBox(){
         cmbMateria.getItems().setAll(Materia.materias);
+        filtrarPreguntas();
     }
     
     
