@@ -44,6 +44,11 @@ public class preguntaMenuController implements Initializable {
     @FXML
     private Button btnguardar;
     
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarComboBox();
@@ -66,6 +71,10 @@ public class preguntaMenuController implements Initializable {
             
         }
     }
+
+    /**
+     *
+     */
     public void cargarComboBox(){
         cmbMateria.getItems().setAll(Materia.materias);
     }

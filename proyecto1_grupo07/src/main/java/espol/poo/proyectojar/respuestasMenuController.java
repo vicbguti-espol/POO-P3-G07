@@ -38,6 +38,12 @@ public class respuestasMenuController implements Initializable{
     private void switchToPrimary(ActionEvent event) throws IOException{
         App.setRoot("ConfPreguntas");
     }
+
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb){
         

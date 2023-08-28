@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <actions>
+<actions>
         <action>
             <actionName>run</actionName>
             <packagings>
@@ -36,5 +36,19 @@
                 <goal>compile</goal>
                 <goal>javafx:jlink</goal>
             </goals>
+        </action>
+        <action>
+            <actionName>javadoc</actionName>
+            <recursive>false</recursive>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>generate-sources</goal>
+                <goal>javadoc:javadoc</goal>
+            </goals>
+            <properties>
+                <espol.poo></espol.poo>
+            </properties>
         </action>
     </actions>

@@ -67,6 +67,12 @@ public class ConfPreguntasController implements Initializable{
                 alert.showAndWait();
         }
     }
+
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb){
         cargarComboBox();
@@ -141,6 +147,10 @@ public class ConfPreguntasController implements Initializable{
             alert.showAndWait();
         }
     }
+
+    /**
+     *
+     */
     public void cargarComboBox(){
         cmbMateria.getItems().setAll(Materia.materias);
     }
