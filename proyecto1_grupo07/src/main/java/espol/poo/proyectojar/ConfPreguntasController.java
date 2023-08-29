@@ -56,37 +56,6 @@ public class ConfPreguntasController implements Initializable{
     ObservableList<Pregunta> listaPreguntas =FXCollections.observableArrayList(Pregunta.preguntas);
     
     @FXML
-    private void switchToPrimary(ActionEvent event) throws IOException{
-        App.setRoot("primary");
-    }
-    @FXML
-    private void switchToRespuestas(ActionEvent event) throws IOException{
-        Pregunta m = preguntaEditable;
-        if (m != null) {
-            App.setRoot("respuestasMenu");
-        } else{
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Error");
-                alert.setContentText("Seleccione una pregunta");
-                alert.showAndWait();
-        }
-    }
-
-    @FXML
-    public void filtrarPreguntas(){
-        // Filtrar por comboBox y los atributos de cada juego
-        List<Pregunta> pCriterios =  Pregunta.preguntas.stream().filter(p ->(p.getMateria().equals((Materia)cmbMateria.getValue()))).collect(Collectors.toList());
-         // Actualizar TableView
-         tvPreguntas.getItems().setAll(pCriterios);
-    }
-
-    /**
-     *
-     * @param url
-     * @param rb
-     */
-
-    @Override
     public void initialize(URL url, ResourceBundle rb){
         cargarComboBox();
         tvPreguntas.setOnMouseClicked(e->{
@@ -109,6 +78,42 @@ public class ConfPreguntasController implements Initializable{
         
         bpCentral.setCenter(llenarTableViewPreguntas());
     }
+    
+    @FXML
+    private void switchToPrimary(ActionEvent event) throws IOException{
+        App.setRoot("primary");
+    }
+    @FXML
+    private void switchToRespuestas(ActionEvent event) throws IOException{
+        Pregunta m = preguntaEditable;
+        if (m != null) {
+            App.setRoot("respuestasMenu");
+        } else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setContentText("Seleccione una pregunta");
+                alert.showAndWait();
+        }
+    }
+
+    /**
+     *
+     */
+    @FXML
+    public void filtrarPreguntas(){
+        // Filtrar por comboBox y los atributos de cada juego
+        List<Pregunta> pCriterios =  Pregunta.preguntas.stream().filter(p ->(p.getMateria().equals((Materia)cmbMateria.getValue()))).collect(Collectors.toList());
+         // Actualizar TableView
+         tvPreguntas.getItems().setAll(pCriterios);
+    }
+
+    /**
+     *
+     * @param url
+     * @param rb
+     */
+
+    
     
     
     @FXML

@@ -47,8 +47,5 @@
                 <goal>generate-sources</goal>
                 <goal>javadoc:javadoc</goal>
             </goals>
-            <properties>
-                <espol.poo></espol.poo>
-            </properties>
         </action>
     </actions>

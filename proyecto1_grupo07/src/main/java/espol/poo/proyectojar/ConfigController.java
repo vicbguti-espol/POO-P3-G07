@@ -30,7 +30,7 @@ public class ConfigController {
     }
     @FXML
     private void switchToPreguntas(ActionEvent event) throws IOException{
-        App.setRoot("confpreguntas");
+        App.setRoot("confPreguntas");
     }
 }
 

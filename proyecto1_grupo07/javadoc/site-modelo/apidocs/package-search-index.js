@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"espol.poo.excepciones"},{"l":"espol.poo.modelo.academico"},{"l":"espol.poo.modelo.juego"}];updateSearchResults();
